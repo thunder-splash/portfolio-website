@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+:root {
+  --background: #05070d;
+  --foreground: #e2e8f0;
+  --surface: #0a0f1a;
+  --accent-cyan: #22d3ee;
+  --accent-emerald: #34d399;
+  --muted: #94a3b8;
+  --font-outfit: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --font-space: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-jetbrains: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-emerald: var(--accent-emerald);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-space);
+  --font-mono: var(--font-jetbrains);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-outfit);
+}
+
+/* Keep horizontal bleed clipped without breaking middle-click autoscroll
+   (overflow-x: hidden on body/html kills it in Chromium). */
+.page-shell {
+  overflow-x: clip;
+}
+
+/* Interactive cursor — buttons/links across the site */
+a,
+button,
+[role="button"],
+label[for],
+summary,
+select,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+a:disabled,
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.28);
+  color: #f8fafc;
+}
+
+.font-display {
+  font-family: var(--font-space);
+}
+
+@keyframes scrollPulse {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes geoDrift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes geoDriftSlow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(2deg);
+  }
+}
+
+@keyframes geoSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes geoScan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.7;
+  }
+  92% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.geo-drift {
+  animation: geoDrift 9s ease-in-out infinite;
+}
+
+.geo-drift-slow {
+  animation: geoDriftSlow 14s ease-in-out infinite;
+}
+
+.geo-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: geoSpin 48s linear infinite;
+}
+
+.geo-scan {
+  animation: geoScan 11s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geo-drift,
+  .geo-drift-slow,
+  .geo-spin,
+  .geo-scan {
+    animation: none;
+  }
+
+  [style*="will-change-transform"] {
+    transform: none !important;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 211, 238, 0.35) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.3);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
