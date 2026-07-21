@@ -46,6 +46,20 @@ export type Dictionary = {
     projectsCount: string;
     openDetails: string;
     viewing: string;
+    mockupNote: string;
+    interactiveBadge: string;
+    interactiveNote: string;
+    tryInteractive: string;
+    demoDisclaimer: string;
+    playground: {
+      liveDemo: string;
+      synthetic: string;
+      disclaimer: string;
+      loading: string;
+      close: string;
+      openTab: string;
+      scenes: string;
+    };
     jobs: Record<
       string,
       {
@@ -150,83 +164,199 @@ export const dictionaries: Record<Locale, Dictionary> = {
       projectsCount: "{n} projects",
       openDetails: "Details",
       viewing: "Open",
+      mockupNote:
+        "Illustrative mock · synthetic UI · not the production product",
+      interactiveBadge: "Demo",
+      interactiveNote:
+        "Portfolio demo · synthetic data · unrelated to live originals",
+      tryInteractive: "Open portfolio demo",
+      demoDisclaimer:
+        "These are illustrative portfolio demos only — rebuilt showcase UIs with synthetic data. They are not production apps, are not affiliated with employers’ live products, and intentionally share little with NDA-covered originals.",
+      playground: {
+        liveDemo: "Portfolio demo",
+        synthetic: "Synthetic showcase · not production",
+        disclaimer:
+          "Illustrative demo for this portfolio. Synthetic data and UI — not the real product, not production code, and not meant to represent confidential employer systems.",
+        loading: "Booting demo",
+        close: "Close",
+        openTab: "New tab",
+        scenes: "Scenes",
+      },
       jobs: {
         "2trade": {
           role: "Senior Fullstack / Frontend Lead",
-          period: "Jul 2025 – Sep 2025",
-          blurb: "Svelte → React 19 rewrite of FastTable. −60% time-to-market with AI tooling.",
+          period: "Jul 2025 – Sep 2025 · Remote",
+          blurb:
+            "Led FastTable Dashboard v2 modernization: Svelte → React 19 for realtime restaurant ops metrics. −60% TTM with AI tooling.",
           projects: {
             "fasttable-v2": {
               title: "FastTable Dashboard v2",
               type: "Case Study",
-              summary: "Legacy dashboard → modular React 19 stack.",
+              summary:
+                "Enterprise ops console: orders pipeline with status chips, managers & venue context.",
               points: [
-                "Zero-downtime UI migration",
-                "AI-assisted delivery (−60% TTM)",
+                "React 19 + TypeScript + MUI modular shell",
+                "Orders domain with expandable entity graphs",
+                "AI-assisted delivery cut TTM by 60%",
               ],
             },
-            "design-system": {
-              title: "Modular UI Kit",
-              type: "Internal",
-              summary: "Shared tables, filters, motion widgets.",
-              points: ["Tokenized UI density", "Strict TS contracts"],
+            "fasttable-filters": {
+              title: "Scale Filtering Engine",
+              type: "Feature",
+              summary:
+                "Operational filters over dense order tables without UI stalls.",
+              points: [
+                "Status + free-text filter panel on large lists",
+                "Performance-first table architecture",
+              ],
+            },
+            "fasttable-tickets": {
+              title: "Support Ticket Chat",
+              type: "Feature",
+              summary:
+                "Guest↔ops chat with restaurant & order context cards.",
+              points: [
+                "Ticket detail with threaded messages",
+                "Linked object / order side panels",
+                "Realtime-ready messaging layer",
+              ],
+            },
+            "fasttable-rooms": {
+              title: "Venue Rooms Manager",
+              type: "Feature",
+              summary:
+                "Room cards with media, table counts and venue hierarchy.",
+              points: [
+                "Object → rooms → tables domain model",
+                "Media-rich admin cards for floor plans",
+              ],
             },
           },
         },
         agsoft: {
           role: "Senior Fullstack Developer",
-          period: "Jan 2025 – Apr 2025",
-          blurb: "IBM MAXIMO → AXIOMA. Full type-safety + PostgreSQL tuned (+40% queries).",
+          period: "Jan 2025 – Apr 2025 · Contract",
+          blurb:
+            "IBM MAXIMO → AXIOMA. Fullstack TypeScript + PostgreSQL; query performance +40%.",
           projects: {
             axioma: {
               title: "AXIOMA Platform",
               type: "Case Study",
-              summary: "Enterprise asset/work system replacing MAXIMO.",
-              points: ["E2E TypeScript safety", "+40% query performance"],
+              summary:
+                "Next-gen business platform replacing IBM MAXIMO workflows.",
+              points: [
+                "Front + server utilities end-to-end",
+                "Legacy → modern TypeScript models",
+                "PostgreSQL layouts + filtering (+40%)",
+              ],
             },
             "axioma-admin": {
               title: "Ops Admin Console",
               type: "Module",
-              summary: "RBAC + cutover tooling for migration.",
-              points: ["Role-based ops views", "Safer data validation"],
+              summary: "RBAC and migration tooling for the MAXIMO cutover.",
+              points: [
+                "Role-based operational views",
+                "Safer validation during migration",
+              ],
             },
           },
         },
         radmate: {
           role: "Fullstack · AI & UI/UX",
-          period: "Nov 2023 – Jan 2025",
-          blurb: "Gamified edtech at scale. 60fps on weak devices + Web3/API bridges.",
+          period: "Nov 2023 – Jan 2025 · Remote",
+          blurb:
+            "Led Sparkora — gamified edtech with quest loops, XP progression and a dynamic task engine. 60fps on low-spec devices; API/Web3-ready integrations.",
           projects: {
             "edu-platform": {
-              title: "Gamified Learning",
+              title: "Sparkora Learn",
               type: "Case Study",
-              summary: "Quests, progression, performance-first UI.",
-              points: ["60fps on low-spec hardware", "Reatom game-like state"],
+              summary:
+                "Immersive onboarding + quest UX with sticky XP HUD and 60fps motion.",
+              points: [
+                "Game-like flows tuned for daily retention",
+                "Smooth Framer Motion / Reatom state loops",
+                "Runs silky on budget hardware",
+              ],
+            },
+            "sparkora-engine": {
+              title: "Dynamic Quest Engine",
+              type: "Architecture",
+              summary:
+                "Infinitely extensible blueprint→seed→variants generator + lightweight UI kit.",
+              points: [
+                "Task generation without UI rewrites",
+                "Bespoke primitives → smaller bundle",
+                "Skill-tagged learning loops",
+              ],
             },
             "web3-bridge": {
-              title: "Web3 / API Bridge",
+              title: "API / Web3 Bridge",
               type: "Integration",
-              summary: "Rewards & identity wired to Web3 services.",
-              points: ["Resilient API orchestration", "Reusable connectors"],
+              summary:
+                "Content API sandbox + wallet-ready achievement adapter.",
+              points: [
+                "Versioned quest blueprints over REST",
+                "Demo wallet for on-chain style badges",
+              ],
+            },
+            "sparkora-hub": {
+              title: "Retention Hub",
+              type: "Feature",
+              summary:
+                "Post-quest home loop: topic gallery, weekly facts, status rewards.",
+              points: [
+                "Daily-return surfaces after the main quest",
+                "Lightweight motion on content cards",
+                "Status / reward hooks for engagement",
+              ],
             },
           },
         },
         multicode: {
           role: "Fullstack Developer",
-          period: "Mar 2022 – Nov 2023",
-          blurb: "High-traffic furniture e-com + SaaS. DnD hierarchies, JWT/OAuth.",
+          period: "Mar 2022 – Nov 2023 · Remote",
+          blurb:
+            "Furniture e-com + SaaS admin. JWT/OAuth, DnD hierarchies, Next.js SEO to 99/100 CWV.",
           projects: {
             "furniture-shop": {
-              title: "Furniture Store",
+              title: "Furniture E-commerce",
               type: "Case Study",
-              summary: "Catalog → checkout, auth, high traffic.",
-              points: ["Full-cycle ownership", "JWT / OAuth flows"],
+              summary:
+                "High-traffic storefront migrated to Next.js for SEO & CWV.",
+              points: [
+                "Full-cycle catalog → checkout",
+                "JWT + multi-provider OAuth",
+                "Core Web Vitals 99/100",
+              ],
             },
             "hierarchy-dnd": {
               title: "Hierarchy DnD Admin",
               type: "SaaS",
-              summary: "Nested category sorting with optimistic UI.",
-              points: ["Nested drag & drop", "Conflict rollback"],
+              summary:
+                "Nested category sorting with batch edit for merchandisers.",
+              points: [
+                "Advanced drag-and-drop trees",
+                "Massive batch-editing workflows",
+              ],
+            },
+          },
+        },
+        freelance: {
+          role: "Fullstack Web Developer",
+          period: "May 2021 – Mar 2022 · Global",
+          blurb:
+            "15+ MVPs & landings for startups. React/Node delivery 2× faster with early AI tooling.",
+          projects: {
+            "mvp-factory": {
+              title: "MVP Delivery Track",
+              type: "Portfolio",
+              summary:
+                "Custom landings and MVP builds under budget for global clients.",
+              points: [
+                "15+ micro-projects shipped",
+                "React + Node + PostgreSQL stacks",
+                "Prompt engineering for 2× MVP speed",
+              ],
             },
           },
         },
@@ -324,107 +454,190 @@ export const dictionaries: Record<Locale, Dictionary> = {
       projectsCount: "{n} проекта",
       openDetails: "Подробнее",
       viewing: "Выбрано",
+      mockupNote:
+        "Показательный мокап · синтетический UI · не продакшен",
+      interactiveBadge: "Демо",
+      interactiveNote:
+        "Демо для портфолио · синтетика · не оригинал продукта",
+      tryInteractive: "Открыть демо портфолио",
+      demoDisclaimer:
+        "Это только показательные демо для портфолио — пересобранные витрины с синтетическими данными. Это не продакшен-продукты, не живые системы работодателей и намеренно почти не совпадают с оригиналами под NDA.",
+      playground: {
+        liveDemo: "Демо портфолио",
+        synthetic: "Синтетическая витрина · не продакшен",
+        disclaimer:
+          "Показательное демо для портфолио. Синтетические данные и UI — это не реальный продукт, не продакшен-код и не отражение конфиденциальных систем работодателя.",
+        loading: "Загрузка демо",
+        close: "Закрыть",
+        openTab: "Новая вкладка",
+        scenes: "Экраны",
+      },
       jobs: {
         "2trade": {
           role: "Senior Fullstack / Frontend Lead",
-          period: "Июль 2025 – Сентябрь 2025",
+          period: "Июль 2025 – Сентябрь 2025 · Remote",
           blurb:
-            "Миграция FastTable Dashboard v2 с Svelte на React 19. Сократил time-to-market на 60% за счёт AI-инструментов.",
+            "Модернизация FastTable Dashboard v2: Svelte → React 19 для realtime-метрик ресторанного бизнеса. −60% TTM с AI.",
           projects: {
             "fasttable-v2": {
               title: "FastTable Dashboard v2",
               type: "Кейс",
-              summary: "Переписывание legacy-дашборда на модульный React 19.",
+              summary:
+                "Ops-консоль: пайплайн заказов, статусы, менеджеры и контекст заведения.",
               points: [
-                "Миграция UI без простоя",
-                "AI-ускоренная поставка (−60% TTM)",
+                "React 19 + TypeScript + MUI shell",
+                "Домен заказов с expand сущностей",
+                "AI-поставка: −60% time-to-market",
               ],
             },
-            "design-system": {
-              title: "Modular UI Kit",
-              type: "Внутренний продукт",
-              summary: "Общий слой таблиц, фильтров и motion-компонентов.",
+            "fasttable-filters": {
+              title: "Scale Filtering Engine",
+              type: "Фича",
+              summary: "Фильтры по плотным таблицам заказов без тормозов UI.",
               points: [
-                "Токенизированная плотность UI",
-                "Строгие TypeScript-контракты",
+                "Панель фильтров: статус + свободный текст",
+                "Performance-first табличная архитектура",
+              ],
+            },
+            "fasttable-tickets": {
+              title: "Support Ticket Chat",
+              type: "Фича",
+              summary: "Чат гость↔ops с карточками ресторана и заказа.",
+              points: [
+                "Деталка тикета с тредом сообщений",
+                "Боковые панели object / order",
+                "Messaging-слой под realtime",
+              ],
+            },
+            "fasttable-rooms": {
+              title: "Venue Rooms Manager",
+              type: "Фича",
+              summary: "Карточки залов с медиа, столами и иерархией объекта.",
+              points: [
+                "Модель object → rooms → tables",
+                "Медиа-карточки для залов",
               ],
             },
           },
         },
         agsoft: {
           role: "Senior Fullstack Developer",
-          period: "Январь 2025 – Апрель 2025",
+          period: "Январь 2025 – Апрель 2025 · Contract",
           blurb:
-            "Миграция IBM MAXIMO в собственное решение AXIOMA. Полный type-safety и оптимизация PostgreSQL (+40% к запросам).",
+            "IBM MAXIMO → AXIOMA. TypeScript fullstack + PostgreSQL; +40% к запросам.",
           projects: {
             axioma: {
               title: "AXIOMA Platform",
               type: "Кейс",
-              summary: "Enterprise-платформа на замену IBM MAXIMO.",
+              summary: "Бизнес-платформа нового поколения вместо MAXIMO.",
               points: [
-                "End-to-end TypeScript",
-                "+40% к производительности запросов",
+                "Frontend + server utilities end-to-end",
+                "Legacy → современные TypeScript-модели",
+                "Оптимизация PostgreSQL (+40%)",
               ],
             },
             "axioma-admin": {
               title: "Ops Admin Console",
               type: "Модуль",
-              summary: "RBAC и инструменты сопровождения миграции.",
+              summary: "RBAC и тулзы миграции для cutover с MAXIMO.",
               points: [
-                "Ролевые представления для ops",
-                "Валидация данных при cutover",
+                "Ролевые operational-экраны",
+                "Валидация данных при миграции",
               ],
             },
           },
         },
         radmate: {
           role: "Fullstack Developer (AI & UI/UX)",
-          period: "Ноябрь 2023 – Январь 2025",
+          period: "Ноябрь 2023 – Январь 2025 · Remote",
           blurb:
-            "Геймифицированная образовательная платформа. 60 fps на слабом железе и интеграции Web3/API.",
+            "Sparkora — геймифицированный edtech: квесты, XP и динамический движок заданий. 60 fps на слабом железе; API/Web3-ready слой.",
           projects: {
             "edu-platform": {
-              title: "Gamified Learning",
+              title: "Sparkora Learn",
               type: "Кейс",
-              summary: "Квесты, прогрессия и UI с упором на производительность.",
+              summary:
+                "Онбординг + квест-UX с XP HUD и плавной 60fps-анимацией.",
               points: [
-                "Стабильные 60 fps на weak devices",
-                "Архитектура состояния на Reatom",
+                "Игровые флоу под daily retention",
+                "Framer Motion + Reatom state loops",
+                "Шёлко на budget-устройствах",
+              ],
+            },
+            "sparkora-engine": {
+              title: "Dynamic Quest Engine",
+              type: "Архитектура",
+              summary:
+                "Blueprint→seed→variants генератор + лёгкий UI kit.",
+              points: [
+                "Генерация заданий без переписки UI",
+                "Свои примитивы → меньше бандл",
+                "Skill-tagged learning loops",
               ],
             },
             "web3-bridge": {
-              title: "Web3 / API Bridge",
+              title: "API / Web3 Bridge",
               type: "Интеграция",
-              summary: "Связка наград и identity с внешними Web3-сервисами.",
+              summary: "Content API sandbox + wallet-ready achievement adapter.",
               points: [
-                "Устойчивая оркестрация API",
-                "Переиспользуемые коннекторы",
+                "Версионированные quest blueprints",
+                "Demo wallet для achievement-бейджей",
+              ],
+            },
+            "sparkora-hub": {
+              title: "Retention Hub",
+              type: "Фича",
+              summary:
+                "Home после квеста: галерея тем, weekly facts, status-награды.",
+              points: [
+                "Поверхности для daily return",
+                "Лёгкий motion на карточках",
+                "Status / reward hooks для вовлечения",
               ],
             },
           },
         },
         multicode: {
           role: "Fullstack Developer",
-          period: "Март 2022 – Ноябрь 2023",
+          period: "Март 2022 – Ноябрь 2023 · Remote",
           blurb:
-            "E-commerce мебели с высоким трафиком и SaaS-инструменты. DnD-иерархии, JWT/OAuth.",
+            "E-com мебели + SaaS-админка. JWT/OAuth, DnD-иерархии, Next.js SEO до 99/100 CWV.",
           projects: {
             "furniture-shop": {
-              title: "Furniture Store",
+              title: "Furniture E-commerce",
               type: "Кейс",
-              summary: "Каталог, checkout и auth для high-traffic витрины.",
+              summary: "High-traffic витрина с миграцией на Next.js.",
               points: [
-                "Полный цикл разработки фич",
-                "Аутентификация JWT / OAuth",
+                "Полный цикл catalog → checkout",
+                "JWT + multi-provider OAuth",
+                "Core Web Vitals 99/100",
               ],
             },
             "hierarchy-dnd": {
               title: "Hierarchy DnD Admin",
               type: "SaaS",
-              summary: "Вложенная сортировка категорий drag-and-drop.",
+              summary: "Вложенная сортировка категорий и batch-edit.",
               points: [
-                "Nested drag-and-drop",
-                "Optimistic UI с откатом при конфликтах",
+                "Продвинутый drag-and-drop",
+                "Массовое редактирование",
+              ],
+            },
+          },
+        },
+        freelance: {
+          role: "Fullstack Web Developer",
+          period: "Май 2021 – Март 2022 · Global",
+          blurb:
+            "15+ MVP и лендингов. React/Node в 2× быстрее рынка за счёт early AI-инструментов.",
+          projects: {
+            "mvp-factory": {
+              title: "MVP Delivery Track",
+              type: "Портфолио",
+              summary: "Кастомные лендинги и MVP для стартапов и бизнеса.",
+              points: [
+                "15+ микропроектов",
+                "React + Node + PostgreSQL",
+                "Prompt engineering → 2× к скорости MVP",
               ],
             },
           },
@@ -524,80 +737,192 @@ export const dictionaries: Record<Locale, Dictionary> = {
       projectsCount: "{n} proyectos",
       openDetails: "Detalles",
       viewing: "Abierto",
+      mockupNote:
+        "Mock ilustrativo · UI sintético · no es producción",
+      interactiveBadge: "Demo",
+      interactiveNote:
+        "Demo de portfolio · datos sintéticos · no es el original",
+      tryInteractive: "Abrir demo del portfolio",
+      demoDisclaimer:
+        "Solo demos ilustrativas del portfolio: UIs reconstruidas con datos sintéticos. No son apps de producción, no están afiliadas a productos reales del empleador y deliberadamente poco tienen en común con originales bajo NDA.",
+      playground: {
+        liveDemo: "Demo del portfolio",
+        synthetic: "Vitrina sintética · no producción",
+        disclaimer:
+          "Demo ilustrativa de este portfolio. Datos y UI sintéticos: no es el producto real, ni código de producción, ni un reflejo de sistemas confidenciales del empleador.",
+        loading: "Cargando demo",
+        close: "Cerrar",
+        openTab: "Nueva pestaña",
+        scenes: "Pantallas",
+      },
       jobs: {
         "2trade": {
           role: "Senior Fullstack / Frontend Lead",
-          period: "Jul 2025 – Sep 2025",
-          blurb: "Svelte → React 19 (FastTable). −60% TTM con AI.",
+          period: "Jul 2025 – Sep 2025 · Remote",
+          blurb:
+            "Modernización FastTable v2: Svelte → React 19 para métricas realtime de restaurantes. −60% TTM con AI.",
           projects: {
             "fasttable-v2": {
               title: "FastTable Dashboard v2",
               type: "Caso",
-              summary: "Dashboard legacy → React 19 modular.",
-              points: ["Migración UI sin downtime", "Entrega AI (−60% TTM)"],
+              summary:
+                "Consola ops: pipeline de pedidos con estados, managers y venue.",
+              points: [
+                "Shell React 19 + TypeScript + MUI",
+                "Dominio de pedidos con expand de entidades",
+                "Entrega con AI: −60% TTM",
+              ],
             },
-            "design-system": {
-              title: "Modular UI Kit",
-              type: "Interno",
-              summary: "Tablas, filtros y widgets compartidos.",
-              points: ["UI tokenizada", "Contratos TS estrictos"],
+            "fasttable-filters": {
+              title: "Scale Filtering Engine",
+              type: "Feature",
+              summary: "Filtros sobre tablas densas de pedidos sin lag.",
+              points: [
+                "Panel de filtros: estado + texto libre",
+                "Arquitectura de tablas performance-first",
+              ],
+            },
+            "fasttable-tickets": {
+              title: "Support Ticket Chat",
+              type: "Feature",
+              summary: "Chat guest↔ops con cards de restaurante y pedido.",
+              points: [
+                "Detalle de ticket con hilo de mensajes",
+                "Paneles laterales object / order",
+                "Capa messaging lista para realtime",
+              ],
+            },
+            "fasttable-rooms": {
+              title: "Venue Rooms Manager",
+              type: "Feature",
+              summary: "Cards de salas con media, mesas e jerarquía del venue.",
+              points: [
+                "Modelo object → rooms → tables",
+                "Cards con media para salas",
+              ],
             },
           },
         },
         agsoft: {
           role: "Senior Fullstack Developer",
-          period: "Ene 2025 – Abr 2025",
-          blurb: "IBM MAXIMO → AXIOMA. Type-safety + PostgreSQL (+40%).",
+          period: "Ene 2025 – Abr 2025 · Contract",
+          blurb:
+            "IBM MAXIMO → AXIOMA. TypeScript fullstack + PostgreSQL; +40% queries.",
           projects: {
             axioma: {
               title: "AXIOMA Platform",
               type: "Caso",
-              summary: "Sistema enterprise que reemplaza MAXIMO.",
-              points: ["TypeScript E2E", "+40% en queries"],
+              summary: "Plataforma business de nueva generación vs MAXIMO.",
+              points: [
+                "Front + server utilities end-to-end",
+                "Legacy → modelos TypeScript modernos",
+                "PostgreSQL optimizado (+40%)",
+              ],
             },
             "axioma-admin": {
               title: "Ops Admin Console",
               type: "Módulo",
-              summary: "RBAC y tooling de cutover.",
-              points: ["Vistas por rol", "Validación de datos"],
+              summary: "RBAC y tooling de migración para el cutover.",
+              points: [
+                "Vistas operativas por rol",
+                "Validación segura en migración",
+              ],
             },
           },
         },
         radmate: {
           role: "Fullstack · AI & UI/UX",
-          period: "Nov 2023 – Ene 2025",
-          blurb: "Edtech gamificado. 60fps en low-spec + puentes Web3/API.",
+          period: "Nov 2023 – Ene 2025 · Remote",
+          blurb:
+            "Sparkora — edtech gamificado: quests, XP y motor dinámico. 60fps en low-spec; capa API/Web3-ready.",
           projects: {
             "edu-platform": {
-              title: "Gamified Learning",
+              title: "Sparkora Learn",
               type: "Caso",
-              summary: "Quests, progreso, UI de alto rendimiento.",
-              points: ["60fps en hardware débil", "Estado Reatom"],
+              summary:
+                "Onboarding + quest UX con XP HUD y motion a 60fps.",
+              points: [
+                "Flujos game-like para retención diaria",
+                "Framer Motion + bucles Reatom",
+                "Suave en hardware débil",
+              ],
+            },
+            "sparkora-engine": {
+              title: "Dynamic Quest Engine",
+              type: "Arquitectura",
+              summary:
+                "Generador blueprint→seed→variants + UI kit ligero.",
+              points: [
+                "Tareas nuevas sin reescribir UI",
+                "Primitivos propios → bundle menor",
+                "Learning loops por skill",
+              ],
             },
             "web3-bridge": {
-              title: "Web3 / API Bridge",
+              title: "API / Web3 Bridge",
               type: "Integración",
-              summary: "Rewards e identity hacia Web3.",
-              points: ["Orquestación API", "Conectores reutilizables"],
+              summary:
+                "Sandbox Content API + adapter wallet-ready.",
+              points: [
+                "Blueprints versionados vía REST",
+                "Demo wallet para badges",
+              ],
+            },
+            "sparkora-hub": {
+              title: "Retention Hub",
+              type: "Feature",
+              summary:
+                "Home post-quest: gallery, weekly facts, status rewards.",
+              points: [
+                "Superficies para daily return",
+                "Motion ligero en cards",
+                "Hooks de status / reward",
+              ],
             },
           },
         },
         multicode: {
           role: "Fullstack Developer",
-          period: "Mar 2022 – Nov 2023",
-          blurb: "E-com de muebles high-traffic + SaaS. DnD, JWT/OAuth.",
+          period: "Mar 2022 – Nov 2023 · Remote",
+          blurb:
+            "E-com de muebles + admin SaaS. JWT/OAuth, DnD, Next.js SEO a 99/100 CWV.",
           projects: {
             "furniture-shop": {
-              title: "Furniture Store",
+              title: "Furniture E-commerce",
               type: "Caso",
-              summary: "Catálogo → checkout, auth, alto tráfico.",
-              points: ["Ownership full-cycle", "Flujos JWT / OAuth"],
+              summary: "Storefront high-traffic migrado a Next.js.",
+              points: [
+                "Ciclo completo catálogo → checkout",
+                "JWT + OAuth multi-provider",
+                "Core Web Vitals 99/100",
+              ],
             },
             "hierarchy-dnd": {
               title: "Hierarchy DnD Admin",
               type: "SaaS",
-              summary: "Orden de categorías anidadas.",
-              points: ["Drag & drop anidado", "Rollback en conflictos"],
+              summary: "Orden de categorías anidadas con batch edit.",
+              points: [
+                "Drag-and-drop avanzado",
+                "Edición masiva de jerarquías",
+              ],
+            },
+          },
+        },
+        freelance: {
+          role: "Fullstack Web Developer",
+          period: "May 2021 – Mar 2022 · Global",
+          blurb:
+            "15+ MVPs y landings. React/Node 2× más rápido con early AI tooling.",
+          projects: {
+            "mvp-factory": {
+              title: "MVP Delivery Track",
+              type: "Portfolio",
+              summary: "Landings y MVPs a medida para startups globales.",
+              points: [
+                "15+ micro-proyectos",
+                "React + Node + PostgreSQL",
+                "Prompt engineering → 2× velocidad MVP",
+              ],
             },
           },
         },

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><title>DnD</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Segoe UI,system-ui,sans-serif;background:#0b1220;color:#e2e8f0;width:1280px;height:720px;padding:28px}
+h1{font-size:22px;margin-bottom:6px}.sub{color:#64748b;font-size:13px;margin-bottom:18px}
+.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;height:580px}
+.card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:16px}
+h2{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.node{margin:8px 0;padding:12px;border:1px solid #334155;border-radius:10px;background:#0b1220;position:relative}
+.node::before{content:"⋮⋮";position:absolute;left:8px;top:10px;color:#64748b;font-size:12px}
+.node{padding-left:28px}.child{margin-left:24px}.batch{padding:10px;border-radius:8px;background:#083344;border:1px solid #164e63;color:#67e8f9;font-size:12px;margin-bottom:8px}
+</style></head><body>
+  <h1>Hierarchy DnD Admin</h1>
+  <div class="sub">Nested category sorting + batch editing for merchandisers</div>
+  <div class="layout">
+    <div class="card"><h2>Category tree</h2>
+      <div class="node">Living room</div>
+      <div class="node child">Sofas</div>
+      <div class="node child">Armchairs</div>
+      <div class="node">Dining</div>
+      <div class="node child">Tables</div>
+      <div class="node child">Chairs</div>
+      <div class="node">Storage</div>
+    </div>
+    <div class="card"><h2>Batch actions</h2>
+      <div class="batch">Move 24 SKUs → Dining / Tables</div>
+      <div class="batch">Reorder seasonal collection</div>
+      <div class="batch">Publish draft hierarchy</div>
+      <div style="margin-top:20px;font-size:13px;color:#94a3b8">Optimistic UI with conflict rollback</div>
+    </div>
+  </div>
+</body></html>
