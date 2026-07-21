@@ -49,11 +49,19 @@ export function ContentDeck() {
         <div className="relative">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[#0a101c]/55"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0a121f]/80 via-[#0a101c]/70 to-[#070b14]/40"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/35 to-transparent"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_12%,rgba(34,211,238,0.1),transparent_60%)]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_60%,rgba(52,211,153,0.06),transparent_55%)]"
           />
           <div className="relative">
             <Experience />

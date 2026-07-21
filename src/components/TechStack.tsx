@@ -72,7 +72,7 @@ const iconMap: Record<string, LucideIcon> = {
 const flowLabels: Record<string, string[]> = {
   ai: ["Prompt", "Agent", "Ship"],
   frontend: ["Design", "Build", "Polish"],
-  backend: ["API", "Data", "Scale"],
+  backend: ["Hono", "Data", "Scale"],
   uiux: ["Token", "Motion", "Ship"],
   devops: ["Build", "Test", "Deploy"],
 };
@@ -149,7 +149,7 @@ export function TechStack() {
                     </span>
                   </div>
 
-                  {featured ? (
+                  {featured || category.id === "backend" ? (
                     <div className="my-1 flex items-center gap-2">
                       {flow.map((step, stepIndex) => (
                         <div key={step} className="flex items-center gap-2">
@@ -174,7 +174,7 @@ export function TechStack() {
                           String(category.skills.length),
                         )}
                       </span>
-                      {!featured && flow.length > 0 ? (
+                      {!featured && category.id !== "backend" && flow.length > 0 ? (
                         <span className="truncate font-mono text-[10px] tracking-[0.12em] text-slate-600">
                           {flow.join(" → ")}
                         </span>

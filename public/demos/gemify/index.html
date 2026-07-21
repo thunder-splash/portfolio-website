@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GEMIFY — NFT marketplace demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0d11; --panel: #12151c; --panel2: #181c25; --ink: #eef2f6;
+      --muted: #8b95a5; --line: rgba(238,242,246,0.1);
+      --gem: #3dffa8; --gem-deep: #1a9f6a; --gem-soft: rgba(61,255,168,0.12);
+      --quartz: #ff8fab; --gold: #e8c47c; --warn: #ff6b4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; font-family: Syne, sans-serif; color: var(--ink);
+      background:
+        radial-gradient(ellipse 55% 40% at 90% -5%, rgba(61,255,168,0.12), transparent),
+        radial-gradient(ellipse 40% 30% at 0% 100%, rgba(255,143,171,0.07), transparent),
+        var(--bg);
+    }
+    button, input, select { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+    input, select {
+      width: 100%; padding: 11px 12px; border-radius: 12px;
+      border: 1px solid var(--line); background: var(--panel2);
+    }
+    input:focus, select:focus { outline: 1px solid rgba(61,255,168,0.4); }
+    .shell { min-height: 100vh; display: flex; flex-direction: column; }
+    .top {
+      position: sticky; top: 0; z-index: 30;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 11px clamp(14px, 3vw, 28px);
+      background: rgba(11,13,17,0.9); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 9px; font-weight: 800; letter-spacing: 0.05em; font-size: 17px; }
+    .brand i {
+      width: 26px; height: 26px; display: grid; place-items: center; font-style: normal; font-size: 11px;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+      background: linear-gradient(145deg, var(--gem), var(--gem-deep)); color: #04140e; font-weight: 800;
+    }
+    .brand span { color: var(--gem); }
+    .nav { display: flex; gap: 3px; flex: 1; flex-wrap: wrap; }
+    .nav button { padding: 7px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--muted); }
+    .nav button.on, .nav button:hover { background: var(--gem-soft); color: var(--gem); }
+    .wallet-chip {
+      margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel);
+      font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600;
+    }
+    .wallet-chip b { color: var(--gem); }
+    .note {
+      padding: 7px clamp(14px, 3vw, 28px); font-size: 11px; color: var(--muted);
+      border-bottom: 1px solid var(--line); background: rgba(232,196,124,0.06);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    main { flex: 1; width: 100%; max-width: 1140px; margin: 0 auto; padding: 20px clamp(14px, 3vw, 28px) 48px; }
+
+    .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gem); }
+    .btn { padding: 11px 16px; border-radius: 999px; font-weight: 700; font-size: 13px; border: 1px solid var(--line); background: var(--panel); }
+    .btn.primary { background: var(--gem); color: #04140e; border-color: transparent; }
+    .btn.primary:hover { filter: brightness(1.05); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn.ghost:hover { border-color: rgba(61,255,168,0.35); }
+    .btn.warn { background: rgba(255,107,74,0.15); color: var(--warn); border-color: transparent; }
+
+    /* carousel */
+    .carousel {
+      position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--line);
+      min-height: 240px; margin-bottom: 22px; background: var(--panel);
+    }
+    .slide {
+      display: none; padding: 28px clamp(18px, 4vw, 40px); min-height: 240px;
+      background-size: cover; background-position: center; position: relative;
+    }
+    .slide.on { display: grid; align-content: end; gap: 8px; }
+    .slide::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(11,13,17,0.92), rgba(11,13,17,0.35));
+    }
+    .slide > * { position: relative; z-index: 1; }
+    .slide h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 800; max-width: 16ch; }
+    .slide p { color: var(--muted); max-width: 42ch; font-size: 14px; line-height: 1.5; }
+    .car-bar {
+      position: absolute; left: 18px; right: 18px; bottom: 12px; z-index: 2;
+      display: flex; gap: 6px;
+    }
+    .car-bar i {
+      flex: 1; height: 3px; border-radius: 99px; background: rgba(255,255,255,0.15); overflow: hidden;
+    }
+    .car-bar i b {
+      display: block; height: 100%; width: 0; background: var(--gem);
+      transition: width 0.05s linear;
+    }
+    .car-bar i.on b { width: var(--p, 0%); }
+
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 6px 0 14px; flex-wrap: wrap; }
+    .section-head h2 { font-size: 20px; font-weight: 800; }
+    .section-head p { color: var(--muted); font-size: 13px; }
+
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      margin-bottom: 14px; padding: 10px; border-radius: 16px;
+      border: 1px solid var(--line); background: var(--panel);
+    }
+    .toolbar .search { flex: 1; min-width: 140px; }
+    .chip {
+      padding: 8px 11px; border-radius: 999px; border: 1px solid var(--line);
+      font-size: 12px; font-weight: 700; color: var(--muted);
+    }
+    .chip.on { background: var(--gem-soft); color: var(--gem); border-color: transparent; }
+    .density { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+    .density button { padding: 8px 12px; font-size: 12px; font-weight: 700; color: var(--muted); }
+    .density button.on { background: var(--gem-soft); color: var(--gem); }
+
+    .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .grid.dense { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+    @media (min-width: 800px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+      .grid.dense { grid-template-columns: repeat(6, 1fr); }
+    }
+    .card {
+      border-radius: 16px; border: 1px solid var(--line); background: var(--panel);
+      overflow: hidden; text-align: left; transition: 0.18s ease;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(61,255,168,0.35); }
+    .card .art { aspect-ratio: 1; position: relative; background: #0e1118; }
+    .card .art .gemlet {
+      position: absolute; inset: 16%;
+      clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);
+    }
+    .card .body { padding: 10px 11px 12px; }
+    .card .col { font-size: 10px; color: var(--muted); }
+    .card .name { font-size: 13px; font-weight: 700; margin-top: 2px; }
+    .card .price {
+      margin-top: 8px; padding: 7px 9px; border-radius: 10px; background: var(--panel2);
+      font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; color: var(--gem);
+    }
+    .badge {
+      position: absolute; top: 8px; left: 8px; z-index: 1;
+      padding: 3px 7px; border-radius: 999px; font-size: 9px; font-weight: 700;
+      background: rgba(11,13,17,0.75); border: 1px solid var(--line);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .badge.own { color: var(--gem); border-color: rgba(61,255,168,0.35); }
+
+    .col-hero {
+      display: grid; gap: 16px; margin-bottom: 18px;
+      border-radius: 22px; border: 1px solid var(--line); overflow: hidden; background: var(--panel);
+    }
+    @media (min-width: 800px) { .col-hero { grid-template-columns: 1.1fr 0.9fr; } }
+    .col-banner { min-height: 180px; position: relative; }
+    .col-banner .gemlet { position: absolute; inset: 18%; clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%); }
+    .col-meta { padding: 18px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .col-meta h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; }
+    .stats-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stat-pill {
+      padding: 8px 11px; border-radius: 12px; background: var(--panel2);
+      font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--muted);
+    }
+    .stat-pill b { color: var(--ink); }
+
+    .detail { display: grid; gap: 18px; }
+    @media (min-width: 860px) { .detail { grid-template-columns: 0.92fr 1.08fr; align-items: start; } }
+    .detail-art {
+      border-radius: 22px; border: 1px solid var(--line); background: var(--panel);
+      aspect-ratio: 1; position: relative; overflow: hidden;
+    }
+    .detail-art .gemlet {
+      position: absolute; inset: 14%;
+      clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 18% 100%, 0% 35%);
+      filter: drop-shadow(0 18px 36px rgba(0,0,0,0.45));
+    }
+    .panel { border-radius: 20px; border: 1px solid var(--line); background: var(--panel); padding: 18px; }
+    .panel h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0 14px; }
+    .pill {
+      padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line);
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .pill.hot { color: var(--gem); background: var(--gem-soft); border-color: transparent; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+    .stat { padding: 10px 11px; border-radius: 12px; background: var(--panel2); font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--muted); }
+    .stat b { display: block; margin-top: 3px; color: var(--ink); font-size: 13px; }
+    .chart { height: 150px; border-radius: 12px; background: #0e1118; border: 1px solid var(--line); margin-bottom: 12px; padding: 8px; }
+    .chart svg { width: 100%; height: 100%; display: block; }
+    .buy-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .price-big { font-family: "IBM Plex Mono", monospace; font-size: 22px; font-weight: 600; color: var(--gem); }
+
+    .tabs { display: flex; gap: 4px; margin-bottom: 14px; flex-wrap: wrap; }
+    .tabs button { padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--muted); border: 1px solid transparent; }
+    .tabs button.on { background: var(--gem-soft); color: var(--gem); }
+
+    .bal-grid { display: grid; gap: 14px; }
+    @media (min-width: 800px) { .bal-grid { grid-template-columns: 1fr 1fr; } }
+    .balance-card {
+      border-radius: 20px; border: 1px solid rgba(61,255,168,0.25);
+      background: linear-gradient(145deg, rgba(61,255,168,0.1), var(--panel)); padding: 20px;
+    }
+    .balance-card small { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+    .balance-card .amt { margin-top: 6px; font-size: clamp(30px, 5vw, 42px); font-weight: 800; }
+    .balance-card .amt span { color: var(--gem); font-size: 0.5em; }
+    .form-row { display: grid; gap: 8px; margin-top: 12px; }
+    .form-row label { font-size: 12px; color: var(--muted); font-weight: 700; }
+    .tx-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; max-height: 260px; overflow: auto; }
+    .tx {
+      display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px;
+      border-radius: 12px; background: var(--panel2); font-size: 12px;
+    }
+    .tx b { font-family: "IBM Plex Mono", monospace; }
+    .tx .in { color: var(--gem); }
+    .tx .out { color: var(--warn); }
+
+    .profile-banner {
+      border-radius: 20px; border: 1px solid var(--line); overflow: hidden; margin-bottom: 16px;
+      background: linear-gradient(120deg, #15201a, #12151c 50%, #1a1220);
+      padding: 22px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    }
+    .avatar {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: linear-gradient(145deg, var(--gem), var(--gem-deep));
+      display: grid; place-items: center; font-weight: 800; color: #04140e; font-size: 22px;
+    }
+    .profile-banner h1 { font-size: 22px; font-weight: 800; }
+    .profile-banner p { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+    .auth-box { max-width: 420px; margin: 40px auto; }
+    .auth-box h1 { font-size: 28px; margin: 8px 0 6px; }
+    .auth-box p { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+
+    .toast {
+      position: fixed; right: 16px; bottom: 16px; z-index: 60;
+      padding: 12px 14px; border-radius: 14px; background: var(--ink); color: #0b0d11;
+      font-size: 13px; font-weight: 700; transform: translateY(120%); opacity: 0; transition: 0.25s ease;
+      max-width: min(90vw, 340px);
+    }
+    .toast.show { transform: none; opacity: 1; }
+    .toast.bad { background: var(--warn); color: #fff; }
+
+    .modal-bg {
+      position: fixed; inset: 0; z-index: 50; background: rgba(5,7,10,0.75);
+      backdrop-filter: blur(8px); display: grid; place-items: center; padding: 16px;
+    }
+    .modal {
+      width: min(100%, 420px); border-radius: 18px; border: 1px solid var(--line);
+      background: var(--panel); padding: 18px;
+    }
+    .modal h3 { font-size: 18px; margin-bottom: 8px; }
+    .modal p { color: var(--muted); font-size: 14px; line-height: 1.5; margin-bottom: 14px; }
+    .modal .row { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+
+    .related { margin-top: 18px; }
+    .empty { color: var(--muted); font-size: 14px; padding: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <button class="brand" type="button" data-go="/"><i>G</i>GEMI<span>FY</span></button>
+      <nav class="nav">
+        <button type="button" data-go="/">Home</button>
+        <button type="button" data-go="/collections">Collections</button>
+        <button type="button" data-go="/balance">Balance</button>
+        <button type="button" data-go="/profile">Profile</button>
+      </nav>
+      <button class="wallet-chip" type="button" data-go="/balance"><span>bal</span><b id="balChip">—</b></button>
+      <button class="btn ghost" type="button" id="authBtn" style="padding:8px 12px;font-size:12px">Login</button>
+    </header>
+    <div class="note">Freelance MVP showcase · mirrors Gemify flows (collections · chart · buy gate · deposit/withdraw) · synthetic only</div>
+    <main id="root"></main>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORE = "gemify_demo_v2";
+    const COLLECTIONS = [
+      { id: "obsidian", name: "Obsidian Facets", blurb: "Hard-cut emerald geometry from the night vault.", floor: 0.42, volume: 128.4, items: 4, tone: "linear-gradient(145deg,#3dffa8,#0a3d2c 55%,#1a1030)", slide: "linear-gradient(120deg,#0f1f18,#0b0d11), radial-gradient(circle at 70% 40%,rgba(61,255,168,0.35),transparent 50%)" },
+      { id: "quartz", name: "Rose Quartz", blurb: "Soft-cut blush stones with quartz grain.", floor: 0.31, volume: 86.2, items: 4, tone: "linear-gradient(145deg,#ff8fab,#7a2048 50%,#1a1020)", slide: "linear-gradient(120deg,#1a1018,#0b0d11), radial-gradient(circle at 70% 40%,rgba(255,143,171,0.35),transparent 50%)" },
+      { id: "aurelia", name: "Aurelia Veil", blurb: "Gilded facets for collectors who like warmth.", floor: 0.24, volume: 64.8, items: 4, tone: "linear-gradient(145deg,#e8c47c,#8a5a18 50%,#1c1408)", slide: "linear-gradient(120deg,#1a140c,#0b0d11), radial-gradient(circle at 70% 40%,rgba(232,196,124,0.35),transparent 50%)" },
+      { id: "void", name: "Void Prism", blurb: "Cold blue refraction from deep space cuts.", floor: 0.36, volume: 152.1, items: 4, tone: "linear-gradient(145deg,#8ec5ff,#1a3a6a 50%,#0a1020)", slide: "linear-gradient(120deg,#0e1520,#0b0d11), radial-gradient(circle at 70% 40%,rgba(142,197,255,0.35),transparent 50%)" },
+    ];
+    const NFTS = [
+      { id: "g-01", name: "Facet #01", col: "obsidian", price: 0.42, rarity: "Rare", hist: [0.28,0.31,0.29,0.36,0.4,0.42], author: "obsidian.lab" },
+      { id: "g-02", name: "Facet #07", col: "obsidian", price: 0.58, rarity: "Epic", hist: [0.4,0.44,0.5,0.48,0.55,0.58], author: "obsidian.lab" },
+      { id: "g-03", name: "Facet #14", col: "obsidian", price: 0.39, rarity: "Common", hist: [0.3,0.32,0.34,0.33,0.37,0.39], author: "cutter.eth" },
+      { id: "g-04", name: "Facet #22", col: "obsidian", price: 0.91, rarity: "Legendary", hist: [0.7,0.75,0.8,0.78,0.88,0.91], author: "obsidian.lab" },
+      { id: "g-05", name: "Bloom #03", col: "quartz", price: 0.31, rarity: "Common", hist: [0.22,0.25,0.27,0.26,0.3,0.31], author: "rose.studio" },
+      { id: "g-06", name: "Bloom #12", col: "quartz", price: 0.67, rarity: "Rare", hist: [0.5,0.52,0.58,0.61,0.64,0.67], author: "rose.studio" },
+      { id: "g-07", name: "Bloom #18", col: "quartz", price: 0.44, rarity: "Rare", hist: [0.35,0.38,0.4,0.39,0.42,0.44], author: "petal.dao" },
+      { id: "g-08", name: "Bloom #27", col: "quartz", price: 1.05, rarity: "Epic", hist: [0.8,0.85,0.9,0.92,1.0,1.05], author: "rose.studio" },
+      { id: "g-09", name: "Veil #02", col: "aurelia", price: 0.89, rarity: "Epic", hist: [0.7,0.72,0.8,0.78,0.85,0.89], author: "aurelia.gold" },
+      { id: "g-10", name: "Veil #09", col: "aurelia", price: 0.24, rarity: "Common", hist: [0.18,0.19,0.21,0.2,0.23,0.24], author: "aurelia.gold" },
+      { id: "g-11", name: "Veil #15", col: "aurelia", price: 0.53, rarity: "Rare", hist: [0.4,0.43,0.46,0.48,0.5,0.53], author: "gilt.works" },
+      { id: "g-12", name: "Veil #30", col: "aurelia", price: 1.2, rarity: "Legendary", hist: [0.9,0.95,1.05,1.1,1.15,1.2], author: "aurelia.gold" },
+      { id: "g-13", name: "Prism #04", col: "void", price: 1.12, rarity: "Legendary", hist: [0.9,0.95,1.0,0.98,1.08,1.12], author: "void.prism" },
+      { id: "g-14", name: "Prism #11", col: "void", price: 0.36, rarity: "Common", hist: [0.3,0.32,0.31,0.34,0.35,0.36], author: "void.prism" },
+      { id: "g-15", name: "Prism #19", col: "void", price: 0.72, rarity: "Rare", hist: [0.55,0.58,0.62,0.65,0.7,0.72], author: "orbit.cut" },
+      { id: "g-16", name: "Prism #28", col: "void", price: 0.48, rarity: "Rare", hist: [0.38,0.4,0.42,0.44,0.46,0.48], author: "void.prism" },
+    ];
+
+    function defaultState() {
+      return {
+        balance: 1.42,
+        owned: [],
+        loggedIn: false,
+        user: { email: "collector@gemify.demo", handle: "collector", bio: "Cryptoart collector" },
+        deposits: [{ id: "d1", amount: 1.0, method: "card", at: "09:12" }],
+        withdrawals: [{ id: "w1", amount: 0.2, method: "crypto", at: "10:04" }],
+        txs: [
+          { id: "t1", type: "deposit", label: "Card top-up", amount: 1.0, at: "09:12" },
+          { id: "t2", type: "withdraw", label: "Crypto out", amount: 0.2, at: "10:04" },
+        ],
+        minDeposit: 0.1,
+        minWithdraw: 0.05,
+        sort: "price-asc",
+        density: "sparse",
+        search: "",
+        filterCol: "all",
+      };
+    }
+    function loadState() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORE) || "null");
+        if (raw && typeof raw.balance === "number") return { ...defaultState(), ...raw };
+      } catch {}
+      return defaultState();
+    }
+    let state = loadState();
+    function save() {
+      localStorage.setItem(STORE, JSON.stringify(state));
+      const chip = document.getElementById("balChip");
+      if (chip) chip.textContent = state.balance.toFixed(2) + " ETH";
+      const authBtn = document.getElementById("authBtn");
+      if (authBtn) authBtn.textContent = state.loggedIn ? state.user.handle : "Login";
+    }
+
+    const root = document.getElementById("root");
+    const toastEl = document.getElementById("toast");
+    let carTimer = null, carPct = 0, carIdx = 0;
+
+    function toast(msg, bad) {
+      toastEl.textContent = msg;
+      toastEl.classList.toggle("bad", !!bad);
+      toastEl.classList.add("show");
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 2200);
+    }
+    function colById(id) { return COLLECTIONS.find((c) => c.id === id); }
+    function nftById(id) { return NFTS.find((n) => n.id === id); }
+    function nftsInCol(id) { return NFTS.filter((n) => n.col === id); }
+    function go(path) { location.hash = "#" + path; }
+    function parseHash() {
+      const h = (location.hash || "#/").replace(/^#/, "") || "/";
+      const p = h.split("/").filter(Boolean);
+      if (p[0] === "collections") return { route: "collections" };
+      if (p[0] === "collection" && p[1]) return { route: "collection", id: p[1] };
+      if (p[0] === "nft" && p[1]) return { route: "nft", id: p[1] };
+      if (p[0] === "balance") return { route: "balance" };
+      if (p[0] === "profile") return { route: "profile" };
+      if (p[0] === "login") return { route: "login" };
+      return { route: "home" };
+    }
+    function setNav(route) {
+      document.querySelectorAll(".nav button").forEach((b) => {
+        const path = b.getAttribute("data-go");
+        const on =
+          (route === "home" && path === "/") ||
+          ((route === "collections" || route === "collection" || route === "nft") && path === "/collections") ||
+          (route === "balance" && path === "/balance") ||
+          ((route === "profile" || route === "login") && path === "/profile");
+        b.classList.toggle("on", on);
+      });
+    }
+    function gemArt(tone) { return `<div class="gemlet" style="background:${tone}"></div>`; }
+    function sparkline(hist) {
+      const w = 340, h = 130, pad = 8;
+      const min = Math.min(...hist), max = Math.max(...hist), span = max - min || 0.01;
+      const pts = hist.map((v, i) => {
+        const x = pad + (i / (hist.length - 1)) * (w - pad * 2);
+        const y = h - pad - ((v - min) / span) * (h - pad * 2);
+        return [x, y];
+      });
+      const line = pts.map((p) => p.join(",")).join(" ");
+      const area = `${pad},${h - pad} ${line} ${w - pad},${h - pad}`;
+      const last = pts[pts.length - 1];
+      return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+        <defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3dffa8" stop-opacity="0.35"/><stop offset="100%" stop-color="#3dffa8" stop-opacity="0"/>
+        </linearGradient></defs>
+        <polygon points="${area}" fill="url(#gf)"/>
+        <polyline points="${line}" fill="none" stroke="#3dffa8" stroke-width="2.4" stroke-linejoin="round"/>
+        <circle cx="${last[0]}" cy="${last[1]}" r="4" fill="#3dffa8"/>
+      </svg>`;
+    }
+    function cardHtml(n, dense) {
+      const c = colById(n.col);
+      const owned = state.owned.includes(n.id);
+      return `<button class="card" type="button" data-nft="${n.id}">
+        <div class="art">${owned ? `<span class="badge own">owned</span>` : `<span class="badge">${n.rarity}</span>`}${gemArt(c.tone)}</div>
+        <div class="body">
+          ${dense ? "" : `<div class="col">${c.name}</div>`}
+          <div class="name">${n.name}</div>
+          <div class="price">${n.price.toFixed(2)} ETH</div>
+        </div>
+      </button>`;
+    }
+    function bindCards() {
+      root.querySelectorAll("[data-nft]").forEach((b) => { b.onclick = () => go("/nft/" + b.dataset.nft); });
+    }
+    function sortNfts(list) {
+      const arr = [...list];
+      if (state.sort === "price-desc") arr.sort((a, b) => b.price - a.price);
+      else if (state.sort === "name") arr.sort((a, b) => a.name.localeCompare(b.name));
+      else arr.sort((a, b) => a.price - b.price);
+      const q = (state.search || "").trim().toLowerCase();
+      return q ? arr.filter((n) => n.name.toLowerCase().includes(q) || n.col.includes(q)) : arr;
+    }
+    function stopCarousel() {
+      if (carTimer) { clearInterval(carTimer); carTimer = null; }
+    }
+    function startCarousel() {
+      stopCarousel();
+      carPct = 0;
+      const bars = () => root.querySelectorAll(".car-bar i");
+      carTimer = setInterval(() => {
+        carPct += 1.2;
+        const nodes = bars();
+        nodes.forEach((n, i) => {
+          n.classList.toggle("on", i === carIdx);
+          n.style.setProperty("--p", i === carIdx ? carPct + "%" : (i < carIdx ? "100%" : "0%"));
+          const b = n.querySelector("b");
+          if (b) b.style.width = i === carIdx ? carPct + "%" : (i < carIdx ? "100%" : "0%");
+        });
+        if (carPct >= 100) {
+          carPct = 0;
+          carIdx = (carIdx + 1) % COLLECTIONS.length;
+          root.querySelectorAll(".slide").forEach((s, i) => s.classList.toggle("on", i === carIdx));
+        }
+      }, 40);
+    }
+
+    function renderHome() {
+      stopCarousel();
+      carIdx = 0; carPct = 0;
+      const trending = sortNfts(NFTS).slice(0, 8);
+      root.innerHTML = `
+        <div class="carousel" id="carousel">
+          ${COLLECTIONS.map((c, i) => `
+            <div class="slide ${i === 0 ? "on" : ""}" style="background-image:${c.slide}">
+              <p class="eyebrow">Featured collection</p>
+              <h2>${c.name}</h2>
+              <p>${c.blurb}</p>
+              <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn primary" type="button" data-go="/collection/${c.id}">Open collection</button>
+                <button class="btn ghost" type="button" data-go="/collections">All collections</button>
+              </div>
+            </div>`).join("")}
+          <div class="car-bar">${COLLECTIONS.map((_, i) => `<i class="${i === 0 ? "on" : ""}" style="--p:0%"><b></b></i>`).join("")}</div>
+        </div>
+        <div class="section-head">
+          <div><h2>Collections</h2><p>Four synthetic drops · floor & volume</p></div>
+          <button class="btn ghost" type="button" data-go="/collections">Browse all</button>
+        </div>
+        <div class="grid">${COLLECTIONS.map((c) => `
+          <button class="card" type="button" data-go="/collection/${c.id}">
+            <div class="art">${gemArt(c.tone)}</div>
+            <div class="body">
+              <div class="name">${c.name}</div>
+              <div class="col">${c.items} items · vol ${c.volume} ETH</div>
+              <div class="price">floor ${c.floor.toFixed(2)} ETH</div>
+            </div>
+          </button>`).join("")}</div>
+        <div class="section-head" style="margin-top:22px">
+          <div><h2>Trending facets</h2><p>Tap any gem for chart + buy flow</p></div>
+        </div>
+        <div class="grid">${trending.map((n) => cardHtml(n, false)).join("")}</div>
+      `;
+      bindCards();
+      startCarousel();
+      root.querySelector("#carousel")?.addEventListener("mouseenter", stopCarousel);
+      root.querySelector("#carousel")?.addEventListener("mouseleave", startCarousel);
+    }
+
+    function toolbarHtml(extraChips = "") {
+      return `<div class="toolbar">
+        <input class="search" id="search" placeholder="Search NFTs…" value="${state.search.replace(/"/g, "&quot;")}" />
+        <select id="sort">
+          <option value="price-asc" ${state.sort === "price-asc" ? "selected" : ""}>Price ↑</option>
+          <option value="price-desc" ${state.sort === "price-desc" ? "selected" : ""}>Price ↓</option>
+          <option value="name" ${state.sort === "name" ? "selected" : ""}>Name</option>
+        </select>
+        <div class="density">
+          <button type="button" class="${state.density === "sparse" ? "on" : ""}" data-density="sparse">Sparse</button>
+          <button type="button" class="${state.density === "dense" ? "on" : ""}" data-density="dense">Dense</button>
+        </div>
+        ${extraChips}
+      </div>`;
+    }
+    function bindToolbar(onChange) {
+      el("search")?.addEventListener("input", (e) => { state.search = e.target.value; save(); onChange(); });
+      el("sort")?.addEventListener("change", (e) => { state.sort = e.target.value; save(); onChange(); });
+      root.querySelectorAll("[data-density]").forEach((b) => {
+        b.onclick = () => { state.density = b.dataset.density; save(); onChange(); };
+      });
+    }
+    function el(id) { return document.getElementById(id); }
+
+    function renderCollections() {
+      stopCarousel();
+      const chips = COLLECTIONS.map((c) =>
+        `<button class="chip ${state.filterCol === c.id ? "on" : ""}" type="button" data-filter="${c.id}">${c.name}</button>`
+      ).join("");
+      let list = state.filterCol === "all" ? NFTS : nftsInCol(state.filterCol);
+      list = sortNfts(list);
+      root.innerHTML = `
+        <div class="section-head"><div><h2>Market</h2><p>${list.length} listings · search / sort / density</p></div></div>
+        ${toolbarHtml(`<button class="chip ${state.filterCol === "all" ? "on" : ""}" type="button" data-filter="all">All</button>${chips}`)}
+        <div class="grid ${state.density === "dense" ? "dense" : ""}">${list.map((n) => cardHtml(n, state.density === "dense")).join("") || `<p class="empty">No matches</p>`}</div>
+      `;
+      bindCards();
+      bindToolbar(() => renderCollections());
+      root.querySelectorAll("[data-filter]").forEach((b) => {
+        b.onclick = () => { state.filterCol = b.dataset.filter; save(); renderCollections(); };
+      });
+    }
+
+    function renderCollection(id) {
+      stopCarousel();
+      const c = colById(id) || COLLECTIONS[0];
+      let list = sortNfts(nftsInCol(c.id));
+      root.innerHTML = `
+        <div class="col-hero">
+          <div class="col-banner" style="background:#0e1118">${gemArt(c.tone)}</div>
+          <div class="col-meta">
+            <p class="eyebrow">Collection</p>
+            <h1>${c.name}</h1>
+            <p style="color:var(--muted);font-size:14px;line-height:1.5">${c.blurb}</p>
+            <div class="stats-row">
+              <div class="stat-pill">Floor <b>${c.floor.toFixed(2)} ETH</b></div>
+              <div class="stat-pill">Volume <b>${c.volume} ETH</b></div>
+              <div class="stat-pill">Items <b>${list.length}</b></div>
+            </div>
+            <div style="margin-top:8px"><button class="btn ghost" type="button" data-go="/collections">← All collections</button></div>
+          </div>
+        </div>
+        ${toolbarHtml("")}
+        <div class="grid ${state.density === "dense" ? "dense" : ""}">${list.map((n) => cardHtml(n, state.density === "dense")).join("")}</div>
+      `;
+      bindCards();
+      bindToolbar(() => renderCollection(c.id));
+    }
+
+    function canBuy() {
+      return state.loggedIn && state.withdrawals.length > 0 && state.deposits.length > 0;
+    }
+
+    function renderNft(id) {
+      stopCarousel();
+      const n = nftById(id) || NFTS[0];
+      const c = colById(n.col);
+      const owned = state.owned.includes(n.id);
+      const start = n.hist[0], cur = n.hist[n.hist.length - 1];
+      const pct = (((cur - start) / start) * 100).toFixed(1);
+      const related = nftsInCol(n.col).filter((x) => x.id !== n.id).slice(0, 4);
+      root.innerHTML = `
+        <div class="detail">
+          <div class="detail-art">${gemArt(c.tone)}</div>
+          <div class="panel">
+            <p class="eyebrow">${c.name}</p>
+            <h1>${n.name}</h1>
+            <div class="meta-row">
+              <span class="pill">by ${n.author}</span>
+              <span class="pill">${n.rarity}</span>
+              <span class="pill hot">${pct.startsWith("-") ? pct : "+" + pct}% 7d</span>
+              ${owned ? `<span class="pill hot">in wallet</span>` : ""}
+            </div>
+            <div class="stats">
+              <div class="stat">Start<b>${start.toFixed(2)} ETH</b></div>
+              <div class="stat">Current<b>${cur.toFixed(2)} ETH</b></div>
+              <div class="stat">Low<b>${Math.min(...n.hist).toFixed(2)} ETH</b></div>
+              <div class="stat">High<b>${Math.max(...n.hist).toFixed(2)} ETH</b></div>
+            </div>
+            <div class="chart">${sparkline(n.hist)}</div>
+            <div class="buy-row">
+              <div class="price-big">${n.price.toFixed(2)} ETH</div>
+              ${owned
+                ? `<button class="btn" disabled type="button">Already owned</button>`
+                : `<button class="btn primary" type="button" id="buyBtn">Buy now</button>`}
+              <button class="btn ghost" type="button" data-go="/collection/${c.id}">Collection</button>
+            </div>
+            <p style="margin-top:10px;font-size:12px;color:var(--muted);font-family:IBM Plex Mono,monospace">
+              Buy gate: login + deposit history + withdrawal method (like original Gemify can_buy).
+            </p>
+          </div>
+        </div>
+        <div class="related">
+          <div class="section-head"><div><h2>More from ${c.name}</h2></div></div>
+          <div class="grid">${related.map((x) => cardHtml(x, false)).join("")}</div>
+        </div>
+      `;
+      bindCards();
+      el("buyBtn")?.addEventListener("click", () => openBuy(n));
+    }
+
+    function openBuy(n) {
+      if (!state.loggedIn) {
+        toast("Login required", true);
+        go("/login");
+        return;
+      }
+      if (!canBuy()) {
+        showModal("Purchase blocked",
+          "Original Gemify checks can_buy against deposit/withdrawal history. Add a deposit or withdrawal method in Balance first.",
+          [{ label: "Open Balance", primary: true, fn: () => go("/balance") }, { label: "Close" }]);
+        return;
+      }
+      if (state.balance < n.price) {
+        toast("Not enough ETH", true);
+        return;
+      }
+      showModal("Confirm purchase",
+        `Buy <b style="color:var(--ink)">${n.name}</b> for <b style="color:var(--gem)">${n.price.toFixed(2)} ETH</b>?<br/>Balance after: ${(state.balance - n.price).toFixed(2)} ETH`,
+        [
+          { label: "Cancel" },
+          { label: "Confirm", primary: true, fn: () => {
+            state.balance = round(state.balance - n.price);
+            state.owned.push(n.id);
+            state.txs.unshift({ id: "t" + Date.now(), type: "buy", label: "Bought " + n.name, amount: n.price, at: now() });
+            save();
+            toast("Purchased " + n.name);
+            render();
+          }}
+        ]);
+    }
+    function round(n) { return Math.round(n * 1000) / 1000; }
+    function now() { return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }); }
+
+    function showModal(title, html, actions) {
+      const bg = document.createElement("div");
+      bg.className = "modal-bg";
+      bg.innerHTML = `<div class="modal" role="dialog"><h3>${title}</h3><p>${html}</p><div class="row" id="modalActs"></div></div>`;
+      document.body.appendChild(bg);
+      const row = bg.querySelector("#modalActs");
+      actions.forEach((a) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "btn" + (a.primary ? " primary" : " ghost");
+        b.textContent = a.label;
+        b.onclick = () => { bg.remove(); a.fn?.(); };
+        row.appendChild(b);
+      });
+      bg.onclick = (e) => { if (e.target === bg) bg.remove(); };
+    }
+
+    function renderBalance() {
+      stopCarousel();
+      root.innerHTML = `
+        <div class="section-head"><div><h2>Balance</h2><p>Deposit / withdraw · method + history (Gemify-style)</p></div></div>
+        <div class="bal-grid">
+          <div class="balance-card">
+            <small>Available</small>
+            <div class="amt">${state.balance.toFixed(2)} <span>ETH</span></div>
+            <p style="margin-top:8px;color:var(--muted);font-size:12px">Min deposit ${state.minDeposit} · min withdraw ${state.minWithdraw}</p>
+          </div>
+          <div class="panel">
+            <div class="tabs">
+              <button type="button" class="on" data-tab="dep">Deposit</button>
+              <button type="button" data-tab="wd">Withdraw</button>
+            </div>
+            <div id="tabDep">
+              <div class="form-row">
+                <label>Amount (ETH)</label>
+                <input id="depAmt" type="number" step="0.01" min="0" placeholder="0.25" />
+                <label>Method</label>
+                <select id="depMethod"><option value="card">Card</option><option value="crypto">Crypto</option><option value="bank">Bank</option></select>
+                <button class="btn primary" type="button" id="doDep">Top up</button>
+              </div>
+            </div>
+            <div id="tabWd" hidden>
+              <div class="form-row">
+                <label>Amount (ETH)</label>
+                <input id="wdAmt" type="number" step="0.01" min="0" placeholder="0.10" />
+                <label>Method</label>
+                <select id="wdMethod"><option value="crypto">Crypto</option><option value="card">Card</option></select>
+                <button class="btn warn" type="button" id="doWd">Withdraw</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:14px">
+          <h2 style="font-size:16px">Ledger</h2>
+          <div class="tx-list">
+            ${state.txs.length ? state.txs.map((t) => `
+              <div class="tx">
+                <div><div>${t.label}</div><div style="color:var(--muted);font-size:11px;margin-top:2px">${t.at} · ${t.type}</div></div>
+                <b class="${t.type === "withdraw" || t.type === "buy" ? "out" : "in"}">${t.type === "deposit" ? "+" : "−"}${Number(t.amount).toFixed(2)}</b>
+              </div>`).join("") : `<p class="empty">No transactions yet</p>`}
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost" type="button" id="resetDemo">Reset demo wallet</button>
+          </div>
+        </div>
+      `;
+      root.querySelectorAll("[data-tab]").forEach((b) => {
+        b.onclick = () => {
+          root.querySelectorAll("[data-tab]").forEach((x) => x.classList.remove("on"));
+          b.classList.add("on");
+          el("tabDep").hidden = b.dataset.tab !== "dep";
+          el("tabWd").hidden = b.dataset.tab !== "wd";
+        };
+      });
+      el("doDep").onclick = () => {
+        if (!state.loggedIn) { toast("Login first", true); go("/login"); return; }
+        const amt = parseFloat(el("depAmt").value);
+        if (!(amt >= state.minDeposit)) { toast(`Min deposit ${state.minDeposit} ETH`, true); return; }
+        const method = el("depMethod").value;
+        state.balance = round(state.balance + amt);
+        state.deposits.push({ id: "d" + Date.now(), amount: amt, method, at: now() });
+        state.txs.unshift({ id: "t" + Date.now(), type: "deposit", label: "Deposit via " + method, amount: amt, at: now() });
+        save(); toast("+" + amt.toFixed(2) + " ETH"); renderBalance();
+      };
+      el("doWd").onclick = () => {
+        if (!state.loggedIn) { toast("Login first", true); go("/login"); return; }
+        const amt = parseFloat(el("wdAmt").value);
+        if (!(amt >= state.minWithdraw)) { toast(`Min withdraw ${state.minWithdraw} ETH`, true); return; }
+        if (amt > state.balance) { toast("Insufficient balance", true); return; }
+        const method = el("wdMethod").value;
+        state.balance = round(state.balance - amt);
+        state.withdrawals.push({ id: "w" + Date.now(), amount: amt, method, at: now() });
+        state.txs.unshift({ id: "t" + Date.now(), type: "withdraw", label: "Withdraw via " + method, amount: amt, at: now() });
+        save(); toast("−" + amt.toFixed(2) + " ETH"); renderBalance();
+      };
+      el("resetDemo").onclick = () => {
+        const keepLogin = state.loggedIn;
+        const user = state.user;
+        state = defaultState();
+        state.loggedIn = keepLogin;
+        state.user = user;
+        save(); toast("Wallet reset"); renderBalance();
+      };
+    }
+
+    function renderProfile() {
+      stopCarousel();
+      if (!state.loggedIn) { go("/login"); return; }
+      const held = NFTS.filter((n) => state.owned.includes(n.id));
+      root.innerHTML = `
+        <div class="profile-banner">
+          <div class="avatar">${state.user.handle.slice(0, 1).toUpperCase()}</div>
+          <div style="flex:1;min-width:180px">
+            <h1>${state.user.handle}</h1>
+            <p>${state.user.email} · ${state.user.bio}</p>
+          </div>
+          <button class="btn ghost" type="button" id="logout">Log out</button>
+        </div>
+        <div class="tabs">
+          <button type="button" class="on" data-ptab="nfts">Your NFTs (${held.length})</button>
+          <button type="button" data-ptab="activity">Activity</button>
+          <button type="button" data-ptab="settings">Settings</button>
+        </div>
+        <div id="pNfts">
+          ${held.length ? `<div class="grid">${held.map((n) => cardHtml(n, false)).join("")}</div>` : `<p class="empty">No gems yet — buy from Collections.</p>`}
+        </div>
+        <div id="pAct" hidden>
+          <div class="panel"><div class="tx-list">${state.txs.map((t) => `
+            <div class="tx"><div>${t.label}<div style="color:var(--muted);font-size:11px;margin-top:2px">${t.at}</div></div>
+            <b class="${t.type === "deposit" ? "in" : "out"}">${t.type === "deposit" ? "+" : "−"}${Number(t.amount).toFixed(2)}</b></div>`).join("") || `<p class="empty">No activity</p>`}</div></div>
+        </div>
+        <div id="pSet" hidden>
+          <div class="panel form-row" style="max-width:420px">
+            <label>Handle</label><input id="setHandle" value="${state.user.handle}" />
+            <label>Bio</label><input id="setBio" value="${state.user.bio}" />
+            <button class="btn primary" type="button" id="saveProfile">Save profile</button>
+          </div>
+        </div>
+      `;
+      bindCards();
+      el("logout").onclick = () => { state.loggedIn = false; save(); toast("Logged out"); go("/"); };
+      root.querySelectorAll("[data-ptab]").forEach((b) => {
+        b.onclick = () => {
+          root.querySelectorAll("[data-ptab]").forEach((x) => x.classList.remove("on"));
+          b.classList.add("on");
+          el("pNfts").hidden = b.dataset.ptab !== "nfts";
+          el("pAct").hidden = b.dataset.ptab !== "activity";
+          el("pSet").hidden = b.dataset.ptab !== "settings";
+        };
+      });
+      el("saveProfile").onclick = () => {
+        state.user.handle = el("setHandle").value.trim() || state.user.handle;
+        state.user.bio = el("setBio").value.trim() || state.user.bio;
+        save(); toast("Profile saved"); renderProfile();
+      };
+    }
+
+    function renderLogin() {
+      stopCarousel();
+      root.innerHTML = `
+        <div class="panel auth-box">
+          <p class="eyebrow">Auth</p>
+          <h1>Enter Gemify</h1>
+          <p>Mock login unlocks buy flow, deposits and profile — same gate pattern as the original app.</p>
+          <div class="form-row">
+            <label>Email</label>
+            <input id="loginEmail" type="email" value="${state.user.email}" />
+            <label>Password</label>
+            <input id="loginPass" type="password" value="demo" />
+            <button class="btn primary" type="button" id="doLogin">Continue</button>
+            <button class="btn ghost" type="button" data-go="/">Back home</button>
+          </div>
+        </div>
+      `;
+      el("doLogin").onclick = () => {
+        const email = el("loginEmail").value.trim();
+        if (!email.includes("@")) { toast("Enter a valid email", true); return; }
+        state.loggedIn = true;
+        state.user.email = email;
+        state.user.handle = email.split("@")[0].slice(0, 16);
+        save();
+        toast("Welcome, " + state.user.handle);
+        go("/profile");
+      };
+    }
+
+    function render() {
+      const r = parseHash();
+      setNav(r.route);
+      save();
+      if (r.route === "collections") renderCollections();
+      else if (r.route === "collection") renderCollection(r.id);
+      else if (r.route === "nft") renderNft(r.id);
+      else if (r.route === "balance") renderBalance();
+      else if (r.route === "profile") renderProfile();
+      else if (r.route === "login") renderLogin();
+      else renderHome();
+    }
+
+    document.body.addEventListener("click", (e) => {
+      const goBtn = e.target.closest("[data-go]");
+      if (goBtn) go(goBtn.getAttribute("data-go"));
+    });
+    document.getElementById("authBtn").onclick = () => go(state.loggedIn ? "/profile" : "/login");
+    window.addEventListener("hashchange", render);
+    save();
+    render();
+  </script>
+</body>
+</html>

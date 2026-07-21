@@ -19,6 +19,7 @@
       --coral-soft: #ffe3da;
       --panel: #fffef9;
       --chain: #2a4d7a;
+      --gold: #c48a1a;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -45,6 +46,12 @@
     .chip {
       padding: 6px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
       background: var(--mint-soft); color: var(--mint);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .meta-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .meta-chips span {
+      padding: 6px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
+      background: #fff; border: 1px solid var(--line);
       font-family: "IBM Plex Mono", monospace;
     }
     .wallet {
@@ -80,7 +87,7 @@
       overflow: hidden;
       min-height: 420px;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 14px;
+      gap: 10px;
     }
     .stage::before {
       content: "";
@@ -88,11 +95,19 @@
       background: radial-gradient(circle at 50% 0%, rgba(31,154,106,0.18), transparent 60%);
       pointer-events: none;
     }
+    .evo {
+      position: relative; z-index: 1;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px; font-weight: 600; color: var(--gold);
+      padding: 4px 10px; border-radius: 999px; background: #fff6e0; border: 1px solid rgba(196,138,26,0.25);
+    }
     .pet-wrap {
-      width: 220px; height: 220px;
+      width: 200px; height: 200px;
       position: relative;
       animation: float 3.2s ease-in-out infinite;
     }
+    .pet-wrap.lv2 { width: 220px; height: 220px; }
+    .pet-wrap.lv3 { width: 240px; height: 240px; }
     .pet {
       width: 100%; height: 100%;
       border-radius: 46% 54% 48% 52% / 52% 44% 56% 48%;
@@ -103,6 +118,28 @@
       position: relative;
       transition: filter 0.3s ease, transform 0.3s ease;
     }
+    .pet.stage2 { background: radial-gradient(circle at 35% 30%, #fff8ec, #ff9a6a 40%, #d94828 100%); }
+    .pet.stage3 {
+      background: radial-gradient(circle at 35% 28%, #fff9f0, #ff8f5c 38%, #c73a1e 100%);
+      border-radius: 48% 52% 46% 54% / 54% 46% 54% 46%;
+    }
+    .hat {
+      display: none;
+      position: absolute; top: -6%; left: 50%; transform: translateX(-50%);
+      width: 54%; height: 22%;
+      background: var(--mint);
+      border-radius: 18px 18px 6px 6px;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+      z-index: 2;
+    }
+    .hat::after {
+      content: "";
+      position: absolute; left: 50%; top: -55%; transform: translateX(-50%);
+      width: 28%; height: 70%;
+      background: var(--coral);
+      border-radius: 6px;
+    }
+    .pet-wrap.lv3 .hat { display: block; }
     .pet.hungry { filter: saturate(0.7) brightness(0.95); }
     .pet.sleepy { filter: brightness(0.85) contrast(0.95); }
     .pet.happy { transform: scale(1.04); }
@@ -132,9 +169,7 @@
     }
     .blush.l { left: 18%; }
     .blush.r { right: 18%; }
-    .pet-name {
-      font-size: 28px; font-weight: 800; position: relative; z-index: 1;
-    }
+    .pet-name { font-size: 28px; font-weight: 800; position: relative; z-index: 1; }
     .mood {
       font-family: "IBM Plex Mono", monospace;
       font-size: 12px; color: var(--muted); position: relative; z-index: 1;
@@ -147,10 +182,16 @@
       display: flex; flex-direction: column; gap: 14px;
     }
     .panel h1 {
-      font-size: clamp(26px, 3.5vw, 34px);
+      font-size: clamp(24px, 3.5vw, 32px);
       font-weight: 800; line-height: 1.1;
     }
     .panel .lead { color: var(--muted); font-size: 14px; line-height: 1.45; font-weight: 600; }
+    .quest {
+      padding: 12px; border-radius: 14px;
+      background: var(--mint-soft); border: 1px solid rgba(31,154,106,0.2);
+      font-size: 13px; font-weight: 700; line-height: 1.4;
+    }
+    .quest small { display: block; margin-top: 4px; color: var(--muted); font-weight: 600; font-family: "IBM Plex Mono", monospace; font-size: 11px; }
     .stats { display: grid; gap: 10px; }
     .stat label {
       display: flex; justify-content: space-between;
@@ -166,6 +207,7 @@
     }
     .bar.mood i { background: var(--coral); }
     .bar.energy i { background: var(--chain); }
+    .bar.xp i { background: var(--gold); }
     .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .actions button {
       padding: 14px 12px; border-radius: 16px;
@@ -186,9 +228,84 @@
       position: fixed; left: 50%; bottom: 18px; transform: translate(-50%, 120%);
       padding: 12px 16px; border-radius: 999px;
       background: var(--ink); color: #f4faf6; font-size: 13px; font-weight: 700;
-      opacity: 0; transition: 0.25s ease; z-index: 30; white-space: nowrap;
+      opacity: 0; transition: 0.25s ease; z-index: 50; white-space: nowrap;
+      max-width: 90vw; overflow: hidden; text-overflow: ellipsis;
     }
     .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+    /* MINI-GAME OVERLAY */
+    .overlay {
+      position: fixed; inset: 0; z-index: 40;
+      background: rgba(18, 32, 26, 0.55);
+      backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .overlay.open { display: flex; }
+    .game {
+      width: min(440px, 100%);
+      background: var(--panel);
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+    }
+    .game-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px;
+      padding: 14px 16px; border-bottom: 1px solid var(--line);
+    }
+    .game-head h2 { font-size: 18px; font-weight: 800; }
+    .game-head .hud {
+      display: flex; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+    }
+    .game-head .hud span {
+      padding: 5px 8px; border-radius: 999px; background: var(--mint-soft); color: var(--mint);
+    }
+    .arena {
+      position: relative;
+      height: 360px;
+      background:
+        linear-gradient(180deg, #dff5ea 0%, #c8ead8 70%, #b7dfca 100%);
+      overflow: hidden;
+      touch-action: none;
+      cursor: crosshair;
+      user-select: none;
+    }
+    .arena.over { cursor: default; }
+    .drop {
+      position: absolute;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 20px;
+      transform: translate(-50%, -50%);
+      animation: fall linear forwards;
+      pointer-events: auto;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+    }
+    .drop.berry { background: #ff6b4a; }
+    .drop.coin { background: #f0c14a; font-size: 16px; }
+    .drop.rock { background: #6b7280; border-radius: 8px; }
+    .game-foot {
+      padding: 14px 16px;
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+      border-top: 1px solid var(--line);
+      font-size: 13px; font-weight: 600; color: var(--muted);
+    }
+    .game-foot button {
+      margin-left: auto;
+      padding: 10px 14px; border-radius: 12px;
+      background: var(--ink); color: #f4faf6; font-weight: 800; font-size: 13px;
+    }
+    .game-foot button.mint { background: var(--mint); }
+    .result {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; background: rgba(255,254,249,0.92); text-align: center; padding: 20px;
+    }
+    .result.show { display: flex; }
+    .result h3 { font-size: 26px; font-weight: 800; }
+    .result p { color: var(--muted); font-weight: 600; line-height: 1.4; max-width: 28ch; }
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -197,6 +314,10 @@
       0%, 92%, 100% { transform: scaleY(1); }
       96% { transform: scaleY(0.1); }
     }
+    @keyframes fall {
+      from { top: -8%; }
+      to { top: 108%; }
+    }
   </style>
 </head>
 <body>
@@ -204,12 +325,18 @@
     <header class="top">
       <div class="brand">MO<span>CHI</span></div>
       <div class="chip">Web3 Tamagotchi · demo</div>
+      <div class="meta-chips">
+        <span id="lvlChip">Lv 1</span>
+        <span id="coinChip">0 MOCH</span>
+      </div>
       <button class="wallet" id="walletBtn">Connect wallet</button>
     </header>
     <div class="note">Portfolio demo · mock wallet / fake txs · not a real chain pet · synthetic only</div>
     <main>
       <section class="stage">
-        <div class="pet-wrap">
+        <div class="evo" id="evoLabel">Stage 1 · Blob</div>
+        <div class="pet-wrap" id="petWrap">
+          <div class="hat" aria-hidden="true"></div>
           <div class="pet" id="pet">
             <div class="eye l" id="eyeL"></div>
             <div class="eye r" id="eyeR"></div>
@@ -224,7 +351,11 @@
       <section class="panel">
         <div>
           <h1>On-chain companion</h1>
-          <p class="lead">Корми, играй, отдыхай. «Синхронизация» пишет fake tx в demo-ledger. Без реального Web3 — только вайб MVP.</p>
+          <p class="lead">Корми, лови ягоды в mini-game, качай XP. Цель квеста — поймать 15 ягод и засинхронить NFT-чекпоинт.</p>
+        </div>
+        <div class="quest" id="questBox">
+          Daily quest: catch 15 berries
+          <small>0 / 15 · reward: 40 MOCH + XP</small>
         </div>
         <div class="stats">
           <div>
@@ -239,10 +370,14 @@
             <label><span>ENERGY</span><span id="energyVal">75</span></label>
             <div class="bar energy"><i id="energyBar"></i></div>
           </div>
+          <div>
+            <label><span>XP</span><span id="xpVal">0 / 100</span></label>
+            <div class="bar xp"><i id="xpBar"></i></div>
+          </div>
         </div>
         <div class="actions">
-          <button class="primary" id="feed">Feed · 0.001 ETH</button>
-          <button class="warm" id="play">Play mini-game</button>
+          <button class="primary" id="feed">Feed · 5 MOCH</button>
+          <button class="warm" id="play">Berry Catch</button>
           <button id="rest">Rest</button>
           <button id="sync">Sync on-chain</button>
         </div>
@@ -254,18 +389,50 @@
       </section>
     </main>
   </div>
+
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="game" role="dialog" aria-label="Berry Catch">
+      <div class="game-head">
+        <h2>Berry Catch</h2>
+        <div class="hud">
+          <span id="gScore">0</span>
+          <span id="gTime">20s</span>
+        </div>
+      </div>
+      <div class="arena" id="arena">
+        <div class="result" id="result">
+          <h3 id="resultTitle">Nice!</h3>
+          <p id="resultText">+</p>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span id="gHint">Лови 🍓 и 🪙, избегай 🪨</span>
+        <button id="closeGame">Close</button>
+        <button class="mint" id="againGame" hidden>Play again</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
   <script>
-    const KEY = "mochi_pet_v1";
+    const KEY = "mochi_pet_v2";
+    const QUEST_TARGET = 15;
+
     const defaultState = () => ({
       name: "Mochi",
       hunger: 78,
       mood: 72,
       energy: 80,
+      xp: 0,
+      level: 1,
+      coins: 20,
       wallet: null,
       minted: false,
       lastTx: null,
       txs: 0,
+      berriesCaught: 0,
+      questDone: false,
+      highScore: 0,
     });
 
     let state = { ...defaultState(), ...(JSON.parse(localStorage.getItem(KEY) || "{}")) };
@@ -273,13 +440,16 @@
     const el = (id) => document.getElementById(id);
     const toastEl = el("toast");
 
+    let game = null;
+
     function clamp(n) { return Math.max(0, Math.min(100, Math.round(n))); }
+    function xpToLevel(level) { return 80 + (level - 1) * 40; }
 
     function toast(msg) {
       toastEl.textContent = msg;
       toastEl.classList.add("show");
       clearTimeout(toastEl._t);
-      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1600);
+      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1700);
     }
 
     function fakeTx() {
@@ -292,29 +462,71 @@
       localStorage.setItem(KEY, JSON.stringify(state));
     }
 
+    function stage() {
+      if (state.level >= 5) return 3;
+      if (state.level >= 3) return 2;
+      return 1;
+    }
+
+    function stageLabel() {
+      return ({ 1: "Stage 1 · Blob", 2: "Stage 2 · Glow", 3: "Stage 3 · Crown" })[stage()];
+    }
+
     function moodText() {
-      const avg = (state.hunger + state.mood + state.energy) / 3;
       if (state.energy < 25) return "needs a nap · zzz";
       if (state.hunger < 30) return "hangry · feed me pls";
       if (state.mood > 80 && state.hunger > 60) return "vibing on-chain ✨";
-      if (avg < 40) return "low battery companion";
+      if (state.questDone) return "quest complete · legend";
       return "feeling curious";
     }
 
+    function addXp(amount) {
+      state.xp += amount;
+      let need = xpToLevel(state.level);
+      let leveled = false;
+      while (state.xp >= need) {
+        state.xp -= need;
+        state.level += 1;
+        leveled = true;
+        need = xpToLevel(state.level);
+      }
+      if (leveled) toast(`Level up · Lv ${state.level} · ${stageLabel()}`);
+    }
+
+    function maybeCompleteQuest() {
+      if (!state.questDone && state.berriesCaught >= QUEST_TARGET) {
+        state.questDone = true;
+        state.coins += 40;
+        addXp(35);
+        state.lastTx = fakeTx();
+        state.txs += 1;
+        toast("Quest done · +40 MOCH + XP");
+      }
+    }
+
     function render() {
+      const need = xpToLevel(state.level);
       el("hungerVal").textContent = state.hunger;
       el("moodVal").textContent = state.mood;
       el("energyVal").textContent = state.energy;
+      el("xpVal").textContent = `${state.xp} / ${need}`;
       el("hungerBar").style.width = state.hunger + "%";
       el("moodBar").style.width = state.mood + "%";
       el("energyBar").style.width = state.energy + "%";
+      el("xpBar").style.width = Math.min(100, (state.xp / need) * 100) + "%";
       el("petName").textContent = state.name;
       el("moodLine").textContent = moodText();
+      el("lvlChip").textContent = `Lv ${state.level}`;
+      el("coinChip").textContent = `${state.coins} MOCH`;
+      el("evoLabel").textContent = stageLabel();
 
+      const wrap = el("petWrap");
       const pet = el("pet");
       const mouth = el("mouth");
       const eyes = [el("eyeL"), el("eyeR")];
-      pet.className = "pet";
+      const st = stage();
+      wrap.className = "pet-wrap" + (st === 2 ? " lv2" : st === 3 ? " lv3" : "");
+      pet.className = "pet" + (st === 2 ? " stage2" : st === 3 ? " stage3" : "");
       mouth.className = "mouth";
       eyes.forEach((e) => e.classList.remove("sleepy"));
 
@@ -328,15 +540,19 @@
         pet.classList.add("happy");
       }
 
-      el("walletBtn").textContent = state.wallet
-        ? state.wallet
-        : "Connect wallet";
+      el("walletBtn").textContent = state.wallet ? state.wallet : "Connect wallet";
       el("walletBtn").classList.toggle("on", !!state.wallet);
+
+      const qLeft = Math.max(0, QUEST_TARGET - state.berriesCaught);
+      el("questBox").innerHTML = state.questDone
+        ? `Daily quest complete ✅<small>high score ${state.highScore} · reward claimed</small>`
+        : `Daily quest: catch ${QUEST_TARGET} berries<small>${state.berriesCaught} / ${QUEST_TARGET} · left ${qLeft} · reward 40 MOCH + XP</small>`;
 
       el("ledger").innerHTML =
         `wallet: ${state.wallet || "disconnected"}<br/>` +
         `last tx: ${state.lastTx || "—"}<br/>` +
-        `pet NFT: ${state.minted ? "MOCHI #" + (1000 + state.txs) : "unminted"} · txs ${state.txs}`;
+        `pet NFT: ${state.minted ? "MOCHI #" + (1000 + state.level * 10 + state.txs) : "unminted"} · txs ${state.txs}<br/>` +
+        `best catch: ${state.highScore}`;
     }
 
     function requireWallet() {
@@ -358,48 +574,189 @@
 
     el("feed").onclick = () => {
       if (!requireWallet()) return;
+      if (state.coins < 5) { toast("Need 5 MOCH · play Berry Catch"); return; }
+      state.coins -= 5;
       state.hunger = clamp(state.hunger + 22);
       state.mood = clamp(state.mood + 6);
-      state.energy = clamp(state.energy - 4);
+      state.energy = clamp(state.energy - 3);
+      addXp(6);
       state.lastTx = fakeTx();
       state.txs += 1;
       save(); render();
-      toast("Fed · mock 0.001 ETH");
-    };
-
-    el("play").onclick = () => {
-      if (!requireWallet()) return;
-      if (state.energy < 15) { toast("Too tired · rest first"); return; }
-      state.mood = clamp(state.mood + 18);
-      state.energy = clamp(state.energy - 14);
-      state.hunger = clamp(state.hunger - 8);
-      state.lastTx = fakeTx();
-      state.txs += 1;
-      save(); render();
-      toast("Mini-game win · +mood");
+      toast("Fed · −5 MOCH");
     };
 
     el("rest").onclick = () => {
       state.energy = clamp(state.energy + 24);
       state.hunger = clamp(state.hunger - 5);
+      addXp(3);
       save(); render();
       toast("Resting… energy up");
     };
 
     el("sync").onclick = () => {
       if (!requireWallet()) return;
+      if (state.level < 2 && !state.questDone) {
+        toast("Reach Lv 2 or finish quest first");
+        return;
+      }
       state.minted = true;
       state.lastTx = fakeTx();
       state.txs += 1;
+      addXp(12);
       save(); render();
       toast("Synced · fake NFT checkpoint");
     };
 
-    // gentle decay so it feels alive
+    /* ——— Berry Catch mini-game ——— */
+    function openGame() {
+      if (!requireWallet()) return;
+      if (state.energy < 12) { toast("Too tired · rest first"); return; }
+      el("overlay").classList.add("open");
+      el("overlay").setAttribute("aria-hidden", "false");
+      startRound();
+    }
+
+    function closeGame() {
+      stopRound(false);
+      el("overlay").classList.remove("open");
+      el("overlay").setAttribute("aria-hidden", "true");
+    }
+
+    function clearDrops() {
+      el("arena").querySelectorAll(".drop").forEach((d) => d.remove());
+    }
+
+    function stopRound(showResult) {
+      if (!game) return;
+      clearInterval(game.ticker);
+      clearInterval(game.spawner);
+      clearDrops();
+      el("arena").classList.toggle("over", !!showResult);
+      if (!showResult) {
+        el("result").classList.remove("show");
+        el("againGame").hidden = true;
+        game = null;
+      }
+    }
+
+    function startRound() {
+      stopRound(false);
+      state.energy = clamp(state.energy - 12);
+      state.hunger = clamp(state.hunger - 4);
+      save(); render();
+
+      game = {
+        score: 0,
+        berries: 0,
+        coins: 0,
+        rocks: 0,
+        time: 20,
+        alive: true,
+      };
+      el("gScore").textContent = "0 pts";
+      el("gTime").textContent = "20s";
+      el("result").classList.remove("show");
+      el("againGame").hidden = true;
+      el("closeGame").textContent = "Close";
+      el("arena").classList.remove("over");
+
+      game.ticker = setInterval(() => {
+        if (!game?.alive) return;
+        game.time -= 1;
+        el("gTime").textContent = game.time + "s";
+        if (game.time <= 0) endRound();
+      }, 1000);
+
+      game.spawner = setInterval(spawnDrop, 480);
+      spawnDrop();
+    }
+
+    function spawnDrop() {
+      if (!game?.alive) return;
+      const roll = Math.random();
+      const type = roll < 0.62 ? "berry" : roll < 0.82 ? "coin" : "rock";
+      const node = document.createElement("button");
+      node.type = "button";
+      node.className = `drop ${type}`;
+      node.textContent = type === "berry" ? "🍓" : type === "coin" ? "🪙" : "🪨";
+      node.style.left = 12 + Math.random() * 76 + "%";
+      node.style.animationDuration = 1.5 + Math.random() * 1.4 + "s";
+      node.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        catchDrop(node, type);
+      });
+      node.addEventListener("animationend", () => node.remove());
+      el("arena").appendChild(node);
+    }
+
+    function catchDrop(node, type) {
+      if (!game?.alive) return;
+      node.remove();
+      if (type === "berry") {
+        game.score += 10;
+        game.berries += 1;
+      } else if (type === "coin") {
+        game.score += 6;
+        game.coins += 1;
+      } else {
+        game.score = Math.max(0, game.score - 8);
+        game.rocks += 1;
+      }
+      el("gScore").textContent = game.score + " pts";
+    }
+
+    function endRound() {
+      if (!game?.alive) return;
+      game.alive = false;
+      clearInterval(game.ticker);
+      clearInterval(game.spawner);
+      clearDrops();
+
+      const score = game.score;
+      const berries = game.berries;
+      const coinGain = 3 + game.coins * 2 + Math.floor(score / 20);
+      const xpGain = 8 + Math.floor(score / 8) + berries;
+
+      state.berriesCaught += berries;
+      state.coins += coinGain;
+      state.mood = clamp(state.mood + 10 + Math.min(20, Math.floor(score / 10)));
+      state.energy = clamp(state.energy - 4);
+      addXp(xpGain);
+      if (score > state.highScore) state.highScore = score;
+      state.lastTx = fakeTx();
+      state.txs += 1;
+      maybeCompleteQuest();
+      save();
+      render();
+
+      el("resultTitle").textContent = score >= 80 ? "Legend catch!" : score >= 40 ? "Nice run!" : "Warm-up";
+      el("resultText").textContent =
+        `+${berries} berries · +${coinGain} MOCH · +${xpGain} XP` +
+        (game.rocks ? ` · −${game.rocks} rock hits` : "");
+      el("result").classList.add("show");
+      el("arena").classList.add("over");
+      el("againGame").hidden = false;
+      el("closeGame").textContent = "Back to pet";
+      toast(`Berry Catch · ${score} pts`);
+      game = null;
+    }
+
+    el("play").onclick = openGame;
+    el("closeGame").onclick = closeGame;
+    el("againGame").onclick = () => {
+      if (state.energy < 12) { toast("Too tired · rest first"); return; }
+      startRound();
+    };
+    el("overlay").addEventListener("click", (e) => {
+      if (e.target === el("overlay")) closeGame();
+    });
+
     setInterval(() => {
+      if (el("overlay").classList.contains("open")) return;
       state.hunger = clamp(state.hunger - 1);
-      state.energy = clamp(state.energy - 0.6);
-      state.mood = clamp(state.mood - (state.hunger < 40 ? 1.2 : 0.4));
+      state.energy = clamp(state.energy - 0.5);
+      state.mood = clamp(state.mood - (state.hunger < 40 ? 1.1 : 0.35));
       save(); render();
     }, 5000);
 

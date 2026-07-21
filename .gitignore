@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 .demo-screenshots/
+.tmp/
 
 # debug
 npm-debug.log*

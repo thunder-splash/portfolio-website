@@ -40,16 +40,26 @@ export type Dictionary = {
   work: {
     eyebrow: string;
     title: string;
+    invite: string;
     horizonTag: string;
     horizonToEdu: string;
+    companiesLabel: string;
     projectsLabel: string;
     projectsCount: string;
+    pickProject: string;
+    pathLabel: string;
+    pathFrom: string;
+    pathTo: string;
     openDetails: string;
     viewing: string;
     mockupNote: string;
     interactiveBadge: string;
     interactiveNote: string;
     tryInteractive: string;
+    demoReady: string;
+    tapToPlay: string;
+    prevProject: string;
+    nextProject: string;
     demoDisclaimer: string;
     playground: {
       liveDemo: string;
@@ -109,7 +119,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       headlineAccent: "built faster",
       headlineAfter: "",
       sub: "5+ years fullstack. AI agents in the workflow — up to 300% faster delivery.",
-      viewWork: "View Work",
+      viewWork: "Touch the work",
       contact: "Contact",
       scroll: "Scroll",
     },
@@ -123,23 +133,23 @@ export const dictionaries: Record<Locale, Dictionary> = {
       categories: {
         ai: {
           title: "AI & Automation",
-          blurb: "LLM workflows, agent pipelines, and AI-assisted delivery in production.",
+          blurb: "LLM workflows, MCP, agent pipelines, and AI-assisted delivery in production.",
         },
         frontend: {
           title: "Frontend",
-          blurb: "Typed UI systems with React 19 and modern state tooling.",
+          blurb: "Typed UI systems with React 19, Next.js, and modern state tooling.",
         },
         backend: {
           title: "Backend & DB",
-          blurb: "APIs and data layers built for scale and type-safety.",
+          blurb: "Hono-first APIs, typed data layers, and realtime where it pays off.",
         },
         uiux: {
           title: "UI / UX",
-          blurb: "Motion-ready interfaces with consistent design systems.",
+          blurb: "Motion-ready interfaces with consistent design systems and a11y.",
         },
         devops: {
           title: "DevOps",
-          blurb: "Build tooling, containers, and CI/CD for reliable releases.",
+          blurb: "Vite/Webpack builds, containers, GitHub Actions, and Vercel deploys.",
         },
       },
     },
@@ -158,10 +168,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
     work: {
       eyebrow: "03 — Work",
       title: "Roles & deliverables",
+      invite:
+        "Company → case → path (started → shipped) → live demo. Built to be touched, not skimmed.",
       horizonTag: "Career",
       horizonToEdu: "04 · Background",
+      companiesLabel: "Companies",
       projectsLabel: "Projects",
       projectsCount: "{n} projects",
+      pickProject: "Pick a case",
+      pathLabel: "The path",
+      pathFrom: "Started with",
+      pathTo: "Shipped",
       openDetails: "Details",
       viewing: "Open",
       mockupNote:
@@ -169,9 +186,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
       interactiveBadge: "Demo",
       interactiveNote:
         "Portfolio demo · synthetic data · unrelated to live originals",
-      tryInteractive: "Open portfolio demo",
+      tryInteractive: "Open live demo",
+      demoReady: "Demo ready",
+      tapToPlay: "Or tap the stage",
+      prevProject: "Previous project",
+      nextProject: "Next project",
       demoDisclaimer:
-        "These are illustrative portfolio demos only — rebuilt showcase UIs with synthetic data. They are not production apps, are not affiliated with employers’ live products, and intentionally share little with NDA-covered originals.",
+        "Illustrative portfolio demos · synthetic data · not production apps and not affiliated with employers’ live products.",
       playground: {
         liveDemo: "Portfolio demo",
         synthetic: "Synthetic showcase · not production",
@@ -237,10 +258,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Senior Fullstack Developer",
           period: "Jan 2025 – Apr 2025 · Contract",
           blurb:
-            "IBM MAXIMO → AXIOMA. Fullstack TypeScript + PostgreSQL; query performance +40%.",
+            "IBM MAXIMO → Axioma. Fullstack TypeScript + PostgreSQL; query performance +40%.",
           projects: {
             axioma: {
-              title: "АКСИОМА Workbench",
+              title: "Axioma Workbench",
               type: "Case Study",
               summary:
                 "Illustrative EAM/ТОИР workbench: work orders, assets, PG performance story.",
@@ -251,7 +272,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
               ],
             },
             "axioma-admin": {
-              title: "АКСИОМА Admin / Cutover",
+              title: "Axioma Admin / Cutover",
               type: "Module",
               summary:
                 "RBAC toggles and MAXIMO cutover checklist for a safer migration story.",
@@ -317,27 +338,28 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Developer",
           period: "Mar 2022 – Nov 2023 · Remote",
           blurb:
-            "Furniture e-com + SaaS admin. JWT/OAuth, DnD hierarchies, Next.js SEO to 99/100 CWV.",
+            "FORMA furniture e-com + Meridian merchandising admin. Live sofa configurator, DnD hierarchies, Next.js SEO to 99/100 CWV.",
           projects: {
             "furniture-shop": {
               title: "FORMA Furniture Shop",
               type: "Case Study",
               summary:
-                "Illustrative Next.js furniture storefront: catalog → PDP → cart with mock OAuth.",
+                "Storefront with a live sofa configurator — swap color and fabric textures in real time.",
               points: [
-                "Interactive catalog, PDP and checkout demo",
-                "JWT / multi-provider OAuth mock flow",
-                "Performance-minded UI · CWV 99/100 story",
+                "Color + fabric configurator on hero & PDP",
+                "Unsplash texture maps with multiply blend",
+                "Catalog → cart → mock OAuth · CWV 99/100 story",
               ],
             },
             "hierarchy-dnd": {
-              title: "Meridian Hierarchy Admin",
+              title: "FORMA Admin · Meridian",
               type: "SaaS",
               summary:
-                "Merchandising tree with live drag-and-drop nesting and batch actions.",
+                "Merchandising admin for FORMA: DnD trees, stock, colorways, batch publish.",
               points: [
-                "Real DnD reorder / nest on category trees",
-                "Batch move + publish with conflict toast",
+                "Real DnD nest / reorder on category trees",
+                "Stock ± adjust + low-stock badges",
+                "Sand / Moss / Clay colorways per node",
               ],
             },
           },
@@ -346,7 +368,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Web Developer",
           period: "May 2021 – Mar 2022 · Global",
           blurb:
-            "Shipped playful MVPs fast — including a Web3 tamagotchi companion with mock wallet flows.",
+            "Playful Web3 MVPs — a tamagotchi companion and a faceted NFT marketplace.",
           projects: {
             "web3-tamagotchi": {
               title: "MOCHI — Web3 Tamagotchi",
@@ -354,9 +376,20 @@ export const dictionaries: Record<Locale, Dictionary> = {
               summary:
                 "On-chain vibes pet: feed, play, rest, fake NFT sync. Portfolio demo only.",
               points: [
-                "Live stats + mood-driven pet UI",
-                "Mock wallet, txs and NFT checkpoint",
-                "Lightweight SPA — zero real chain risk",
+                "Berry Catch mini-game · score → MOCH + XP",
+                "Levels, daily quest, pet evolution stages",
+                "Mock wallet / NFT sync — zero real chain risk",
+              ],
+            },
+            "gemify-market": {
+              title: "GEMIFY Marketplace",
+              type: "Web3 MVP",
+              summary:
+                "Full NFT market loop from the freelance build: carousel, collections, charted PDP, buy gate, deposit/withdraw, profile.",
+              points: [
+                "Auto carousel + collection floors / volume",
+                "Search · sort · sparse/dense market grid",
+                "Buy gate (login + ledger) · balance ledger · profile NFTs",
               ],
             },
           },
@@ -400,7 +433,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       headlineAccent: "нового поколения",
       headlineAfter: "",
       sub: "Senior Fullstack с опытом 5+ лет. Внедряю AI-агентов в цикл разработки — ускорение поставки до 300%.",
-      viewWork: "Смотреть опыт",
+      viewWork: "Потрогать работы",
       contact: "Написать",
       scroll: "Далее",
     },
@@ -414,23 +447,23 @@ export const dictionaries: Record<Locale, Dictionary> = {
       categories: {
         ai: {
           title: "AI и автоматизация",
-          blurb: "LLM-воркфлоу, агентные пайплайны и AI-ускоренная поставка.",
+          blurb: "LLM-воркфлоу, MCP, агентные пайплайны и AI-ускоренная поставка.",
         },
         frontend: {
           title: "Frontend",
-          blurb: "Типизированные UI-системы на React 19 и современном state.",
+          blurb: "Типизированные UI на React 19, Next.js и современном state.",
         },
         backend: {
           title: "Backend и БД",
-          blurb: "API и слой данных с упором на масштабируемость.",
+          blurb: "API на Hono, типизированный data-layer и realtime там, где это нужно.",
         },
         uiux: {
           title: "UI / UX",
-          blurb: "Интерфейсы с motion и согласованным design system.",
+          blurb: "Интерфейсы с motion, design system и a11y.",
         },
         devops: {
           title: "DevOps",
-          blurb: "Сборка, контейнеры и CI/CD для стабильных релизов.",
+          blurb: "Vite/Webpack, контейнеры, GitHub Actions и деплои на Vercel.",
         },
       },
     },
@@ -449,10 +482,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
     work: {
       eyebrow: "03 — Опыт",
       title: "Карьера и проекты",
+      invite:
+        "Компания → кейс → путь (с чего → к чему) → живое демо. Блок сделан, чтобы его трогали.",
       horizonTag: "Карьера",
       horizonToEdu: "04 · Образование",
+      companiesLabel: "Компании",
       projectsLabel: "Проекты",
       projectsCount: "{n} проекта",
+      pickProject: "Выбери кейс",
+      pathLabel: "Путь",
+      pathFrom: "С чего начали",
+      pathTo: "Чем закончили",
       openDetails: "Подробнее",
       viewing: "Выбрано",
       mockupNote:
@@ -460,9 +500,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
       interactiveBadge: "Демо",
       interactiveNote:
         "Демо для портфолио · синтетика · не оригинал продукта",
-      tryInteractive: "Открыть демо портфолио",
+      tryInteractive: "Открыть живое демо",
+      demoReady: "Демо готово",
+      tapToPlay: "Или тапни по сцене",
+      prevProject: "Предыдущий проект",
+      nextProject: "Следующий проект",
       demoDisclaimer:
-        "Это только показательные демо для портфолио — пересобранные витрины с синтетическими данными. Это не продакшен-продукты, не живые системы работодателей и намеренно почти не совпадают с оригиналами под NDA.",
+        "Показательные демо портфолио · синтетические данные · не продакшен и не аффилированы с живыми продуктами работодателей.",
       playground: {
         liveDemo: "Демо портфолио",
         synthetic: "Синтетическая витрина · не продакшен",
@@ -604,27 +648,28 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Developer",
           period: "Март 2022 – Ноябрь 2023 · Remote",
           blurb:
-            "E-com мебели + SaaS-админка. JWT/OAuth, DnD-иерархии, Next.js SEO до 99/100 CWV.",
+            "FORMA e-com мебели + Meridian merchandising-админка. Живой конфигуратор дивана, DnD-иерархии, Next.js SEO до 99/100 CWV.",
           projects: {
             "furniture-shop": {
               title: "FORMA — мебельный магазин",
               type: "Кейс",
               summary:
-                "Показательная витрина на Next.js: каталог → PDP → корзина и mock OAuth.",
+                "Витрина с живым конфигуратором дивана — цвет и фактура ткани меняются в реальном времени.",
               points: [
-                "Интерактивный каталог, карточка товара и checkout",
-                "JWT / multi-provider OAuth (имитация)",
-                "Лёгкий UI · история про CWV 99/100",
+                "Конфигуратор цвета + ткани на hero и PDP",
+                "Текстуры с Unsplash + multiply blend",
+                "Каталог → корзина → mock OAuth · CWV 99/100",
               ],
             },
             "hierarchy-dnd": {
-              title: "Meridian — иерархии DnD",
+              title: "FORMA Admin · Meridian",
               type: "SaaS",
               summary:
-                "Дерево категорий с живым drag-and-drop и batch-операциями.",
+                "Админка FORMA: DnD-дерево, склад, colorways, batch publish.",
               points: [
-                "Реальный DnD: порядок и вложенность",
-                "Batch move + publish с conflict-тостом",
+                "Реальный DnD: вложенность и порядок",
+                "Сток ± и low-stock бейджи",
+                "Colorways Sand / Moss / Clay на узлах",
               ],
             },
           },
@@ -633,7 +678,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Web Developer",
           period: "Май 2021 – Март 2022 · Global",
           blurb:
-            "Быстрые MVP с характером — в том числе Web3-тамагочи с mock-кошельком.",
+            "Игровые Web3 MVP — тамагочи-компаньон и NFT-маркетплейс с гранями.",
           projects: {
             "web3-tamagotchi": {
               title: "MOCHI — Web3 Tamagotchi",
@@ -641,9 +686,20 @@ export const dictionaries: Record<Locale, Dictionary> = {
               summary:
                 "Ончейн-вайб питомец: кормёжка, игра, отдых, fake NFT sync. Только демо.",
               points: [
-                "Живые статы и мордашка по настроению",
-                "Mock wallet, txs и NFT-чекпоинт",
-                "Лёгкая SPA — без реального блокчейна",
+                "Мини-игра Berry Catch · очки → MOCH + XP",
+                "Уровни, daily quest, эволюция питомца",
+                "Mock wallet / NFT sync — без реального чейна",
+              ],
+            },
+            "gemify-market": {
+              title: "GEMIFY — маркетплейс",
+              type: "Web3 MVP",
+              summary:
+                "Полный NFT-цикл из фриланс-билда: карусель, коллекции, PDP с графиком, buy gate, deposit/withdraw, профиль.",
+              points: [
+                "Авто-карусель + floor / volume коллекций",
+                "Search · sort · sparse/dense сетка маркета",
+                "Buy gate · ledger баланса · NFT в профиле",
               ],
             },
           },
@@ -688,7 +744,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       headlineAccent: "más rápido",
       headlineAfter: "",
       sub: "5+ años fullstack. Agentes AI en el flujo — hasta 300% más velocidad.",
-      viewWork: "Ver trabajo",
+      viewWork: "Tocar el trabajo",
       contact: "Contacto",
       scroll: "Scroll",
     },
@@ -702,23 +758,23 @@ export const dictionaries: Record<Locale, Dictionary> = {
       categories: {
         ai: {
           title: "AI y automatización",
-          blurb: "Flujos LLM, pipelines de agentes y entrega acelerada con AI.",
+          blurb: "Flujos LLM, MCP, pipelines de agentes y entrega acelerada con AI.",
         },
         frontend: {
           title: "Frontend",
-          blurb: "Sistemas UI tipados con React 19 y state moderno.",
+          blurb: "Sistemas UI tipados con React 19, Next.js y state moderno.",
         },
         backend: {
           title: "Backend y DB",
-          blurb: "APIs y datos pensados para escala y type-safety.",
+          blurb: "APIs con Hono, capas de datos tipadas y realtime cuando aporta.",
         },
         uiux: {
           title: "UI / UX",
-          blurb: "Interfaces con motion y design systems consistentes.",
+          blurb: "Interfaces con motion, design systems y a11y.",
         },
         devops: {
           title: "DevOps",
-          blurb: "Build, contenedores y CI/CD para releases estables.",
+          blurb: "Vite/Webpack, contenedores, GitHub Actions y deploys en Vercel.",
         },
       },
     },
@@ -737,10 +793,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
     work: {
       eyebrow: "03 — Trabajo",
       title: "Roles y entregas",
+      invite:
+        "Empresa → caso → camino (inicio → entrega) → demo en vivo. Hecho para tocarse, no para ojearse.",
       horizonTag: "Carrera",
       horizonToEdu: "04 · Background",
+      companiesLabel: "Empresas",
       projectsLabel: "Proyectos",
       projectsCount: "{n} proyectos",
+      pickProject: "Elige un caso",
+      pathLabel: "El camino",
+      pathFrom: "Empezamos con",
+      pathTo: "Entregamos",
       openDetails: "Detalles",
       viewing: "Abierto",
       mockupNote:
@@ -748,9 +811,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
       interactiveBadge: "Demo",
       interactiveNote:
         "Demo de portfolio · datos sintéticos · no es el original",
-      tryInteractive: "Abrir demo del portfolio",
+      tryInteractive: "Abrir demo en vivo",
+      demoReady: "Demo listo",
+      tapToPlay: "O toca el escenario",
+      prevProject: "Proyecto anterior",
+      nextProject: "Proyecto siguiente",
       demoDisclaimer:
-        "Solo demos ilustrativas del portfolio: UIs reconstruidas con datos sintéticos. No son apps de producción, no están afiliadas a productos reales del empleador y deliberadamente poco tienen en común con originales bajo NDA.",
+        "Demos ilustrativos del portfolio · datos sintéticos · no son apps de producción ni productos reales del empleador.",
       playground: {
         liveDemo: "Demo del portfolio",
         synthetic: "Vitrina sintética · no producción",
@@ -813,10 +880,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Senior Fullstack Developer",
           period: "Ene 2025 – Abr 2025 · Contract",
           blurb:
-            "IBM MAXIMO → AXIOMA. TypeScript fullstack + PostgreSQL; +40% queries.",
+            "IBM MAXIMO → Axioma. TypeScript fullstack + PostgreSQL; +40% queries.",
           projects: {
             axioma: {
-              title: "АКСИОМА Workbench",
+              title: "Axioma Workbench",
               type: "Caso",
               summary:
                 "EAM/ТОИР ilustrativo: órdenes, activos y +40% PG story.",
@@ -827,7 +894,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
               ],
             },
             "axioma-admin": {
-              title: "АКСИОМА Admin / Cutover",
+              title: "Axioma Admin / Cutover",
               type: "Módulo",
               summary:
                 "RBAC y checklist de cutover MAXIMO para una migración más segura.",
@@ -893,27 +960,28 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Developer",
           period: "Mar 2022 – Nov 2023 · Remote",
           blurb:
-            "E-com de muebles + admin SaaS. JWT/OAuth, DnD, Next.js SEO a 99/100 CWV.",
+            "E-com FORMA + admin Meridian. Configurador de sofá en vivo, DnD y Next.js SEO a 99/100 CWV.",
           projects: {
             "furniture-shop": {
               title: "FORMA — tienda de muebles",
               type: "Caso",
               summary:
-                "Vitrina ilustrativa Next.js: catálogo → PDP → carrito y OAuth mock.",
+                "Vitrina con configurador de sofá en vivo — color y textura de tela en tiempo real.",
               points: [
-                "Catálogo, PDP y checkout interactivos",
-                "JWT / OAuth multi-provider (mock)",
-                "UI ligera · historia CWV 99/100",
+                "Configurador color + tela en hero y PDP",
+                "Texturas Unsplash con multiply blend",
+                "Catálogo → carrito → OAuth mock · CWV 99/100",
               ],
             },
             "hierarchy-dnd": {
-              title: "Meridian — jerarquías DnD",
+              title: "FORMA Admin · Meridian",
               type: "SaaS",
               summary:
-                "Árbol de categorías con drag-and-drop real y acciones batch.",
+                "Admin FORMA: árbol DnD, stock, colorways, batch publish.",
               points: [
-                "DnD real: orden y anidación",
-                "Batch move + publish con toast de conflicto",
+                "DnD real: anidación y orden",
+                "Stock ± y badges low-stock",
+                "Colorways Sand / Moss / Clay por nodo",
               ],
             },
           },
@@ -922,7 +990,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Web Developer",
           period: "May 2021 – Mar 2022 · Global",
           blurb:
-            "MVPs con carácter — incluido un tamagotchi Web3 con wallet mock.",
+            "MVPs Web3 con carácter — tamagotchi y marketplace NFT facetado.",
           projects: {
             "web3-tamagotchi": {
               title: "MOCHI — Web3 Tamagotchi",
@@ -930,9 +998,20 @@ export const dictionaries: Record<Locale, Dictionary> = {
               summary:
                 "Mascota on-chain vibes: feed, play, rest, fake NFT sync. Solo demo.",
               points: [
-                "Stats vivas y cara según humor",
-                "Mock wallet, txs y checkpoint NFT",
-                "SPA ligera — sin cadena real",
+                "Mini-juego Berry Catch · score → MOCH + XP",
+                "Niveles, daily quest y evolución",
+                "Mock wallet / NFT sync — sin chain real",
+              ],
+            },
+            "gemify-market": {
+              title: "GEMIFY — marketplace",
+              type: "Web3 MVP",
+              summary:
+                "Loop NFT completo del freelance: carrusel, colecciones, PDP con gráfica, buy gate, deposit/withdraw, perfil.",
+              points: [
+                "Carrusel auto + floor / volume de colecciones",
+                "Search · sort · grid sparse/dense",
+                "Buy gate · ledger de balance · NFTs en perfil",
               ],
             },
           },

@@ -9,223 +9,146 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f3eee6;
-      --ink: #1c1915;
-      --muted: #6f675c;
-      --line: rgba(28, 25, 21, 0.12);
-      --card: #fffdf8;
-      --moss: #2f5d50;
-      --moss-soft: #e5efe9;
-      --sand: #e8dcc8;
-      --clay: #c47b4a;
+      --bg: #f3eee6; --ink: #1c1915; --muted: #6f675c; --line: rgba(28,25,21,.12);
+      --card: #fffdf8; --moss: #2f5d50; --moss-soft: #e5efe9;
+      --sofa-color: #c9b896; --sofa-tex: none;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { min-height: 100%; }
     body {
-      font-family: Outfit, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(47, 93, 80, 0.12), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(196, 123, 74, 0.1), transparent),
-        var(--bg);
+      font-family: Outfit, sans-serif; color: var(--ink);
+      background: radial-gradient(ellipse 80% 50% at 10% -10%, rgba(47,93,80,.1), transparent),
+        radial-gradient(ellipse 55% 35% at 100% 0%, rgba(47,93,80,.06), transparent), var(--bg);
     }
-    button, a { font: inherit; color: inherit; }
-    button { border: 0; background: none; cursor: pointer; }
+    button, a { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
     .app { min-height: 100vh; display: flex; flex-direction: column; }
     .top {
-      position: sticky; top: 0; z-index: 20;
-      display: flex; align-items: center; gap: 18px;
-      padding: 14px clamp(16px, 4vw, 40px);
-      backdrop-filter: blur(12px);
-      background: rgba(243, 238, 230, 0.88);
-      border-bottom: 1px solid var(--line);
+      position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 18px;
+      padding: 14px clamp(16px,4vw,40px); backdrop-filter: blur(12px);
+      background: rgba(243,238,230,.88); border-bottom: 1px solid var(--line);
     }
-    .brand {
-      font-family: Fraunces, serif;
-      font-weight: 700;
-      font-size: 22px;
-      letter-spacing: 0.04em;
-    }
+    .brand { font-family: Fraunces, serif; font-weight: 700; font-size: 22px; letter-spacing: .04em; }
     .nav { display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
-    .nav button {
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-    }
-    .nav button.active, .nav button:hover {
-      background: var(--card);
-      color: var(--ink);
-      box-shadow: 0 1px 0 var(--line);
-    }
+    .nav button { padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 500; color: var(--muted); }
+    .nav button.active, .nav button:hover { background: var(--card); color: var(--ink); box-shadow: 0 1px 0 var(--line); }
     .cart-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 9px 14px;
-      border-radius: 999px;
-      background: var(--ink);
-      color: var(--bg);
-      font-size: 13px;
-      font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px;
+      background: var(--ink); color: var(--bg); font-size: 13px; font-weight: 600;
     }
     .cart-btn span {
-      min-width: 20px; height: 20px; border-radius: 999px;
-      display: grid; place-items: center;
+      min-width: 20px; height: 20px; border-radius: 999px; display: grid; place-items: center;
       background: var(--moss); color: #fff; font-size: 11px;
     }
     .demo-note {
-      padding: 8px clamp(16px, 4vw, 40px);
-      font-size: 11px;
-      color: var(--muted);
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,253,248,0.55);
+      padding: 8px clamp(16px,4vw,40px); font-size: 11px; color: var(--muted);
+      border-bottom: 1px solid var(--line); background: rgba(255,253,248,.55);
     }
-    main { flex: 1; padding: 24px clamp(16px, 4vw, 40px) 48px; width: 100%; max-width: 1180px; margin: 0 auto; }
-
-    /* HOME */
-    .hero {
-      display: grid;
-      gap: 24px;
-      min-height: min(70vh, 640px);
-      align-items: stretch;
-    }
-    @media (min-width: 900px) {
-      .hero { grid-template-columns: 1.05fr 0.95fr; gap: 28px; }
-    }
-    .hero-copy { display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 8px 0; }
-    .eyebrow {
-      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--moss);
-    }
-    .hero h1 {
-      font-family: Fraunces, serif;
-      font-size: clamp(36px, 5.5vw, 58px);
-      line-height: 1.05;
-      font-weight: 700;
-      max-width: 12ch;
-    }
-    .hero p { color: var(--muted); font-size: 16px; line-height: 1.55; max-width: 38ch; }
+    main { flex: 1; padding: 24px clamp(16px,4vw,40px) 48px; width: 100%; max-width: 1180px; margin: 0 auto; }
+    .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--moss); }
+    .btn-primary { padding: 14px 22px; border-radius: 999px; background: var(--moss); color: #f7fbf8; font-weight: 600; font-size: 14px; }
+    .btn-ghost { padding: 14px 22px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-weight: 600; font-size: 14px; }
     .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
-    .btn-primary {
-      padding: 14px 22px; border-radius: 999px;
-      background: var(--moss); color: #f7fbf8;
-      font-weight: 600; font-size: 14px;
-    }
-    .btn-ghost {
-      padding: 14px 22px; border-radius: 999px;
-      border: 1px solid var(--line); background: var(--card);
-      font-weight: 600; font-size: 14px;
-    }
-    .score {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 8px; padding: 8px 12px; border-radius: 999px;
-      background: var(--moss-soft); color: var(--moss);
-      font-size: 12px; font-weight: 600; width: fit-content;
-    }
-    .hero-visual {
-      position: relative;
-      border-radius: 28px;
-      overflow: hidden;
-      min-height: 360px;
-      background:
-        linear-gradient(160deg, #d8c4a8 0%, #b89a78 40%, #8d7358 100%);
-      box-shadow: 0 30px 60px rgba(28, 25, 21, 0.12);
-      animation: rise 0.8s ease both;
-    }
-    .hero-visual::before {
-      content: "";
-      position: absolute; inset: 18% 22% auto;
-      height: 58%;
-      border-radius: 18px 18px 8px 8px;
-      background: linear-gradient(180deg, #f0e6d6, #cbb79a);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
-    }
-    .hero-visual::after {
-      content: "";
-      position: absolute; left: 28%; right: 28%; bottom: 16%;
-      height: 14%;
-      border-radius: 999px;
-      background: rgba(28,25,21,0.18);
-      filter: blur(10px);
-    }
-    .hero-chip {
-      position: absolute; left: 18px; bottom: 18px;
-      padding: 10px 14px; border-radius: 16px;
-      background: rgba(255,253,248,0.92);
-      backdrop-filter: blur(8px);
-      font-size: 13px; font-weight: 600;
-    }
-    .hero-chip small { display: block; color: var(--muted); font-weight: 500; font-size: 11px; margin-top: 2px; }
 
-    .strip {
-      margin-top: 36px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    /* Configurator */
+    .cfg {
+      border-radius: 28px; overflow: hidden; background: var(--card);
+      border: 1px solid var(--line); box-shadow: 0 30px 60px rgba(28,25,21,.1);
     }
-    @media (min-width: 720px) { .strip { grid-template-columns: repeat(4, 1fr); } }
-    .strip article {
-      padding: 16px;
-      border-radius: 18px;
-      background: var(--card);
-      border: 1px solid var(--line);
+    .cfg-preview {
+      position: relative; min-height: 280px; padding: 28px 20px 36px;
+      background: linear-gradient(180deg, #e8e2d8 0%, #d5cec2 100%);
+      display: flex; align-items: flex-end; justify-content: center;
     }
+    .cfg-preview::after {
+      content: ""; position: absolute; left: 15%; right: 15%; bottom: 18%; height: 12%;
+      border-radius: 999px; background: rgba(28,25,21,.14); filter: blur(14px);
+    }
+    .sofa-wrap { width: min(100%, 420px); position: relative; z-index: 1; transition: filter .35s ease; }
+    .sofa-wrap.changing { filter: brightness(1.04); }
+    .sofa-svg { width: 100%; height: auto; display: block; }
+    .sofa-base { fill: var(--sofa-color); transition: fill .35s ease; }
+    .sofa-tex-layer {
+      fill: var(--sofa-color); opacity: .92; mix-blend-mode: multiply;
+      transition: fill .35s ease, opacity .35s ease;
+    }
+    .sofa-highlight { fill: rgba(255,255,255,.12); mix-blend-mode: overlay; pointer-events: none; }
+    .sofa-shadow { fill: rgba(28,25,21,.08); }
+    .cfg-badge {
+      position: absolute; top: 16px; left: 16px; padding: 8px 12px; border-radius: 12px;
+      background: rgba(255,253,248,.92); backdrop-filter: blur(8px); font-size: 12px; font-weight: 600;
+    }
+    .cfg-badge small { display: block; color: var(--muted); font-weight: 500; font-size: 10px; margin-top: 2px; }
+    .cfg-panel { padding: 18px 20px 20px; }
+    .cfg-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .cfg-swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .cfg-swatch {
+      width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent;
+      box-shadow: inset 0 0 0 1px rgba(28,25,21,.08); transition: transform .2s, border-color .2s;
+    }
+    .cfg-swatch.on { border-color: var(--moss); transform: scale(1.08); }
+    .cfg-tex { width: 52px; height: 52px; border-radius: 12px; overflow: hidden; border: 2px solid transparent; background-size: cover; background-position: center; }
+    .cfg-tex.on { border-color: var(--moss); }
+    .cfg-tex span { display: block; font-size: 9px; text-align: center; margin-top: 4px; color: var(--muted); font-weight: 500; }
+    .cfg-tex-btn { display: flex; flex-direction: column; align-items: center; gap: 0; }
+    .cfg-summary { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+    .cfg-summary b { color: var(--ink); }
+
+    /* Home */
+    .hero { display: grid; gap: 24px; align-items: stretch; }
+    @media (min-width: 900px) { .hero { grid-template-columns: .95fr 1.05fr; gap: 28px; } }
+    .hero-copy { display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 8px 0; }
+    .hero h1 { font-family: Fraunces, serif; font-size: clamp(34px,5vw,54px); line-height: 1.06; font-weight: 700; max-width: 11ch; }
+    .hero p { color: var(--muted); font-size: 16px; line-height: 1.55; max-width: 40ch; }
+    .score {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; padding: 8px 12px;
+      border-radius: 999px; background: var(--moss-soft); color: var(--moss); font-size: 12px; font-weight: 600; width: fit-content;
+    }
+    .strip { margin-top: 36px; display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+    @media (min-width: 720px) { .strip { grid-template-columns: repeat(4,1fr); } }
+    .strip article { padding: 16px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
     .strip b { display: block; font-size: 14px; margin-bottom: 4px; }
     .strip span { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
-    /* CATALOG */
+    /* Catalog */
     .page-head { display: flex; justify-content: space-between; gap: 16px; align-items: end; margin-bottom: 20px; flex-wrap: wrap; }
-    .page-head h1 { font-family: Fraunces, serif; font-size: clamp(28px, 4vw, 40px); }
+    .page-head h1 { font-family: Fraunces, serif; font-size: clamp(28px,4vw,40px); }
     .filters { display: flex; gap: 8px; flex-wrap: wrap; }
-    .filters button {
-      padding: 8px 12px; border-radius: 999px; font-size: 13px;
-      border: 1px solid var(--line); background: transparent; color: var(--muted);
-    }
+    .filters button { padding: 8px 12px; border-radius: 999px; font-size: 13px; border: 1px solid var(--line); color: var(--muted); }
     .filters button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 16px; }
     .product {
-      border-radius: 22px;
-      overflow: hidden;
-      background: var(--card);
-      border: 1px solid var(--line);
-      text-align: left;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 22px; overflow: hidden; background: var(--card); border: 1px solid var(--line);
+      text-align: left; transition: transform .2s, box-shadow .2s;
     }
-    .product:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(28,25,21,0.08); }
-    .swatch {
-      height: 180px;
-      position: relative;
-    }
-    .meta { padding: 14px 16px 16px; }
-    .meta h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-    .meta p { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .product:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(28,25,21,.08); }
+    .product .swatch { height: 180px; position: relative; }
+    .product .meta { padding: 14px 16px 16px; }
+    .product .meta h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .product .meta p { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
     .price { font-weight: 700; font-size: 15px; }
+    .tag {
+      position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 999px;
+      background: var(--moss); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .04em;
+    }
 
     /* PDP */
     .pdp { display: grid; gap: 24px; }
-    @media (min-width: 860px) { .pdp { grid-template-columns: 1.1fr 0.9fr; align-items: start; } }
-    .pdp-art {
-      border-radius: 28px; min-height: 420px; position: relative; overflow: hidden;
-      border: 1px solid var(--line);
-    }
-    .pdp-info h1 { font-family: Fraunces, serif; font-size: clamp(30px, 4vw, 42px); margin: 8px 0 12px; }
+    @media (min-width: 860px) { .pdp { grid-template-columns: 1.1fr .9fr; align-items: start; } }
+    .pdp-info h1 { font-family: Fraunces, serif; font-size: clamp(30px,4vw,42px); margin: 8px 0 12px; }
     .pdp-info .desc { color: var(--muted); line-height: 1.55; margin-bottom: 18px; }
     .specs { display: grid; gap: 8px; margin: 18px 0 22px; }
     .specs div {
-      display: flex; justify-content: space-between; gap: 12px;
-      padding: 12px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line);
-      font-size: 13px;
+      display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px;
+      border-radius: 14px; background: var(--card); border: 1px solid var(--line); font-size: 13px;
     }
     .specs span { color: var(--muted); }
+    .pdp-static {
+      border-radius: 28px; min-height: 320px; border: 1px solid var(--line);
+    }
 
-    /* CART / AUTH */
+    /* Cart / Auth */
     .panel {
-      max-width: 720px; margin: 0 auto;
-      background: var(--card); border: 1px solid var(--line);
+      max-width: 720px; margin: 0 auto; background: var(--card); border: 1px solid var(--line);
       border-radius: 24px; padding: 22px;
     }
     .panel h1 { font-family: Fraunces, serif; font-size: 32px; margin-bottom: 8px; }
@@ -235,26 +158,23 @@
       padding: 14px 0; border-bottom: 1px solid var(--line);
     }
     .line:last-of-type { border-bottom: 0; }
-    .oauth {
-      display: grid; gap: 10px; margin-top: 12px;
+    .qty-ctrl { display: flex; align-items: center; gap: 6px; }
+    .qty-ctrl button {
+      width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line);
+      background: var(--bg); font-weight: 600; font-size: 14px;
     }
+    .oauth { display: grid; gap: 10px; margin-top: 12px; }
     .oauth button {
-      width: 100%; padding: 14px; border-radius: 14px;
-      border: 1px solid var(--line); background: #fff; font-weight: 600;
-      text-align: left;
+      width: 100%; padding: 14px; border-radius: 14px; border: 1px solid var(--line);
+      background: #fff; font-weight: 600; text-align: left;
     }
     .oauth button:hover { border-color: var(--moss); background: var(--moss-soft); }
     .toast {
-      position: fixed; right: 18px; bottom: 18px; z-index: 50;
-      padding: 12px 16px; border-radius: 14px;
+      position: fixed; right: 18px; bottom: 18px; z-index: 50; padding: 12px 16px; border-radius: 14px;
       background: var(--ink); color: var(--bg); font-size: 13px;
-      transform: translateY(120%); opacity: 0; transition: 0.25s ease;
+      transform: translateY(120%); opacity: 0; transition: .25s ease;
     }
     .toast.show { transform: none; opacity: 1; }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(16px) scale(0.98); }
-      to { opacity: 1; transform: none; }
-    }
   </style>
 </head>
 <body>
@@ -262,60 +182,187 @@
     <header class="top">
       <button class="brand" data-go="home">FORMA</button>
       <nav class="nav">
-        <button data-go="home">Home</button>
-        <button data-go="catalog">Catalog</button>
-        <button data-go="auth">Sign in</button>
+        <button data-go="home">Главная</button>
+        <button data-go="catalog">Каталог</button>
+        <button data-go="auth">Войти</button>
       </nav>
-      <button class="cart-btn" data-go="cart">Cart <span id="cartCount">0</span></button>
+      <button class="cart-btn" data-go="cart">Корзина <span id="cartCount">0</span></button>
     </header>
     <div class="demo-note">Показательное демо портфолио · синтетический каталог · не продакшен-магазин</div>
     <main id="root"></main>
   </div>
   <div class="toast" id="toast"></div>
   <script>
+    const COLORS = [
+      { id: "sand", name: "Песок", hex: "#c4b08a" },
+      { id: "moss", name: "Мох", hex: "#5a7355" },
+      { id: "clay", name: "Глина", hex: "#b07858" },
+      { id: "charcoal", name: "Уголь", hex: "#3d3a36" },
+      { id: "ivory", name: "Слоновая кость", hex: "#ebe4d4" },
+    ];
+    const TEXTURES = [
+      { id: "linen", name: "Лён", url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=70" },
+      { id: "velvet", name: "Бархат", url: "https://images.unsplash.com/photo-1615529182904-2965b6e44f1a?auto=format&fit=crop&w=600&q=70" },
+      { id: "boucle", name: "Букле", url: "https://images.unsplash.com/photo-1586075010923-2dd457ba8392?auto=format&fit=crop&w=600&q=70" },
+      { id: "leather", name: "Кожа", url: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=600&q=70" },
+    ];
+    const NOISE = "repeating-linear-gradient(45deg,rgba(0,0,0,.04) 0 1px,transparent 1px 4px),repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0 1px,transparent 1px 5px)";
     const PRODUCTS = [
-      { id: "lumen-sofa", name: "Lumen Sofa", cat: "Living", price: 89000, tone: "linear-gradient(145deg,#d7c3a6,#9c8264)", blurb: "Модульный диван из дуба и шерстяной обивки.", material: "Oak / Wool", dims: "220×95×80 cm" },
-      { id: "arc-chair", name: "Arc Lounge", cat: "Living", price: 42000, tone: "linear-gradient(145deg,#c9d5c4,#6f8a72)", blurb: "Кресло с мягкой посадкой и стальным каркасом.", material: "Steel / Bouclé", dims: "78×82×90 cm" },
-      { id: "nori-table", name: "Nori Table", cat: "Dining", price: 61000, tone: "linear-gradient(145deg,#e6d7c2,#b08968)", blurb: "Обеденный стол на 6 персон, масло по дереву.", material: "Ash", dims: "180×90×75 cm" },
-      { id: "fold-shelf", name: "Fold Shelf", cat: "Storage", price: 28000, tone: "linear-gradient(145deg,#ddd2c4,#8a7b6a)", blurb: "Открытый стеллаж с регулируемыми полками.", material: "Plywood", dims: "90×35×180 cm" },
-      { id: "halo-lamp", name: "Halo Pendant", cat: "Lighting", price: 19000, tone: "linear-gradient(145deg,#f0e6d4,#c4a574)", blurb: "Подвес с рассеянным тёплым светом.", material: "Brass / Glass", dims: "Ø42 cm" },
-      { id: "ridge-bed", name: "Ridge Bed", cat: "Bedroom", price: 98000, tone: "linear-gradient(145deg,#d9cdc0,#7d6b5a)", blurb: "Кровать с интегрированными тумбами.", material: "Walnut", dims: "160×200 cm" },
+      { id: "lumen-sofa", name: "Lumen Sofa", cat: "Гостиная", price: 89000, tone: "linear-gradient(145deg,#d7c3a6,#9c8264)", blurb: "Модульный диван из дуба — настройте цвет и фактуру обивки.", material: "Дуб / обивка на выбор", dims: "220×95×80 см", configurable: true },
+      { id: "arc-chair", name: "Arc Lounge", cat: "Гостиная", price: 42000, tone: "linear-gradient(145deg,#c9d5c4,#6f8a72)", blurb: "Кресло с мягкой посадкой и стальным каркасом.", material: "Сталь / букле", dims: "78×82×90 см" },
+      { id: "nori-table", name: "Nori Table", cat: "Столовая", price: 61000, tone: "linear-gradient(145deg,#e6d7c2,#b08968)", blurb: "Обеденный стол на 6 персон, масло по дереву.", material: "Ясень", dims: "180×90×75 см" },
+      { id: "fold-shelf", name: "Fold Shelf", cat: "Хранение", price: 28000, tone: "linear-gradient(145deg,#ddd2c4,#8a7b6a)", blurb: "Открытый стеллаж с регулируемыми полками.", material: "Фанера", dims: "90×35×180 см" },
+      { id: "halo-lamp", name: "Halo Pendant", cat: "Свет", price: 19000, tone: "linear-gradient(145deg,#f0e6d4,#c4a574)", blurb: "Подвес с рассеянным тёплым светом.", material: "Латунь / стекло", dims: "Ø42 см" },
+      { id: "ridge-bed", name: "Ridge Bed", cat: "Спальня", price: 98000, tone: "linear-gradient(145deg,#d9cdc0,#7d6b5a)", blurb: "Кровать с интегрированными тумбами.", material: "Орех", dims: "160×200 см" },
+      { id: "cove-desk", name: "Cove Desk", cat: "Гостиная", price: 54000, tone: "linear-gradient(145deg,#cfd8d2,#5f7468)", blurb: "Рабочий стол со скрытой кабель-канализацией.", material: "Дуб / сталь", dims: "140×70×75 см" },
+      { id: "ember-stool", name: "Ember Stool", cat: "Столовая", price: 16000, tone: "linear-gradient(145deg,#e8cfc0,#a86b4a)", blurb: "Барный стул с мягким сиденьем.", material: "Ясень / кожа", dims: "45×45×75 см" },
     ];
 
+    const texOk = {};
+    TEXTURES.forEach((t) => {
+      const img = new Image();
+      img.onload = () => { texOk[t.id] = true; applyCfgVisuals(); };
+      img.onerror = () => { texOk[t.id] = false; applyCfgVisuals(); };
+      img.src = t.url;
+    });
+
+    let cfg = { color: "sand", texture: "linen" };
+    try { cfg = { ...cfg, ...JSON.parse(localStorage.getItem("forma_cfg_v1") || "{}") }; } catch (_) {}
+
     const state = {
-      route: "home",
-      productId: "lumen-sofa",
-      filter: "All",
+      route: "home", productId: "lumen-sofa", filter: "Все",
       cart: JSON.parse(localStorage.getItem("forma_cart") || "[]"),
       authed: localStorage.getItem("forma_auth") === "1",
     };
-
     const root = document.getElementById("root");
     const toastEl = document.getElementById("toast");
     const cartCount = document.getElementById("cartCount");
 
-    function money(n) {
-      return new Intl.NumberFormat("ru-RU").format(n) + " ₽";
-    }
-
+    function money(n) { return new Intl.NumberFormat("ru-RU").format(n) + " ₽"; }
     function toast(msg) {
-      toastEl.textContent = msg;
-      toastEl.classList.add("show");
-      clearTimeout(toastEl._t);
-      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1800);
+      toastEl.textContent = msg; toastEl.classList.add("show");
+      clearTimeout(toastEl._t); toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1800);
     }
-
     function saveCart() {
       localStorage.setItem("forma_cart", JSON.stringify(state.cart));
       cartCount.textContent = String(state.cart.reduce((a, c) => a + c.qty, 0));
     }
+    function saveCfg() { localStorage.setItem("forma_cfg_v1", JSON.stringify(cfg)); }
+    function colorObj(id) { return COLORS.find((c) => c.id === id) || COLORS[0]; }
+    function texObj(id) { return TEXTURES.find((t) => t.id === id) || TEXTURES[0]; }
 
-    function addToCart(id) {
+    function sofaSvg() {
+      return `<svg class="sofa-svg" viewBox="0 0 420 200" aria-hidden="true">
+        <ellipse class="sofa-shadow" cx="210" cy="178" rx="150" ry="14"/>
+        <path class="sofa-base" d="M48 118 L48 88 Q48 68 68 62 L352 62 Q372 68 372 88 L372 118 Q372 132 358 132 L62 132 Q48 132 48 118Z"/>
+        <path class="sofa-base" d="M58 62 L58 38 Q58 22 78 18 L342 18 Q362 22 362 38 L362 62 Q362 72 352 72 L68 72 Q58 72 58 62Z"/>
+        <path class="sofa-base" d="M48 118 L28 118 Q18 118 18 128 L18 148 Q18 158 28 158 L48 158 Q58 158 58 148 L58 132 Q58 118 48 118Z"/>
+        <path class="sofa-base" d="M372 118 L392 118 Q402 118 402 128 L402 148 Q402 158 392 158 L372 158 Q362 158 362 148 L362 132 Q362 118 372 118Z"/>
+        <path class="sofa-base" d="M95 72 L95 52 Q95 42 108 42 L145 42 Q158 42 158 52 L158 72 Q158 82 145 82 L108 82 Q95 82 95 72Z"/>
+        <path class="sofa-base" d="M262 72 L262 52 Q262 42 275 42 L312 42 Q325 42 325 52 L325 72 Q325 82 312 82 L275 82 Q262 82 262 72Z"/>
+        <path class="sofa-base" d="M168 72 L168 48 Q168 38 210 38 Q252 38 252 48 L252 72 Q252 82 210 82 Q168 82 168 72Z"/>
+        <g class="sofa-tex-group">${texPatternPaths()}</g>
+        <path class="sofa-highlight" d="M68 24 Q210 8 352 24 L352 38 Q210 28 68 38Z"/>
+      </svg>`;
+    }
+
+    function texPatternPaths() {
+      const d = "M48 118 L48 88 Q48 68 68 62 L352 62 Q372 68 372 88 L372 118 Q372 132 358 132 L62 132 Q48 132 48 118Z M58 62 L58 38 Q58 22 78 18 L342 18 Q362 22 362 38 L362 62 Q362 72 352 72 L68 72 Q58 72 58 62Z M48 118 L28 118 Q18 118 18 128 L18 148 Q18 158 28 158 L48 158 Q58 158 58 148 L58 132 Q58 118 48 118Z M372 118 L392 118 Q402 118 402 128 L402 148 Q402 158 392 158 L372 158 Q362 158 362 148 L362 132 Q362 118 372 118Z M95 72 L95 52 Q95 42 108 42 L145 42 Q158 42 158 52 L158 72 Q158 82 145 82 L108 82 Q95 82 95 72Z M262 72 L262 52 Q262 42 275 42 L312 42 Q325 42 325 52 L325 72 Q325 82 312 82 L275 82 Q262 82 262 72Z M168 72 L168 48 Q168 38 210 38 Q252 38 252 48 L252 72 Q252 82 210 82 Q168 82 168 72Z";
+      return `<path class="sofa-tex-layer" d="${d}"/>`;
+    }
+
+    function configuratorHTML(badge) {
+      const c = colorObj(cfg.color), t = texObj(cfg.texture);
+      return `<div class="cfg" data-cfg>
+        <div class="cfg-preview">
+          ${badge ? `<div class="cfg-badge">${badge.title}<small>${badge.sub}</small></div>` : ""}
+          <div class="sofa-wrap" id="sofaWrap"><div id="sofaTexHost">${sofaSvg()}</div></div>
+        </div>
+        <div class="cfg-panel">
+          <p class="cfg-label">Цвет обивки</p>
+          <div class="cfg-swatches">${COLORS.map((x) =>
+            `<button class="cfg-swatch ${cfg.color === x.id ? "on" : ""}" data-cfg-color="${x.id}" style="background:${x.hex}" title="${x.name}" aria-label="${x.name}"></button>`
+          ).join("")}</div>
+          <p class="cfg-label">Фактура</p>
+          <div class="cfg-swatches">${TEXTURES.map((x) =>
+            `<button class="cfg-tex-btn" data-cfg-tex="${x.id}">
+              <span class="cfg-tex ${cfg.texture === x.id ? "on" : ""}" style="background-image:url('${x.url}'),${NOISE}"></span>
+              <span>${x.name}</span>
+            </button>`
+          ).join("")}</div>
+          <div class="cfg-summary">Выбрано: <b>${c.name}</b> · <b>${t.name}</b></div>
+        </div>
+      </div>`;
+    }
+
+    function applyCfgVisuals() {
+      const c = colorObj(cfg.color), t = texObj(cfg.texture);
+      document.documentElement.style.setProperty("--sofa-color", c.hex);
+      const host = document.getElementById("sofaTexHost");
+      if (!host) return;
+      const ok = texOk[t.id] !== false;
+      const wrap = document.getElementById("sofaWrap");
+      if (wrap) { wrap.classList.add("changing"); setTimeout(() => wrap.classList.remove("changing"), 350); }
+      if (ok) {
+        host.innerHTML = `<svg class="sofa-svg" viewBox="0 0 420 200" aria-hidden="true">
+          <defs><pattern id="fabPat" patternUnits="userSpaceOnUse" width="80" height="80">
+            <image href="${t.url}" width="80" height="80" preserveAspectRatio="xMidYMid slice"/>
+          </pattern></defs>
+          <ellipse class="sofa-shadow" cx="210" cy="178" rx="150" ry="14"/>
+          <path class="sofa-base" d="M48 118 L48 88 Q48 68 68 62 L352 62 Q372 68 372 88 L372 118 Q372 132 358 132 L62 132 Q48 132 48 118Z"/>
+          <path class="sofa-base" d="M58 62 L58 38 Q58 22 78 18 L342 18 Q362 22 362 38 L362 62 Q362 72 352 72 L68 72 Q58 72 58 62Z"/>
+          <path class="sofa-base" d="M48 118 L28 118 Q18 118 18 128 L18 148 Q18 158 28 158 L48 158 Q58 158 58 148 L58 132 Q58 118 48 118Z"/>
+          <path class="sofa-base" d="M372 118 L392 118 Q402 118 402 128 L402 148 Q402 158 392 158 L372 158 Q362 158 362 148 L362 132 Q362 118 372 118Z"/>
+          <path class="sofa-base" d="M95 72 L95 52 Q95 42 108 42 L145 42 Q158 42 158 52 L158 72 Q158 82 145 82 L108 82 Q95 82 95 72Z"/>
+          <path class="sofa-base" d="M262 72 L262 52 Q262 42 275 42 L312 42 Q325 42 325 52 L325 72 Q325 82 312 82 L275 82 Q262 82 262 72Z"/>
+          <path class="sofa-base" d="M168 72 L168 48 Q168 38 210 38 Q252 38 252 48 L252 72 Q252 82 210 82 Q168 82 168 72Z"/>
+          <path fill="url(#fabPat)" opacity=".55" style="mix-blend-mode:multiply" d="M48 118 L48 88 Q48 68 68 62 L352 62 Q372 68 372 88 L372 118 Q372 132 358 132 L62 132 Q48 132 48 118Z M58 62 L58 38 Q58 22 78 18 L342 18 Q362 22 362 38 L362 62 Q362 72 352 72 L68 72 Q58 72 58 62Z M48 118 L28 118 Q18 118 18 128 L18 148 Q18 158 28 158 L48 158 Q58 158 58 148 L58 132 Q58 118 48 118Z M372 118 L392 118 Q402 118 402 128 L402 148 Q402 158 392 158 L372 158 Q362 158 362 148 L362 132 Q362 118 372 118Z M95 72 L95 52 Q95 42 108 42 L145 42 Q158 42 158 52 L158 72 Q158 82 145 82 L108 82 Q95 82 95 72Z M262 72 L262 52 Q262 42 275 42 L312 42 Q325 42 325 52 L325 72 Q325 82 312 82 L275 82 Q262 82 262 72Z M168 72 L168 48 Q168 38 210 38 Q252 38 252 48 L252 72 Q252 82 210 82 Q168 82 168 72Z"/>
+          <path fill="${c.hex}" opacity=".45" style="mix-blend-mode:overlay" d="M48 118 L48 88 Q48 68 68 62 L352 62 Q372 68 372 88 L372 118 Q372 132 358 132 L62 132 Q48 132 48 118Z M58 62 L58 38 Q58 22 78 18 L342 18 Q362 22 362 38 L362 62 Q362 72 352 72 L68 72 Q58 72 58 62Z M48 118 L28 118 Q18 118 18 128 L18 148 Q18 158 28 158 L48 158 Q58 158 58 148 L58 132 Q58 118 48 118Z M372 118 L392 118 Q402 118 402 128 L402 148 Q402 158 392 158 L372 158 Q362 158 362 148 L362 132 Q362 118 372 118Z M95 72 L95 52 Q95 42 108 42 L145 42 Q158 42 158 52 L158 72 Q158 82 145 82 L108 82 Q95 82 95 72Z M262 72 L262 52 Q262 42 275 42 L312 42 Q325 42 325 52 L325 72 Q325 82 312 82 L275 82 Q262 82 262 72Z M168 72 L168 48 Q168 38 210 38 Q252 38 252 48 L252 72 Q252 82 210 82 Q168 82 168 72Z"/>
+          <path class="sofa-highlight" d="M68 24 Q210 8 352 24 L352 38 Q210 28 68 38Z"/>
+        </svg>`;
+      } else {
+        host.innerHTML = `<svg class="sofa-svg" viewBox="0 0 420 200" aria-hidden="true">
+          <defs><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/></filter></defs>
+          <ellipse class="sofa-shadow" cx="210" cy="178" rx="150" ry="14"/>
+          <path class="sofa-base" d="M48 118 L48 88 Q48 68 68 62 L352 62 Q372 68 372 88 L372 118 Q372 132 358 132 L62 132 Q48 132 48 118Z"/>
+          <path class="sofa-base" d="M58 62 L58 38 Q58 22 78 18 L342 18 Q362 22 362 38 L362 62 Q362 72 352 72 L68 72 Q58 72 58 62Z"/>
+          <path class="sofa-base" d="M48 118 L28 118 Q18 118 18 128 L18 148 Q18 158 28 158 L48 158 Q58 158 58 148 L58 132 Q58 118 48 118Z"/>
+          <path class="sofa-base" d="M372 118 L392 118 Q402 118 402 128 L402 148 Q402 158 392 158 L372 158 Q362 158 362 148 L362 132 Q362 118 372 118Z"/>
+          <path class="sofa-base" d="M95 72 L95 52 Q95 42 108 42 L145 42 Q158 42 158 52 L158 72 Q158 82 145 82 L108 82 Q95 82 95 72Z"/>
+          <path class="sofa-base" d="M262 72 L262 52 Q262 42 275 42 L312 42 Q325 42 325 52 L325 72 Q325 82 312 82 L275 82 Q262 82 262 72Z"/>
+          <path class="sofa-base" d="M168 72 L168 48 Q168 38 210 38 Q252 38 252 48 L252 72 Q252 82 210 82 Q168 82 168 72Z"/>
+          <rect width="420" height="200" filter="url(#grain)" opacity=".18" style="mix-blend-mode:multiply"/>
+          <path class="sofa-highlight" d="M68 24 Q210 8 352 24 L352 38 Q210 28 68 38Z"/>
+        </svg>`;
+      }
+    }
+
+    function bindConfigurator() {
+      document.querySelectorAll("[data-cfg-color]").forEach((b) => {
+        b.onclick = () => { cfg.color = b.dataset.cfgColor; saveCfg(); refreshCfgUI(); };
+      });
+      document.querySelectorAll("[data-cfg-tex]").forEach((b) => {
+        b.onclick = () => { cfg.texture = b.dataset.cfgTex; saveCfg(); refreshCfgUI(); };
+      });
+      applyCfgVisuals();
+    }
+    function refreshCfgUI() {
+      document.querySelectorAll("[data-cfg-color]").forEach((b) => b.classList.toggle("on", b.dataset.cfgColor === cfg.color));
+      document.querySelectorAll("[data-cfg-tex]").forEach((b) => {
+        const el = b.querySelector(".cfg-tex");
+        if (el) el.classList.toggle("on", b.dataset.cfgTex === cfg.texture);
+      });
+      const sum = document.querySelector(".cfg-summary");
+      if (sum) sum.innerHTML = `Выбрано: <b>${colorObj(cfg.color).name}</b> · <b>${texObj(cfg.texture).name}</b>`;
+      applyCfgVisuals();
+    }
+
+    function addToCart(id, qty) {
       const row = state.cart.find((c) => c.id === id);
-      if (row) row.qty += 1;
-      else state.cart.push({ id, qty: 1 });
-      saveCart();
-      toast("Добавлено в корзину");
+      if (row) row.qty += qty || 1;
+      else state.cart.push({ id, qty: qty || 1, cfg: id === "lumen-sofa" ? { ...cfg } : null });
+      saveCart(); toast("Добавлено в корзину");
     }
 
     function parseHash() {
@@ -328,13 +375,11 @@
       if (parts[0] === "product" && parts[1]) return { route: "product", productId: parts[1] };
       return { route: "home" };
     }
-
     function go(route, productId) {
       if (route === "home") location.hash = "#/";
       else if (route === "product") location.hash = `#/product/${productId || state.productId}`;
       else location.hash = `#/${route}`;
     }
-
     function setNav() {
       document.querySelectorAll(".nav button").forEach((b) => {
         b.classList.toggle("active", b.dataset.go === state.route || (state.route === "product" && b.dataset.go === "catalog"));
@@ -342,140 +387,117 @@
     }
 
     function renderHome() {
-      root.innerHTML = `
-        <section class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow">Forma Home · Next.js commerce</p>
-            <h1>Мебель, которая грузится быстро</h1>
-            <p>Витрина с каталогом, PDP и checkout-потоком. JWT/OAuth и Core Web Vitals 99/100 — показательная сборка для портфолио.</p>
-            <div class="cta-row">
-              <button class="btn-primary" data-go="catalog">Открыть каталог</button>
-              <button class="btn-ghost" data-go="auth">Войти через OAuth</button>
-            </div>
-            <div class="score">Core Web Vitals · 99/100</div>
+      root.innerHTML = `<section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Forma Home · e-commerce</p>
+          <h1>Мебель, которую можно настроить</h1>
+          <p>Интерактивный конфигуратор обивки, каталог, корзина и OAuth — показательная сборка для портфолио.</p>
+          <div class="cta-row">
+            <button class="btn-primary" data-go="catalog">Открыть каталог</button>
+            <button class="btn-ghost" data-go="product" data-pid="lumen-sofa">Lumen Sofa →</button>
           </div>
-          <div class="hero-visual">
-            <div class="hero-chip">Lumen Sofa<small>от ${money(89000)}</small></div>
-          </div>
-        </section>
-        <div class="strip">
-          <article><b>Catalog → Checkout</b><span>Полный путь покупки на синтетических данных</span></article>
-          <article><b>Auth</b><span>JWT + multi-provider OAuth mock</span></article>
-          <article><b>SEO</b><span>Next.js-стиль маршрутов и мета</span></article>
-          <article><b>CWV</b><span>Лёгкий UI без тяжёлых виджетов</span></article>
-        </div>`;
+          <div class="score">Конфигуратор · цвет + фактура · live preview</div>
+        </div>
+        ${configuratorHTML({ title: "Lumen Sofa", sub: `от ${money(89000)}` })}
+      </section>
+      <div class="strip">
+        <article><b>Конфигуратор</b><span>5 цветов × 4 фактуры с live-превью</span></article>
+        <article><b>Каталог → Checkout</b><span>Полный путь покупки на синтетических данных</span></article>
+        <article><b>Auth</b><span>Multi-provider OAuth mock</span></article>
+        <article><b>localStorage</b><span>Корзина и конфигурация сохраняются</span></article>
+      </div>`;
+      bindConfigurator();
     }
 
     function renderCatalog() {
-      const cats = ["All", ...new Set(PRODUCTS.map((p) => p.cat))];
-      const list = PRODUCTS.filter((p) => state.filter === "All" || p.cat === state.filter);
-      root.innerHTML = `
-        <div class="page-head">
-          <div>
-            <p class="eyebrow">Collection</p>
-            <h1>Каталог</h1>
-          </div>
-          <div class="filters">
-            ${cats.map((c) => `<button data-filter="${c}" class="${state.filter === c ? "on" : ""}">${c}</button>`).join("")}
-          </div>
-        </div>
-        <div class="grid">
-          ${list.map((p) => `
-            <button class="product" data-product="${p.id}">
-              <div class="swatch" style="background:${p.tone}"></div>
-              <div class="meta">
-                <h3>${p.name}</h3>
-                <p>${p.cat}</p>
-                <div class="price">${money(p.price)}</div>
-              </div>
-            </button>`).join("")}
-        </div>`;
+      const cats = ["Все", ...new Set(PRODUCTS.map((p) => p.cat))];
+      const list = PRODUCTS.filter((p) => state.filter === "Все" || p.cat === state.filter);
+      root.innerHTML = `<div class="page-head">
+        <div><p class="eyebrow">Collection</p><h1>Каталог</h1></div>
+        <div class="filters">${cats.map((c) =>
+          `<button data-filter="${c}" class="${state.filter === c ? "on" : ""}">${c}</button>`
+        ).join("")}</div>
+      </div>
+      <div class="grid">${list.map((p) => `
+        <button class="product" data-product="${p.id}">
+          <div class="swatch" style="background:${p.tone}">${p.configurable ? '<span class="tag">3D конфиг</span>' : ""}</div>
+          <div class="meta"><h3>${p.name}</h3><p>${p.cat}</p><div class="price">${money(p.price)}</div></div>
+        </button>`).join("")}</div>`;
     }
 
     function renderProduct() {
       const p = PRODUCTS.find((x) => x.id === state.productId) || PRODUCTS[0];
-      root.innerHTML = `
-        <section class="pdp">
-          <div class="pdp-art" style="background:${p.tone}"></div>
-          <div class="pdp-info">
-            <p class="eyebrow">${p.cat}</p>
-            <h1>${p.name}</h1>
-            <p class="desc">${p.blurb}</p>
-            <div class="price" style="font-size:22px;margin-bottom:8px">${money(p.price)}</div>
-            <div class="specs">
-              <div><span>Материал</span><b>${p.material}</b></div>
-              <div><span>Размеры</span><b>${p.dims}</b></div>
-              <div><span>Доставка</span><b>5–12 дней · mock</b></div>
-            </div>
-            <div class="cta-row">
-              <button class="btn-primary" id="addCart">В корзину</button>
-              <button class="btn-ghost" data-go="catalog">Назад в каталог</button>
-            </div>
+      const art = p.configurable
+        ? configuratorHTML({ title: p.name, sub: money(p.price) })
+        : `<div class="pdp-static" style="background:${p.tone}"></div>`;
+      const cfgLine = p.configurable
+        ? `<div><span>Обивка</span><b>${colorObj(cfg.color).name} · ${texObj(cfg.texture).name}</b></div>` : "";
+      root.innerHTML = `<section class="pdp">
+        <div>${art}</div>
+        <div class="pdp-info">
+          <p class="eyebrow">${p.cat}</p>
+          <h1>${p.name}</h1>
+          <p class="desc">${p.blurb}</p>
+          <div class="price" style="font-size:22px;margin-bottom:8px">${money(p.price)}</div>
+          <div class="specs">
+            <div><span>Материал</span><b>${p.material}</b></div>
+            <div><span>Размеры</span><b>${p.dims}</b></div>
+            ${cfgLine}
+            <div><span>Доставка</span><b>5–12 дней · mock</b></div>
           </div>
-        </section>`;
+          <div class="cta-row">
+            <button class="btn-primary" id="addCart">В корзину</button>
+            <button class="btn-ghost" data-go="catalog">Назад в каталог</button>
+          </div>
+        </div>
+      </section>`;
+      if (p.configurable) bindConfigurator();
       document.getElementById("addCart").onclick = () => addToCart(p.id);
     }
 
     function renderCart() {
-      const rows = state.cart.map((c) => {
-        const p = PRODUCTS.find((x) => x.id === c.id);
-        return { ...c, p };
-      }).filter((r) => r.p);
+      const rows = state.cart.map((c) => ({ ...c, p: PRODUCTS.find((x) => x.id === c.id) })).filter((r) => r.p);
       const total = rows.reduce((a, r) => a + r.p.price * r.qty, 0);
-      root.innerHTML = `
-        <div class="panel">
-          <h1>Корзина</h1>
-          <p class="lead">${rows.length ? "Синтетический checkout — без реальной оплаты." : "Пока пусто. Загляните в каталог."}</p>
-          ${rows.map((r) => `
-            <div class="line">
-              <div>
-                <b>${r.p.name}</b>
-                <div style="color:var(--muted);font-size:12px;margin-top:4px">× ${r.qty}</div>
-              </div>
-              <div style="display:flex;gap:10px;align-items:center">
-                <b>${money(r.p.price * r.qty)}</b>
-                <button class="btn-ghost" style="padding:8px 12px" data-remove="${r.id}">−</button>
-              </div>
-            </div>`).join("")}
-          ${rows.length ? `<div class="line"><span>Итого</span><b>${money(total)}</b></div>
-            <div class="cta-row" style="margin-top:16px">
-              <button class="btn-primary" id="checkout">Оформить (demo)</button>
-              <button class="btn-ghost" data-go="catalog">Продолжить покупки</button>
-            </div>` : `<button class="btn-primary" data-go="catalog">В каталог</button>`}
-        </div>`;
+      root.innerHTML = `<div class="panel">
+        <h1>Корзина</h1>
+        <p class="lead">${rows.length ? "Синтетический checkout — без реальной оплаты." : "Пока пусто. Загляните в каталог."}</p>
+        ${rows.map((r) => {
+          const cfgNote = r.cfg ? `<div style="color:var(--muted);font-size:11px;margin-top:2px">${colorObj(r.cfg.color).name} · ${texObj(r.cfg.texture).name}</div>` : "";
+          return `<div class="line"><div><b>${r.p.name}</b>${cfgNote}
+            <div class="qty-ctrl" style="margin-top:6px">
+              <button data-qty="${r.id}" data-d="-1">−</button>
+              <span>${r.qty}</span>
+              <button data-qty="${r.id}" data-d="1">+</button>
+            </div></div>
+            <b>${money(r.p.price * r.qty)}</b></div>`;
+        }).join("")}
+        ${rows.length ? `<div class="line"><span>Итого</span><b>${money(total)}</b></div>
+          <div class="cta-row" style="margin-top:16px">
+            <button class="btn-primary" id="checkout">Оформить (demo)</button>
+            <button class="btn-ghost" data-go="catalog">Продолжить покупки</button>
+          </div>` : `<button class="btn-primary" data-go="catalog">В каталог</button>`}
+      </div>`;
       document.getElementById("checkout")?.addEventListener("click", () => {
-        state.cart = [];
-        saveCart();
-        toast("Заказ принят · demo only");
-        render();
+        state.cart = []; saveCart(); toast("Заказ принят · demo only"); render();
       });
     }
 
     function renderAuth() {
-      root.innerHTML = `
-        <div class="panel">
-          <h1>Вход</h1>
-          <p class="lead">${state.authed ? "Вы вошли в demo-сессию (JWT mock)." : "Multi-provider OAuth + JWT — только имитация."}</p>
-          <div class="oauth">
-            <button data-oauth="Google">Продолжить с Google</button>
-            <button data-oauth="Apple">Продолжить с Apple</button>
-            <button data-oauth="Yandex">Продолжить с Yandex</button>
-          </div>
-          ${state.authed ? `<button class="btn-ghost" style="margin-top:14px" id="logout">Выйти</button>` : ""}
-        </div>`;
+      root.innerHTML = `<div class="panel">
+        <h1>Вход</h1>
+        <p class="lead">${state.authed ? "Вы вошли в demo-сессию (JWT mock)." : "Multi-provider OAuth + JWT — только имитация."}</p>
+        <div class="oauth">
+          <button data-oauth="Google">Продолжить с Google</button>
+          <button data-oauth="Apple">Продолжить с Apple</button>
+          <button data-oauth="Yandex">Продолжить с Yandex</button>
+        </div>
+        ${state.authed ? `<button class="btn-ghost" style="margin-top:14px" id="logout">Выйти</button>` : ""}
+      </div>`;
       document.querySelectorAll("[data-oauth]").forEach((b) => {
-        b.onclick = () => {
-          state.authed = true;
-          localStorage.setItem("forma_auth", "1");
-          toast(`OAuth · ${b.dataset.oauth} (mock)`);
-          render();
-        };
+        b.onclick = () => { state.authed = true; localStorage.setItem("forma_auth", "1"); toast(`OAuth · ${b.dataset.oauth} (mock)`); render(); };
       });
       document.getElementById("logout")?.addEventListener("click", () => {
-        state.authed = false;
-        localStorage.removeItem("forma_auth");
-        toast("Сессия сброшена");
-        render();
+        state.authed = false; localStorage.removeItem("forma_auth"); toast("Сессия сброшена"); render();
       });
     }
 
@@ -493,32 +515,24 @@
 
     document.body.addEventListener("click", (e) => {
       const goBtn = e.target.closest("[data-go]");
-      if (goBtn) {
-        go(goBtn.dataset.go);
-        return;
-      }
+      if (goBtn) { go(goBtn.dataset.go, goBtn.dataset.pid); return; }
       const prod = e.target.closest("[data-product]");
-      if (prod) {
-        go("product", prod.dataset.product);
-        return;
-      }
+      if (prod) { go("product", prod.dataset.product); return; }
       const filter = e.target.closest("[data-filter]");
-      if (filter) {
-        state.filter = filter.dataset.filter;
-        renderCatalog();
-        return;
-      }
-      const remove = e.target.closest("[data-remove]");
-      if (remove) {
-        state.cart = state.cart.filter((c) => c.id !== remove.dataset.remove);
-        saveCart();
-        renderCart();
+      if (filter) { state.filter = filter.dataset.filter; renderCatalog(); return; }
+      const qtyBtn = e.target.closest("[data-qty]");
+      if (qtyBtn) {
+        const row = state.cart.find((c) => c.id === qtyBtn.dataset.qty);
+        if (row) {
+          row.qty += Number(qtyBtn.dataset.d);
+          if (row.qty <= 0) state.cart = state.cart.filter((c) => c.id !== row.id);
+          saveCart(); renderCart();
+        }
       }
     });
 
     window.addEventListener("hashchange", render);
-    saveCart();
-    render();
+    saveCart(); render();
   </script>
 </body>
 </html>

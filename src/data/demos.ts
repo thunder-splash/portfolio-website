@@ -126,6 +126,37 @@ export const interactiveDemos: Record<string, InteractiveDemo> = {
         path: "/batch",
         label: { en: "Batch", ru: "Batch", es: "Batch" },
       },
+      {
+        id: "stock",
+        path: "/stock",
+        label: { en: "Stock", ru: "Склад", es: "Stock" },
+      },
+    ],
+  },
+  gemify: {
+    id: "gemify",
+    baseUrl: "/demos/gemify/",
+    scenes: [
+      {
+        id: "home",
+        path: "/",
+        label: { en: "Home", ru: "Главная", es: "Inicio" },
+      },
+      {
+        id: "collections",
+        path: "/collections",
+        label: { en: "Market", ru: "Маркет", es: "Market" },
+      },
+      {
+        id: "balance",
+        path: "/balance",
+        label: { en: "Balance", ru: "Баланс", es: "Balance" },
+      },
+      {
+        id: "profile",
+        path: "/profile",
+        label: { en: "Profile", ru: "Профиль", es: "Perfil" },
+      },
     ],
   },
   axioma: {
@@ -180,6 +211,7 @@ export const projectDemoMap: Record<
   axioma: { demoId: "axioma", sceneId: "workbench" },
   "axioma-admin": { demoId: "axioma", sceneId: "admin" },
   "web3-tamagotchi": { demoId: "mochi", sceneId: "home" },
+  "gemify-market": { demoId: "gemify", sceneId: "home" },
 };
 
 export function getProjectDemo(projectId: string) {

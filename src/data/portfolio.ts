@@ -1,6 +1,6 @@
 export const profile = {
   name: "Alexey Shuganov",
-  stackLine: "React / TypeScript / Node.js",
+  stackLine: "React / TypeScript / Hono",
   location: "Minsk, Belarus",
   email: "shtepadip@mail.ru",
   telegram: "@pantsoffortune",
@@ -19,12 +19,14 @@ export const techCategories = [
     span: "md:col-span-2 md:row-span-2",
     skills: [
       "OpenAI API",
+      "Claude API",
       "Bolt.new",
       "Lovable",
       "Cursor",
       "Copilot",
       "Prompt Eng.",
       "Agent Pipelines",
+      "MCP",
     ],
   },
   {
@@ -40,25 +42,54 @@ export const techCategories = [
       "MobX",
       "Zustand",
       "Reatom",
+      "TanStack Query",
+      "React Router",
     ],
   },
   {
     id: "backend",
     accent: "blue" as const,
-    span: "md:col-span-1",
-    skills: ["Node.js", "REST", "GraphQL", "PostgreSQL"],
+    span: "md:col-span-2",
+    skills: [
+      "Hono",
+      "Node.js",
+      "REST",
+      "GraphQL",
+      "PostgreSQL",
+      "Prisma",
+      "Redis",
+      "JWT",
+      "WebSockets",
+    ],
   },
   {
     id: "uiux",
     accent: "violet" as const,
-    span: "md:col-span-1",
-    skills: ["MUI", "Framer Motion", "Tailwind", "Responsive"],
+    span: "md:col-span-2",
+    skills: [
+      "MUI",
+      "Framer Motion",
+      "Tailwind",
+      "Sass",
+      "Responsive",
+      "Design Systems",
+      "A11y",
+    ],
   },
   {
     id: "devops",
     accent: "slate" as const,
     span: "md:col-span-2",
-    skills: ["Vite", "Webpack", "Docker", "Git", "CI/CD", "Linux"],
+    skills: [
+      "Vite",
+      "Webpack",
+      "Docker",
+      "Git",
+      "GitHub Actions",
+      "CI/CD",
+      "Vercel",
+      "Linux",
+    ],
   },
 ] as const;
 
@@ -112,7 +143,7 @@ export const experience = [
   {
     id: "agsoft",
     company: "AG-Soft",
-    stack: ["React", "TypeScript", "PostgreSQL", "Node.js", "REST"],
+    stack: ["React", "TypeScript", "PostgreSQL", "Hono", "Node.js", "REST"],
     projects: [
       {
         id: "axioma",
@@ -162,32 +193,38 @@ export const experience = [
   {
     id: "multicode",
     company: "MultiCode",
-    stack: ["React", "Next.js", "Node.js", "JWT", "OAuth", "Sass"],
+    stack: ["React", "Next.js", "Hono", "Node.js", "JWT", "OAuth", "Sass"],
     projects: [
       {
         id: "furniture-shop",
         impact: "99/100 CWV",
-        tags: ["Next.js", "E-com", "SEO"],
-        image: "/projects/furniture-shop-202607210316.png",
+        tags: ["Next.js", "Configurator", "E-com"],
+        image: "/projects/furniture-shop-202607210430.png",
       },
       {
         id: "hierarchy-dnd",
         impact: "Ops speed↑",
-        tags: ["DnD", "Admin", "SaaS"],
-        image: "/projects/hierarchy-dnd-202607210316.png",
+        tags: ["DnD", "Admin", "Stock"],
+        image: "/projects/hierarchy-dnd-202607210430.png",
       },
     ],
   },
   {
     id: "freelance",
     company: "Freelance",
-    stack: ["React", "Web3", "TypeScript", "Vite", "Tailwind"],
+    stack: ["React", "Web3", "TypeScript", "Hono", "Vite", "Tailwind"],
     projects: [
       {
         id: "web3-tamagotchi",
         impact: "Playable MVP",
-        tags: ["Web3", "Tamagotchi", "Mock wallet"],
-        image: "/projects/mochi-202607210328.png",
+        tags: ["Web3", "Mini-game", "Tamagotchi"],
+        image: "/projects/mochi-202607210335.png",
+      },
+      {
+        id: "gemify-market",
+        impact: "NFT market",
+        tags: ["Web3", "Marketplace", "Balance"],
+        image: "/projects/gemify-202607210435.png",
       },
     ],
   },
