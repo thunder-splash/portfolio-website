@@ -240,23 +240,24 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "IBM MAXIMO → AXIOMA. Fullstack TypeScript + PostgreSQL; query performance +40%.",
           projects: {
             axioma: {
-              title: "AXIOMA Platform",
+              title: "АКСИОМА Workbench",
               type: "Case Study",
               summary:
-                "Next-gen business platform replacing IBM MAXIMO workflows.",
+                "Illustrative EAM/ТОИР workbench: work orders, assets, PG performance story.",
               points: [
-                "Front + server utilities end-to-end",
-                "Legacy → modern TypeScript models",
-                "PostgreSQL layouts + filtering (+40%)",
+                "Interactive WO board with status changes",
+                "Asset hierarchy → linked orders",
+                "PostgreSQL query-gain narrative (+40%)",
               ],
             },
             "axioma-admin": {
-              title: "Ops Admin Console",
+              title: "АКСИОМА Admin / Cutover",
               type: "Module",
-              summary: "RBAC and migration tooling for the MAXIMO cutover.",
+              summary:
+                "RBAC toggles and MAXIMO cutover checklist for a safer migration story.",
               points: [
-                "Role-based operational views",
-                "Safer validation during migration",
+                "Clickable role permissions",
+                "Cutover steps with local progress",
               ],
             },
           },
@@ -319,24 +320,24 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "Furniture e-com + SaaS admin. JWT/OAuth, DnD hierarchies, Next.js SEO to 99/100 CWV.",
           projects: {
             "furniture-shop": {
-              title: "Furniture E-commerce",
+              title: "FORMA Furniture Shop",
               type: "Case Study",
               summary:
-                "High-traffic storefront migrated to Next.js for SEO & CWV.",
+                "Illustrative Next.js furniture storefront: catalog → PDP → cart with mock OAuth.",
               points: [
-                "Full-cycle catalog → checkout",
-                "JWT + multi-provider OAuth",
-                "Core Web Vitals 99/100",
+                "Interactive catalog, PDP and checkout demo",
+                "JWT / multi-provider OAuth mock flow",
+                "Performance-minded UI · CWV 99/100 story",
               ],
             },
             "hierarchy-dnd": {
-              title: "Hierarchy DnD Admin",
+              title: "Meridian Hierarchy Admin",
               type: "SaaS",
               summary:
-                "Nested category sorting with batch edit for merchandisers.",
+                "Merchandising tree with live drag-and-drop nesting and batch actions.",
               points: [
-                "Advanced drag-and-drop trees",
-                "Massive batch-editing workflows",
+                "Real DnD reorder / nest on category trees",
+                "Batch move + publish with conflict toast",
               ],
             },
           },
@@ -345,17 +346,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Web Developer",
           period: "May 2021 – Mar 2022 · Global",
           blurb:
-            "15+ MVPs & landings for startups. React/Node delivery 2× faster with early AI tooling.",
+            "Shipped playful MVPs fast — including a Web3 tamagotchi companion with mock wallet flows.",
           projects: {
-            "mvp-factory": {
-              title: "MVP Delivery Track",
-              type: "Portfolio",
+            "web3-tamagotchi": {
+              title: "MOCHI — Web3 Tamagotchi",
+              type: "Playable MVP",
               summary:
-                "Custom landings and MVP builds under budget for global clients.",
+                "On-chain vibes pet: feed, play, rest, fake NFT sync. Portfolio demo only.",
               points: [
-                "15+ micro-projects shipped",
-                "React + Node + PostgreSQL stacks",
-                "Prompt engineering for 2× MVP speed",
+                "Live stats + mood-driven pet UI",
+                "Mock wallet, txs and NFT checkpoint",
+                "Lightweight SPA — zero real chain risk",
               ],
             },
           },
@@ -527,22 +528,24 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "IBM MAXIMO → AXIOMA. TypeScript fullstack + PostgreSQL; +40% к запросам.",
           projects: {
             axioma: {
-              title: "AXIOMA Platform",
+              title: "АКСИОМА Workbench",
               type: "Кейс",
-              summary: "Бизнес-платформа нового поколения вместо MAXIMO.",
+              summary:
+                "Показательный EAM/ТОиР: наряды, активы, история про +40% к PG.",
               points: [
-                "Frontend + server utilities end-to-end",
-                "Legacy → современные TypeScript-модели",
-                "Оптимизация PostgreSQL (+40%)",
+                "Интерактивная доска WO со сменой статусов",
+                "Иерархия активов → связанные наряды",
+                "Narrative про ускорение PostgreSQL (+40%)",
               ],
             },
             "axioma-admin": {
-              title: "Ops Admin Console",
+              title: "АКСИОМА Admin / Cutover",
               type: "Модуль",
-              summary: "RBAC и тулзы миграции для cutover с MAXIMO.",
+              summary:
+                "RBAC-переключатели и чеклист cutover MAXIMO для безопасной миграции.",
               points: [
-                "Ролевые operational-экраны",
-                "Валидация данных при миграции",
+                "Кликабельные права ролей",
+                "Шаги cutover с локальным прогрессом",
               ],
             },
           },
@@ -604,22 +607,24 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "E-com мебели + SaaS-админка. JWT/OAuth, DnD-иерархии, Next.js SEO до 99/100 CWV.",
           projects: {
             "furniture-shop": {
-              title: "Furniture E-commerce",
+              title: "FORMA — мебельный магазин",
               type: "Кейс",
-              summary: "High-traffic витрина с миграцией на Next.js.",
+              summary:
+                "Показательная витрина на Next.js: каталог → PDP → корзина и mock OAuth.",
               points: [
-                "Полный цикл catalog → checkout",
-                "JWT + multi-provider OAuth",
-                "Core Web Vitals 99/100",
+                "Интерактивный каталог, карточка товара и checkout",
+                "JWT / multi-provider OAuth (имитация)",
+                "Лёгкий UI · история про CWV 99/100",
               ],
             },
             "hierarchy-dnd": {
-              title: "Hierarchy DnD Admin",
+              title: "Meridian — иерархии DnD",
               type: "SaaS",
-              summary: "Вложенная сортировка категорий и batch-edit.",
+              summary:
+                "Дерево категорий с живым drag-and-drop и batch-операциями.",
               points: [
-                "Продвинутый drag-and-drop",
-                "Массовое редактирование",
+                "Реальный DnD: порядок и вложенность",
+                "Batch move + publish с conflict-тостом",
               ],
             },
           },
@@ -628,16 +633,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Web Developer",
           period: "Май 2021 – Март 2022 · Global",
           blurb:
-            "15+ MVP и лендингов. React/Node в 2× быстрее рынка за счёт early AI-инструментов.",
+            "Быстрые MVP с характером — в том числе Web3-тамагочи с mock-кошельком.",
           projects: {
-            "mvp-factory": {
-              title: "MVP Delivery Track",
-              type: "Портфолио",
-              summary: "Кастомные лендинги и MVP для стартапов и бизнеса.",
+            "web3-tamagotchi": {
+              title: "MOCHI — Web3 Tamagotchi",
+              type: "Playable MVP",
+              summary:
+                "Ончейн-вайб питомец: кормёжка, игра, отдых, fake NFT sync. Только демо.",
               points: [
-                "15+ микропроектов",
-                "React + Node + PostgreSQL",
-                "Prompt engineering → 2× к скорости MVP",
+                "Живые статы и мордашка по настроению",
+                "Mock wallet, txs и NFT-чекпоинт",
+                "Лёгкая SPA — без реального блокчейна",
               ],
             },
           },
@@ -810,22 +816,24 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "IBM MAXIMO → AXIOMA. TypeScript fullstack + PostgreSQL; +40% queries.",
           projects: {
             axioma: {
-              title: "AXIOMA Platform",
+              title: "АКСИОМА Workbench",
               type: "Caso",
-              summary: "Plataforma business de nueva generación vs MAXIMO.",
+              summary:
+                "EAM/ТОИР ilustrativo: órdenes, activos y +40% PG story.",
               points: [
-                "Front + server utilities end-to-end",
-                "Legacy → modelos TypeScript modernos",
-                "PostgreSQL optimizado (+40%)",
+                "Tablero WO interactivo con estados",
+                "Jerarquía de activos → órdenes ligadas",
+                "Narrativa de PostgreSQL (+40%)",
               ],
             },
             "axioma-admin": {
-              title: "Ops Admin Console",
+              title: "АКСИОМА Admin / Cutover",
               type: "Módulo",
-              summary: "RBAC y tooling de migración para el cutover.",
+              summary:
+                "RBAC y checklist de cutover MAXIMO para una migración más segura.",
               points: [
-                "Vistas operativas por rol",
-                "Validación segura en migración",
+                "Permisos de rol clicables",
+                "Pasos de cutover con progreso local",
               ],
             },
           },
@@ -888,22 +896,24 @@ export const dictionaries: Record<Locale, Dictionary> = {
             "E-com de muebles + admin SaaS. JWT/OAuth, DnD, Next.js SEO a 99/100 CWV.",
           projects: {
             "furniture-shop": {
-              title: "Furniture E-commerce",
+              title: "FORMA — tienda de muebles",
               type: "Caso",
-              summary: "Storefront high-traffic migrado a Next.js.",
+              summary:
+                "Vitrina ilustrativa Next.js: catálogo → PDP → carrito y OAuth mock.",
               points: [
-                "Ciclo completo catálogo → checkout",
-                "JWT + OAuth multi-provider",
-                "Core Web Vitals 99/100",
+                "Catálogo, PDP y checkout interactivos",
+                "JWT / OAuth multi-provider (mock)",
+                "UI ligera · historia CWV 99/100",
               ],
             },
             "hierarchy-dnd": {
-              title: "Hierarchy DnD Admin",
+              title: "Meridian — jerarquías DnD",
               type: "SaaS",
-              summary: "Orden de categorías anidadas con batch edit.",
+              summary:
+                "Árbol de categorías con drag-and-drop real y acciones batch.",
               points: [
-                "Drag-and-drop avanzado",
-                "Edición masiva de jerarquías",
+                "DnD real: orden y anidación",
+                "Batch move + publish con toast de conflicto",
               ],
             },
           },
@@ -912,16 +922,17 @@ export const dictionaries: Record<Locale, Dictionary> = {
           role: "Fullstack Web Developer",
           period: "May 2021 – Mar 2022 · Global",
           blurb:
-            "15+ MVPs y landings. React/Node 2× más rápido con early AI tooling.",
+            "MVPs con carácter — incluido un tamagotchi Web3 con wallet mock.",
           projects: {
-            "mvp-factory": {
-              title: "MVP Delivery Track",
-              type: "Portfolio",
-              summary: "Landings y MVPs a medida para startups globales.",
+            "web3-tamagotchi": {
+              title: "MOCHI — Web3 Tamagotchi",
+              type: "Playable MVP",
+              summary:
+                "Mascota on-chain vibes: feed, play, rest, fake NFT sync. Solo demo.",
               points: [
-                "15+ micro-proyectos",
-                "React + Node + PostgreSQL",
-                "Prompt engineering → 2× velocidad MVP",
+                "Stats vivas y cara según humor",
+                "Mock wallet, txs y checkpoint NFT",
+                "SPA ligera — sin cadena real",
               ],
             },
           },

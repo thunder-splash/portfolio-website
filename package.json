@@ -10,7 +10,8 @@
     "capture:mockups": "node scripts/capture-mockups.mjs",
     "sync:fasttable-demo": "node scripts/sync-fasttable-demo.mjs",
     "sync:sparkora-demo": "node scripts/sync-sparkora-demo.mjs",
-    "capture:sparkora": "node scripts/capture-sparkora-demo.mjs"
+    "capture:sparkora": "node scripts/capture-sparkora-demo.mjs",
+    "capture:multicode": "node scripts/capture-multicode-demos.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

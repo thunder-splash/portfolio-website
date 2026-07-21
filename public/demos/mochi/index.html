@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOCHI — Web3 Tamagotchi demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f2f6f3;
+      --ink: #12201a;
+      --muted: #5d6f66;
+      --line: rgba(18, 32, 26, 0.12);
+      --mint: #1f9a6a;
+      --mint-soft: #d8f5e7;
+      --coral: #e4572e;
+      --coral-soft: #ffe3da;
+      --panel: #fffef9;
+      --chain: #2a4d7a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: Syne, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 0%, rgba(31,154,106,0.16), transparent),
+        radial-gradient(ellipse 50% 35% at 0% 100%, rgba(228,87,46,0.1), transparent),
+        var(--bg);
+    }
+    button { font: inherit; border: 0; background: none; cursor: pointer; color: inherit; }
+    .shell { min-height: 100vh; display: flex; flex-direction: column; }
+    .top {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 12px clamp(14px, 3vw, 32px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,254,249,0.88);
+      backdrop-filter: blur(10px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .brand { font-weight: 800; font-size: 20px; letter-spacing: 0.04em; }
+    .brand span { color: var(--mint); }
+    .chip {
+      padding: 6px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
+      background: var(--mint-soft); color: var(--mint);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .wallet {
+      margin-left: auto;
+      padding: 9px 14px; border-radius: 999px;
+      background: var(--ink); color: #f4faf6;
+      font-size: 12px; font-weight: 700;
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .wallet.on { background: var(--mint); }
+    .note {
+      padding: 8px clamp(14px, 3vw, 32px);
+      font-size: 11px; color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,227,218,0.35);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    main {
+      flex: 1; width: 100%; max-width: 980px; margin: 0 auto;
+      padding: 22px clamp(14px, 3vw, 32px) 40px;
+      display: grid; gap: 18px;
+    }
+    @media (min-width: 840px) {
+      main { grid-template-columns: 1.05fr 0.95fr; align-items: start; }
+    }
+    .stage {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px 18px 18px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px;
+    }
+    .stage::before {
+      content: "";
+      position: absolute; inset: auto -20% -30% -20%; height: 55%;
+      background: radial-gradient(circle at 50% 0%, rgba(31,154,106,0.18), transparent 60%);
+      pointer-events: none;
+    }
+    .pet-wrap {
+      width: 220px; height: 220px;
+      position: relative;
+      animation: float 3.2s ease-in-out infinite;
+    }
+    .pet {
+      width: 100%; height: 100%;
+      border-radius: 46% 54% 48% 52% / 52% 44% 56% 48%;
+      background: radial-gradient(circle at 35% 30%, #fff7e8, #ffb38a 45%, #e4572e 100%);
+      box-shadow:
+        inset -18px -22px 40px rgba(120, 30, 10, 0.2),
+        0 24px 40px rgba(228, 87, 46, 0.22);
+      position: relative;
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+    .pet.hungry { filter: saturate(0.7) brightness(0.95); }
+    .pet.sleepy { filter: brightness(0.85) contrast(0.95); }
+    .pet.happy { transform: scale(1.04); }
+    .eye {
+      position: absolute; top: 42%; width: 18px; height: 22px;
+      background: var(--ink); border-radius: 50%;
+      animation: blink 4.5s infinite;
+    }
+    .eye.l { left: 32%; }
+    .eye.r { right: 32%; }
+    .eye.sleepy { height: 4px; top: 48%; border-radius: 4px; animation: none; }
+    .mouth {
+      position: absolute; left: 50%; bottom: 28%;
+      width: 36px; height: 18px;
+      border: 3px solid var(--ink); border-top: 0;
+      border-radius: 0 0 24px 24px;
+      transform: translateX(-50%);
+    }
+    .mouth.sad {
+      height: 14px; bottom: 30%;
+      border: 0; border-top: 3px solid var(--ink);
+      border-radius: 24px 24px 0 0;
+    }
+    .blush {
+      position: absolute; top: 54%; width: 16px; height: 10px;
+      background: rgba(255,120,140,0.45); border-radius: 50%; filter: blur(1px);
+    }
+    .blush.l { left: 18%; }
+    .blush.r { right: 18%; }
+    .pet-name {
+      font-size: 28px; font-weight: 800; position: relative; z-index: 1;
+    }
+    .mood {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px; color: var(--muted); position: relative; z-index: 1;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .panel h1 {
+      font-size: clamp(26px, 3.5vw, 34px);
+      font-weight: 800; line-height: 1.1;
+    }
+    .panel .lead { color: var(--muted); font-size: 14px; line-height: 1.45; font-weight: 600; }
+    .stats { display: grid; gap: 10px; }
+    .stat label {
+      display: flex; justify-content: space-between;
+      font-size: 12px; font-weight: 700; margin-bottom: 5px;
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .bar {
+      height: 12px; border-radius: 999px; background: rgba(18,32,26,0.08); overflow: hidden;
+    }
+    .bar i {
+      display: block; height: 100%; border-radius: inherit;
+      background: var(--mint); width: 0%; transition: width 0.35s ease;
+    }
+    .bar.mood i { background: var(--coral); }
+    .bar.energy i { background: var(--chain); }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .actions button {
+      padding: 14px 12px; border-radius: 16px;
+      font-weight: 800; font-size: 14px;
+      border: 1px solid var(--line); background: #fff;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .actions button:active { transform: scale(0.97); }
+    .actions button.primary { background: var(--mint); color: #f3fff8; border-color: transparent; }
+    .actions button.warm { background: var(--coral); color: #fff8f5; border-color: transparent; }
+    .chain-box {
+      padding: 12px; border-radius: 16px;
+      background: #eef3f9; border: 1px dashed rgba(42,77,122,0.35);
+      font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--chain);
+      line-height: 1.45;
+    }
+    .toast {
+      position: fixed; left: 50%; bottom: 18px; transform: translate(-50%, 120%);
+      padding: 12px 16px; border-radius: 999px;
+      background: var(--ink); color: #f4faf6; font-size: 13px; font-weight: 700;
+      opacity: 0; transition: 0.25s ease; z-index: 30; white-space: nowrap;
+    }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="brand">MO<span>CHI</span></div>
+      <div class="chip">Web3 Tamagotchi · demo</div>
+      <button class="wallet" id="walletBtn">Connect wallet</button>
+    </header>
+    <div class="note">Portfolio demo · mock wallet / fake txs · not a real chain pet · synthetic only</div>
+    <main>
+      <section class="stage">
+        <div class="pet-wrap">
+          <div class="pet" id="pet">
+            <div class="eye l" id="eyeL"></div>
+            <div class="eye r" id="eyeR"></div>
+            <div class="blush l"></div>
+            <div class="blush r"></div>
+            <div class="mouth" id="mouth"></div>
+          </div>
+        </div>
+        <div class="pet-name" id="petName">Mochi</div>
+        <div class="mood" id="moodLine">feeling curious</div>
+      </section>
+      <section class="panel">
+        <div>
+          <h1>On-chain companion</h1>
+          <p class="lead">Корми, играй, отдыхай. «Синхронизация» пишет fake tx в demo-ledger. Без реального Web3 — только вайб MVP.</p>
+        </div>
+        <div class="stats">
+          <div>
+            <label><span>HUNGER</span><span id="hungerVal">80</span></label>
+            <div class="bar"><i id="hungerBar"></i></div>
+          </div>
+          <div>
+            <label><span>MOOD</span><span id="moodVal">70</span></label>
+            <div class="bar mood"><i id="moodBar"></i></div>
+          </div>
+          <div>
+            <label><span>ENERGY</span><span id="energyVal">75</span></label>
+            <div class="bar energy"><i id="energyBar"></i></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="feed">Feed · 0.001 ETH</button>
+          <button class="warm" id="play">Play mini-game</button>
+          <button id="rest">Rest</button>
+          <button id="sync">Sync on-chain</button>
+        </div>
+        <div class="chain-box" id="ledger">
+          wallet: disconnected<br />
+          last tx: —<br />
+          pet NFT: unminted
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const KEY = "mochi_pet_v1";
+    const defaultState = () => ({
+      name: "Mochi",
+      hunger: 78,
+      mood: 72,
+      energy: 80,
+      wallet: null,
+      minted: false,
+      lastTx: null,
+      txs: 0,
+    });
+
+    let state = { ...defaultState(), ...(JSON.parse(localStorage.getItem(KEY) || "{}")) };
+
+    const el = (id) => document.getElementById(id);
+    const toastEl = el("toast");
+
+    function clamp(n) { return Math.max(0, Math.min(100, Math.round(n))); }
+
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1600);
+    }
+
+    function fakeTx() {
+      const hex = [...crypto.getRandomValues(new Uint8Array(4))]
+        .map((b) => b.toString(16).padStart(2, "0")).join("");
+      return `0x${hex}…demo`;
+    }
+
+    function save() {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    }
+
+    function moodText() {
+      const avg = (state.hunger + state.mood + state.energy) / 3;
+      if (state.energy < 25) return "needs a nap · zzz";
+      if (state.hunger < 30) return "hangry · feed me pls";
+      if (state.mood > 80 && state.hunger > 60) return "vibing on-chain ✨";
+      if (avg < 40) return "low battery companion";
+      return "feeling curious";
+    }
+
+    function render() {
+      el("hungerVal").textContent = state.hunger;
+      el("moodVal").textContent = state.mood;
+      el("energyVal").textContent = state.energy;
+      el("hungerBar").style.width = state.hunger + "%";
+      el("moodBar").style.width = state.mood + "%";
+      el("energyBar").style.width = state.energy + "%";
+      el("petName").textContent = state.name;
+      el("moodLine").textContent = moodText();
+
+      const pet = el("pet");
+      const mouth = el("mouth");
+      const eyes = [el("eyeL"), el("eyeR")];
+      pet.className = "pet";
+      mouth.className = "mouth";
+      eyes.forEach((e) => e.classList.remove("sleepy"));
+
+      if (state.energy < 28) {
+        pet.classList.add("sleepy");
+        eyes.forEach((e) => e.classList.add("sleepy"));
+      } else if (state.hunger < 35) {
+        pet.classList.add("hungry");
+        mouth.classList.add("sad");
+      } else if (state.mood > 75) {
+        pet.classList.add("happy");
+      }
+
+      el("walletBtn").textContent = state.wallet
+        ? state.wallet
+        : "Connect wallet";
+      el("walletBtn").classList.toggle("on", !!state.wallet);
+
+      el("ledger").innerHTML =
+        `wallet: ${state.wallet || "disconnected"}<br/>` +
+        `last tx: ${state.lastTx || "—"}<br/>` +
+        `pet NFT: ${state.minted ? "MOCHI #" + (1000 + state.txs) : "unminted"} · txs ${state.txs}`;
+    }
+
+    function requireWallet() {
+      if (state.wallet) return true;
+      toast("Сначала connect wallet (mock)");
+      return false;
+    }
+
+    el("walletBtn").onclick = () => {
+      if (state.wallet) {
+        state.wallet = null;
+        toast("Wallet disconnected");
+      } else {
+        state.wallet = "0xA4…c91";
+        toast("Mock wallet connected");
+      }
+      save(); render();
+    };
+
+    el("feed").onclick = () => {
+      if (!requireWallet()) return;
+      state.hunger = clamp(state.hunger + 22);
+      state.mood = clamp(state.mood + 6);
+      state.energy = clamp(state.energy - 4);
+      state.lastTx = fakeTx();
+      state.txs += 1;
+      save(); render();
+      toast("Fed · mock 0.001 ETH");
+    };
+
+    el("play").onclick = () => {
+      if (!requireWallet()) return;
+      if (state.energy < 15) { toast("Too tired · rest first"); return; }
+      state.mood = clamp(state.mood + 18);
+      state.energy = clamp(state.energy - 14);
+      state.hunger = clamp(state.hunger - 8);
+      state.lastTx = fakeTx();
+      state.txs += 1;
+      save(); render();
+      toast("Mini-game win · +mood");
+    };
+
+    el("rest").onclick = () => {
+      state.energy = clamp(state.energy + 24);
+      state.hunger = clamp(state.hunger - 5);
+      save(); render();
+      toast("Resting… energy up");
+    };
+
+    el("sync").onclick = () => {
+      if (!requireWallet()) return;
+      state.minted = true;
+      state.lastTx = fakeTx();
+      state.txs += 1;
+      save(); render();
+      toast("Synced · fake NFT checkpoint");
+    };
+
+    // gentle decay so it feels alive
+    setInterval(() => {
+      state.hunger = clamp(state.hunger - 1);
+      state.energy = clamp(state.energy - 0.6);
+      state.mood = clamp(state.mood - (state.hunger < 40 ? 1.2 : 0.4));
+      save(); render();
+    }, 5000);
+
+    render();
+  </script>
+</body>
+</html>

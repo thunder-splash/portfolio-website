@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>АКСИОМА · portfolio demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #e9eef2;
+      --panel: #f7fafc;
+      --ink: #14202b;
+      --muted: #5c6b78;
+      --line: rgba(20, 32, 43, 0.1);
+      --steel: #1f4e6b;
+      --steel-soft: #d9e8f2;
+      --ok: #1f7a4c;
+      --ok-soft: #dff3e8;
+      --warn: #9a5a12;
+      --warn-soft: #fff0d9;
+      --crit: #b42318;
+      --crit-soft: #fde8e6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Manrope, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 70% 40% at 0% 0%, rgba(31, 78, 107, 0.12), transparent),
+        linear-gradient(180deg, #dfe6ec, var(--bg));
+      min-height: 100vh;
+    }
+    button { font: inherit; border: 0; background: none; cursor: pointer; color: inherit; }
+    .shell { min-height: 100vh; display: flex; flex-direction: column; }
+    .top {
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      padding: 12px clamp(14px, 3vw, 28px);
+      background: rgba(247, 250, 252, 0.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      position: sticky; top: 0; z-index: 20;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: Unbounded, sans-serif;
+      font-weight: 700; font-size: 15px; letter-spacing: 0.02em;
+    }
+    .logo i {
+      width: 30px; height: 30px; border-radius: 9px;
+      display: grid; place-items: center; font-style: normal;
+      background: var(--steel); color: #edf5fa; font-size: 13px;
+    }
+    .logo small { display: block; font-family: Manrope, sans-serif; font-weight: 500; font-size: 11px; color: var(--muted); letter-spacing: 0; }
+    .nav { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+    .nav button {
+      padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      color: var(--muted); border: 1px solid transparent;
+    }
+    .nav button.on { background: var(--steel-soft); color: var(--steel); }
+    .note {
+      padding: 8px clamp(14px, 3vw, 28px);
+      font-size: 11px; color: var(--muted);
+      background: rgba(255, 240, 217, 0.55);
+      border-bottom: 1px solid rgba(154, 90, 18, 0.18);
+    }
+    main {
+      flex: 1; width: 100%; max-width: 1220px; margin: 0 auto;
+      padding: 18px clamp(14px, 3vw, 28px) 36px;
+    }
+    .hero {
+      display: grid; gap: 16px; margin-bottom: 16px;
+    }
+    @media (min-width: 860px) {
+      .hero { grid-template-columns: 1.3fr 0.9fr; align-items: end; }
+    }
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--steel); margin-bottom: 8px;
+    }
+    h1 {
+      font-family: Unbounded, sans-serif;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.15; margin-bottom: 8px;
+    }
+    .lead { color: var(--muted); font-size: 14px; line-height: 1.5; max-width: 52ch; }
+    .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .kpi {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 14px; padding: 12px;
+    }
+    .kpi b { display: block; font-size: 20px; margin-bottom: 2px; }
+    .kpi span { font-size: 11px; color: var(--muted); }
+    .kpi.ok b { color: var(--ok); }
+    .layout { display: grid; gap: 14px; }
+    @media (min-width: 920px) {
+      .layout.work { grid-template-columns: 1.15fr 0.85fr; }
+      .layout.admin { grid-template-columns: 1fr 1fr; }
+    }
+    .card {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 16px; padding: 14px;
+    }
+    .card h2 {
+      font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .filters button {
+      padding: 7px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+      border: 1px solid var(--line); background: #fff; color: var(--muted);
+    }
+    .filters button.on { background: var(--ink); color: #f4f7fa; border-color: var(--ink); }
+    .wo {
+      width: 100%; text-align: left;
+      display: grid; gap: 4px;
+      padding: 12px; border-radius: 12px; margin-bottom: 8px;
+      border: 1px solid var(--line); background: #fff;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .wo:hover, .wo.active { border-color: var(--steel); background: var(--steel-soft); }
+    .wo-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .id { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--steel); }
+    .pri {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 3px 7px; border-radius: 999px; text-transform: uppercase;
+    }
+    .pri.high { background: var(--crit-soft); color: var(--crit); }
+    .pri.med { background: var(--warn-soft); color: var(--warn); }
+    .pri.low { background: var(--ok-soft); color: var(--ok); }
+    .wo b { font-size: 14px; }
+    .wo p { font-size: 12px; color: var(--muted); }
+    .detail h3 { font-size: 18px; margin-bottom: 6px; }
+    .meta { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.45; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .pill {
+      padding: 8px 10px; border-radius: 10px; background: #fff;
+      border: 1px solid var(--line); font-size: 12px;
+    }
+    .pill span { color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn {
+      padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 700;
+      border: 1px solid var(--line); background: #fff;
+    }
+    .btn.primary { background: var(--steel); color: #edf5fa; border-color: transparent; }
+    .btn.ok { background: var(--ok); color: #f3fff8; border-color: transparent; }
+    .asset {
+      padding: 11px 12px; border-radius: 12px; border: 1px solid var(--line);
+      background: #fff; margin-bottom: 8px;
+    }
+    .asset.child { margin-left: 18px; }
+    .asset b { display: block; font-size: 13px; margin-bottom: 2px; }
+    .asset span { font-size: 11px; color: var(--muted); font-family: "JetBrains Mono", monospace; }
+    .role {
+      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+      padding: 12px; border-radius: 12px; border: 1px solid var(--line);
+      background: #fff; margin-bottom: 8px;
+    }
+    .perms { display: flex; flex-wrap: wrap; gap: 4px; }
+    .perms label {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 8px; border-radius: 8px; background: var(--steel-soft);
+      font-size: 11px; font-weight: 600; color: var(--steel); cursor: pointer;
+    }
+    .perms input { accent-color: var(--steel); }
+    .step {
+      display: flex; gap: 12px; padding: 12px 0;
+      border-bottom: 1px solid var(--line); align-items: flex-start;
+    }
+    .step:last-child { border-bottom: 0; }
+    .n {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center; flex-shrink: 0;
+      background: var(--steel-soft); color: var(--steel);
+      font-size: 12px; font-weight: 700;
+    }
+    .step.done .n { background: var(--ok); color: #fff; }
+    .step button {
+      margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--steel);
+      text-decoration: underline; text-underline-offset: 3px;
+    }
+    .toast {
+      position: fixed; right: 16px; bottom: 16px; z-index: 40;
+      padding: 12px 14px; border-radius: 12px;
+      background: var(--ink); color: #f4f7fa; font-size: 13px;
+      transform: translateY(120%); opacity: 0; transition: 0.22s ease;
+    }
+    .toast.show { transform: none; opacity: 1; }
+    .gain { color: var(--ok); font-family: "JetBrains Mono", monospace; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="logo"><i>А</i><div>АКСИОМА<small>EAM / ТОиР · portfolio demo</small></div></div>
+      <nav class="nav">
+        <button data-go="workbench" class="on">Workbench</button>
+        <button data-go="assets">Assets</button>
+        <button data-go="admin">Admin / Cutover</button>
+      </nav>
+    </header>
+    <div class="note">
+      Показательное демо портфолио. Синтетические данные и UI — не продакшен-платформа ООО «АКСИОМА» / Интерпроком, не копия реестрового ПО и намеренно упрощены под NDA-safe витрину.
+    </div>
+    <main id="root"></main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const WO = [
+      { id: "WO-20491", title: "Насосная линия A · вибрация", asset: "Pump-A12", pri: "high", status: "in_progress", assignee: "eng-12", sla: "4ч" },
+      { id: "WO-20488", title: "HVAC Север · замена фильтра", asset: "HVAC-N3", pri: "med", status: "parts", assignee: "eng-07", sla: "1д" },
+      { id: "WO-20471", title: "Конвейер 3 · плановый осмотр", asset: "CNV-03", pri: "low", status: "scheduled", assignee: "eng-03", sla: "3д" },
+      { id: "WO-20455", title: "Датчики линии · калибровка", asset: "IOT-Cluster", pri: "high", status: "open", assignee: "—", sla: "8ч" },
+      { id: "WO-20440", title: "Компрессор B · масло", asset: "CMP-B2", pri: "med", status: "done", assignee: "eng-12", sla: "закрыт" },
+    ];
+
+    const ASSETS = [
+      { id: "SITE-Ural", name: "Площадка «Урал»", kind: "site", parent: null },
+      { id: "BLD-1", name: "Цех №1", kind: "building", parent: "SITE-Ural" },
+      { id: "Pump-A12", name: "Насос A12", kind: "equipment", parent: "BLD-1", crit: "A" },
+      { id: "CNV-03", name: "Конвейер 3", kind: "equipment", parent: "BLD-1", crit: "B" },
+      { id: "BLD-2", name: "Инженерный корпус", kind: "building", parent: "SITE-Ural" },
+      { id: "HVAC-N3", name: "HVAC Север", kind: "equipment", parent: "BLD-2", crit: "B" },
+      { id: "IOT-Cluster", name: "IoT-кластер", kind: "equipment", parent: "BLD-2", crit: "A" },
+    ];
+
+    const ROLES = [
+      { id: "lead", name: "Ops Lead", perms: { assets: true, wo: true, approve: true, export: true } },
+      { id: "tech", name: "Technician", perms: { assets: false, wo: true, approve: false, export: false } },
+      { id: "planner", name: "Planner", perms: { assets: true, wo: true, approve: false, export: true } },
+      { id: "auditor", name: "Auditor", perms: { assets: true, wo: false, approve: false, export: true } },
+    ];
+
+    const CUTOVER = [
+      { id: 1, title: "Schema map", text: "MAXIMO objects → AXIOMA models" },
+      { id: 2, title: "Data validation", text: "checksum + orphan detection" },
+      { id: 3, title: "Shadow traffic", text: "parity checks on WO writes" },
+      { id: 4, title: "Go-live gate", text: "rollback plan armed" },
+    ];
+
+    const state = {
+      route: "workbench",
+      filter: "all",
+      selected: "WO-20491",
+      roles: JSON.parse(JSON.stringify(ROLES)),
+      doneSteps: new Set(JSON.parse(localStorage.getItem("ax_steps") || "[1]")),
+      orders: JSON.parse(JSON.stringify(WO)),
+    };
+
+    const root = document.getElementById("root");
+    const toastEl = document.getElementById("toast");
+
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1800);
+    }
+
+    function parseHash() {
+      const h = (location.hash || "#/workbench").replace(/^#/, "") || "/workbench";
+      const part = h.split("/").filter(Boolean)[0] || "workbench";
+      if (["workbench", "assets", "admin"].includes(part)) return part;
+      return "workbench";
+    }
+
+    function go(route) {
+      location.hash = `#/${route}`;
+    }
+
+    function setNav() {
+      document.querySelectorAll(".nav button").forEach((b) => {
+        b.classList.toggle("on", b.dataset.go === state.route);
+      });
+    }
+
+    function statusLabel(s) {
+      return ({ open: "Открыт", in_progress: "В работе", parts: "Ждёт запчасти", scheduled: "План", done: "Закрыт" })[s] || s;
+    }
+
+    function renderWorkbench() {
+      const list = state.orders.filter((w) => state.filter === "all" || w.status === state.filter || (state.filter === "active" && w.status !== "done"));
+      const cur = state.orders.find((w) => w.id === state.selected) || list[0];
+      if (cur) state.selected = cur.id;
+      const openCount = state.orders.filter((w) => w.status !== "done").length;
+      root.innerHTML = `
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Asset Workbench</p>
+            <h1>Наряды ТОиР без простоев</h1>
+            <p class="lead">Лёгкая витрина work orders: приоритеты, SLA, смена статуса. Синтетика для портфолио — без реального бэкенда.</p>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><b>${openCount}</b><span>открытых WO</span></div>
+            <div class="kpi ok"><b>+40%</b><span>query speed story</span></div>
+            <div class="kpi"><b>PG</b><span>TypeScript models</span></div>
+          </div>
+        </section>
+        <div class="layout work">
+          <section class="card">
+            <h2>Work orders</h2>
+            <div class="filters">
+              ${[["all","Все"],["active","Активные"],["high","High"],["open","Открыт"],["done","Закрыт"]].map(([k,l]) =>
+                `<button data-filter="${k}" class="${state.filter===k||(k==="high"&&state.filter==="high")? "on":""}">${l}</button>`
+              ).join("")}
+            </div>
+            <div id="wolist">
+              ${list.filter((w) => state.filter !== "high" || w.pri === "high").map((w) => `
+                <button class="wo ${w.id===state.selected?"active":""}" data-wo="${w.id}">
+                  <div class="wo-top">
+                    <span class="id">${w.id}</span>
+                    <span class="pri ${w.pri}">${w.pri}</span>
+                  </div>
+                  <b>${w.title}</b>
+                  <p>${statusLabel(w.status)} · ${w.assignee} · SLA ${w.sla}</p>
+                </button>`).join("")}
+            </div>
+          </section>
+          <section class="card detail">
+            ${cur ? `
+              <h2>Детали наряда</h2>
+              <div class="id" style="margin-bottom:6px">${cur.id}</div>
+              <h3>${cur.title}</h3>
+              <p class="meta">Актив ${cur.asset}. Приоритет влияет на очередь; статус пишется в demo-state (localStorage не нужен).</p>
+              <div class="row">
+                <div class="pill"><span>Статус</span><br><b>${statusLabel(cur.status)}</b></div>
+                <div class="pill"><span>Исполнитель</span><br><b>${cur.assignee}</b></div>
+                <div class="pill"><span>SLA</span><br><b>${cur.sla}</b></div>
+              </div>
+              <div class="actions">
+                <button class="btn primary" data-status="in_progress">В работу</button>
+                <button class="btn" data-status="parts">Ждёт запчасти</button>
+                <button class="btn ok" data-status="done">Закрыть</button>
+              </div>
+            ` : `<p class="meta">Выберите наряд</p>`}
+          </section>
+        </div>`;
+    }
+
+    function renderAssets() {
+      root.innerHTML = `
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Asset registry</p>
+            <h1>Иерархия объектов</h1>
+            <p class="lead">От площадки до оборудования — как в EAM/учёте имущества. Клик по активу фильтрует связанные наряды.</p>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><b>${ASSETS.length}</b><span>узлов в дереве</span></div>
+            <div class="kpi ok"><b>A/B</b><span>критичность</span></div>
+            <div class="kpi"><b>IoT</b><span>ready hooks</span></div>
+          </div>
+        </section>
+        <div class="layout work">
+          <section class="card">
+            <h2>Дерево активов</h2>
+            ${ASSETS.map((a) => `
+              <button class="asset ${a.parent && a.kind!=="building" ? "child" : ""} ${a.kind==="building"?"child":""}" data-asset="${a.id}" style="${a.kind==="site"?"": a.kind==="building"?"margin-left:12px":"margin-left:28px"}">
+                <b>${a.name}</b>
+                <span>${a.id}${a.crit ? " · crit " + a.crit : ""} · ${a.kind}</span>
+              </button>`).join("")}
+          </section>
+          <section class="card">
+            <h2>Query health</h2>
+            <p class="meta">История оптимизации PostgreSQL после миграции layout’ов — illustrative metrics.</p>
+            <div class="asset"><b>assets_site_idx</b><span class="gain">−38% scan</span></div>
+            <div class="asset"><b>wo_status_created</b><span class="gain">−44% scan</span></div>
+            <div class="asset"><b>parts_sku_fk</b><span class="gain">−29% join</span></div>
+            <button class="btn primary" style="margin-top:12px" data-go="workbench">К нарядам</button>
+          </section>
+        </div>`;
+    }
+
+    function renderAdmin() {
+      root.innerHTML = `
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Ops Admin · Cutover</p>
+            <h1>RBAC и безопасный cutover</h1>
+            <p class="lead">Роли, права и чеклист миграции MAXIMO → современный контур. Всё кликабельно, данные синтетические.</p>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><b>${state.doneSteps.size}/4</b><span>шагов cutover</span></div>
+            <div class="kpi ok"><b>RBAC</b><span>ролевые виды</span></div>
+            <div class="kpi"><b>Gate</b><span>rollback armed</span></div>
+          </div>
+        </section>
+        <div class="layout admin">
+          <section class="card">
+            <h2>Roles</h2>
+            ${state.roles.map((r) => `
+              <div class="role">
+                <b>${r.name}</b>
+                <div class="perms">
+                  ${Object.keys(r.perms).map((p) => `
+                    <label><input type="checkbox" data-role="${r.id}" data-perm="${p}" ${r.perms[p]?"checked":""}/> ${p}</label>
+                  `).join("")}
+                </div>
+              </div>`).join("")}
+          </section>
+          <section class="card">
+            <h2>Cutover checklist</h2>
+            ${CUTOVER.map((s) => `
+              <div class="step ${state.doneSteps.has(s.id)?"done":""}">
+                <div class="n">${state.doneSteps.has(s.id)?"✓":s.id}</div>
+                <div>
+                  <b>${s.title}</b>
+                  <div class="meta" style="margin:0">${s.text}</div>
+                  <button data-step="${s.id}">${state.doneSteps.has(s.id)?"Сбросить":"Отметить выполненным"}</button>
+                </div>
+              </div>`).join("")}
+          </section>
+        </div>`;
+    }
+
+    function render() {
+      state.route = parseHash();
+      setNav();
+      if (state.route === "assets") renderAssets();
+      else if (state.route === "admin") renderAdmin();
+      else renderWorkbench();
+    }
+
+    document.body.addEventListener("click", (e) => {
+      const nav = e.target.closest("[data-go]");
+      if (nav) { go(nav.dataset.go); return; }
+
+      const filter = e.target.closest("[data-filter]");
+      if (filter) {
+        state.filter = filter.dataset.filter;
+        renderWorkbench();
+        return;
+      }
+
+      const wo = e.target.closest("[data-wo]");
+      if (wo) {
+        state.selected = wo.dataset.wo;
+        renderWorkbench();
+        return;
+      }
+
+      const st = e.target.closest("[data-status]");
+      if (st) {
+        const order = state.orders.find((w) => w.id === state.selected);
+        if (order) {
+          order.status = st.dataset.status;
+          if (st.dataset.status === "in_progress" && order.assignee === "—") order.assignee = "eng-12";
+          toast(`${order.id} → ${statusLabel(order.status)}`);
+          renderWorkbench();
+        }
+        return;
+      }
+
+      const asset = e.target.closest("[data-asset]");
+      if (asset) {
+        const related = state.orders.find((w) => w.asset === asset.dataset.asset);
+        if (related) {
+          state.selected = related.id;
+          state.filter = "all";
+          go("workbench");
+          toast(`Связанный наряд ${related.id}`);
+        } else toast(`Актив ${asset.dataset.asset} · нарядов нет`);
+        return;
+      }
+
+      const step = e.target.closest("[data-step]");
+      if (step) {
+        const id = Number(step.dataset.step);
+        if (state.doneSteps.has(id)) state.doneSteps.delete(id);
+        else state.doneSteps.add(id);
+        localStorage.setItem("ax_steps", JSON.stringify([...state.doneSteps]));
+        toast(state.doneSteps.has(id) ? `Шаг ${id} выполнен` : `Шаг ${id} сброшен`);
+        renderAdmin();
+      }
+    });
+
+    document.body.addEventListener("change", (e) => {
+      const input = e.target.closest("[data-role][data-perm]");
+      if (!input) return;
+      const role = state.roles.find((r) => r.id === input.dataset.role);
+      if (role) {
+        role.perms[input.dataset.perm] = input.checked;
+        toast(`${role.name} · ${input.dataset.perm} ${input.checked ? "on" : "off"}`);
+      }
+    });
+
+    window.addEventListener("hashchange", render);
+    render();
+  </script>
+</body>
+</html>

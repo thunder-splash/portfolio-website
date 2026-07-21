@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FORMA — portfolio demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3eee6;
+      --ink: #1c1915;
+      --muted: #6f675c;
+      --line: rgba(28, 25, 21, 0.12);
+      --card: #fffdf8;
+      --moss: #2f5d50;
+      --moss-soft: #e5efe9;
+      --sand: #e8dcc8;
+      --clay: #c47b4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      font-family: Outfit, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(47, 93, 80, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(196, 123, 74, 0.1), transparent),
+        var(--bg);
+    }
+    button, a { font: inherit; color: inherit; }
+    button { border: 0; background: none; cursor: pointer; }
+    .app { min-height: 100vh; display: flex; flex-direction: column; }
+    .top {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; align-items: center; gap: 18px;
+      padding: 14px clamp(16px, 4vw, 40px);
+      backdrop-filter: blur(12px);
+      background: rgba(243, 238, 230, 0.88);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      font-family: Fraunces, serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+    }
+    .nav { display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
+    .nav button {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .nav button.active, .nav button:hover {
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: 0 1px 0 var(--line);
+    }
+    .cart-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .cart-btn span {
+      min-width: 20px; height: 20px; border-radius: 999px;
+      display: grid; place-items: center;
+      background: var(--moss); color: #fff; font-size: 11px;
+    }
+    .demo-note {
+      padding: 8px clamp(16px, 4vw, 40px);
+      font-size: 11px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,253,248,0.55);
+    }
+    main { flex: 1; padding: 24px clamp(16px, 4vw, 40px) 48px; width: 100%; max-width: 1180px; margin: 0 auto; }
+
+    /* HOME */
+    .hero {
+      display: grid;
+      gap: 24px;
+      min-height: min(70vh, 640px);
+      align-items: stretch;
+    }
+    @media (min-width: 900px) {
+      .hero { grid-template-columns: 1.05fr 0.95fr; gap: 28px; }
+    }
+    .hero-copy { display: flex; flex-direction: column; justify-content: center; gap: 16px; padding: 8px 0; }
+    .eyebrow {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--moss);
+    }
+    .hero h1 {
+      font-family: Fraunces, serif;
+      font-size: clamp(36px, 5.5vw, 58px);
+      line-height: 1.05;
+      font-weight: 700;
+      max-width: 12ch;
+    }
+    .hero p { color: var(--muted); font-size: 16px; line-height: 1.55; max-width: 38ch; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    .btn-primary {
+      padding: 14px 22px; border-radius: 999px;
+      background: var(--moss); color: #f7fbf8;
+      font-weight: 600; font-size: 14px;
+    }
+    .btn-ghost {
+      padding: 14px 22px; border-radius: 999px;
+      border: 1px solid var(--line); background: var(--card);
+      font-weight: 600; font-size: 14px;
+    }
+    .score {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 8px; padding: 8px 12px; border-radius: 999px;
+      background: var(--moss-soft); color: var(--moss);
+      font-size: 12px; font-weight: 600; width: fit-content;
+    }
+    .hero-visual {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      min-height: 360px;
+      background:
+        linear-gradient(160deg, #d8c4a8 0%, #b89a78 40%, #8d7358 100%);
+      box-shadow: 0 30px 60px rgba(28, 25, 21, 0.12);
+      animation: rise 0.8s ease both;
+    }
+    .hero-visual::before {
+      content: "";
+      position: absolute; inset: 18% 22% auto;
+      height: 58%;
+      border-radius: 18px 18px 8px 8px;
+      background: linear-gradient(180deg, #f0e6d6, #cbb79a);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+    }
+    .hero-visual::after {
+      content: "";
+      position: absolute; left: 28%; right: 28%; bottom: 16%;
+      height: 14%;
+      border-radius: 999px;
+      background: rgba(28,25,21,0.18);
+      filter: blur(10px);
+    }
+    .hero-chip {
+      position: absolute; left: 18px; bottom: 18px;
+      padding: 10px 14px; border-radius: 16px;
+      background: rgba(255,253,248,0.92);
+      backdrop-filter: blur(8px);
+      font-size: 13px; font-weight: 600;
+    }
+    .hero-chip small { display: block; color: var(--muted); font-weight: 500; font-size: 11px; margin-top: 2px; }
+
+    .strip {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    @media (min-width: 720px) { .strip { grid-template-columns: repeat(4, 1fr); } }
+    .strip article {
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+    .strip b { display: block; font-size: 14px; margin-bottom: 4px; }
+    .strip span { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    /* CATALOG */
+    .page-head { display: flex; justify-content: space-between; gap: 16px; align-items: end; margin-bottom: 20px; flex-wrap: wrap; }
+    .page-head h1 { font-family: Fraunces, serif; font-size: clamp(28px, 4vw, 40px); }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filters button {
+      padding: 8px 12px; border-radius: 999px; font-size: 13px;
+      border: 1px solid var(--line); background: transparent; color: var(--muted);
+    }
+    .filters button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .product {
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--line);
+      text-align: left;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .product:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(28,25,21,0.08); }
+    .swatch {
+      height: 180px;
+      position: relative;
+    }
+    .meta { padding: 14px 16px 16px; }
+    .meta h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .meta p { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .price { font-weight: 700; font-size: 15px; }
+
+    /* PDP */
+    .pdp { display: grid; gap: 24px; }
+    @media (min-width: 860px) { .pdp { grid-template-columns: 1.1fr 0.9fr; align-items: start; } }
+    .pdp-art {
+      border-radius: 28px; min-height: 420px; position: relative; overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .pdp-info h1 { font-family: Fraunces, serif; font-size: clamp(30px, 4vw, 42px); margin: 8px 0 12px; }
+    .pdp-info .desc { color: var(--muted); line-height: 1.55; margin-bottom: 18px; }
+    .specs { display: grid; gap: 8px; margin: 18px 0 22px; }
+    .specs div {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 12px 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--line);
+      font-size: 13px;
+    }
+    .specs span { color: var(--muted); }
+
+    /* CART / AUTH */
+    .panel {
+      max-width: 720px; margin: 0 auto;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 24px; padding: 22px;
+    }
+    .panel h1 { font-family: Fraunces, serif; font-size: 32px; margin-bottom: 8px; }
+    .panel .lead { color: var(--muted); margin-bottom: 18px; }
+    .line {
+      display: flex; justify-content: space-between; gap: 12px; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid var(--line);
+    }
+    .line:last-of-type { border-bottom: 0; }
+    .oauth {
+      display: grid; gap: 10px; margin-top: 12px;
+    }
+    .oauth button {
+      width: 100%; padding: 14px; border-radius: 14px;
+      border: 1px solid var(--line); background: #fff; font-weight: 600;
+      text-align: left;
+    }
+    .oauth button:hover { border-color: var(--moss); background: var(--moss-soft); }
+    .toast {
+      position: fixed; right: 18px; bottom: 18px; z-index: 50;
+      padding: 12px 16px; border-radius: 14px;
+      background: var(--ink); color: var(--bg); font-size: 13px;
+      transform: translateY(120%); opacity: 0; transition: 0.25s ease;
+    }
+    .toast.show { transform: none; opacity: 1; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <button class="brand" data-go="home">FORMA</button>
+      <nav class="nav">
+        <button data-go="home">Home</button>
+        <button data-go="catalog">Catalog</button>
+        <button data-go="auth">Sign in</button>
+      </nav>
+      <button class="cart-btn" data-go="cart">Cart <span id="cartCount">0</span></button>
+    </header>
+    <div class="demo-note">Показательное демо портфолио · синтетический каталог · не продакшен-магазин</div>
+    <main id="root"></main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const PRODUCTS = [
+      { id: "lumen-sofa", name: "Lumen Sofa", cat: "Living", price: 89000, tone: "linear-gradient(145deg,#d7c3a6,#9c8264)", blurb: "Модульный диван из дуба и шерстяной обивки.", material: "Oak / Wool", dims: "220×95×80 cm" },
+      { id: "arc-chair", name: "Arc Lounge", cat: "Living", price: 42000, tone: "linear-gradient(145deg,#c9d5c4,#6f8a72)", blurb: "Кресло с мягкой посадкой и стальным каркасом.", material: "Steel / Bouclé", dims: "78×82×90 cm" },
+      { id: "nori-table", name: "Nori Table", cat: "Dining", price: 61000, tone: "linear-gradient(145deg,#e6d7c2,#b08968)", blurb: "Обеденный стол на 6 персон, масло по дереву.", material: "Ash", dims: "180×90×75 cm" },
+      { id: "fold-shelf", name: "Fold Shelf", cat: "Storage", price: 28000, tone: "linear-gradient(145deg,#ddd2c4,#8a7b6a)", blurb: "Открытый стеллаж с регулируемыми полками.", material: "Plywood", dims: "90×35×180 cm" },
+      { id: "halo-lamp", name: "Halo Pendant", cat: "Lighting", price: 19000, tone: "linear-gradient(145deg,#f0e6d4,#c4a574)", blurb: "Подвес с рассеянным тёплым светом.", material: "Brass / Glass", dims: "Ø42 cm" },
+      { id: "ridge-bed", name: "Ridge Bed", cat: "Bedroom", price: 98000, tone: "linear-gradient(145deg,#d9cdc0,#7d6b5a)", blurb: "Кровать с интегрированными тумбами.", material: "Walnut", dims: "160×200 cm" },
+    ];
+
+    const state = {
+      route: "home",
+      productId: "lumen-sofa",
+      filter: "All",
+      cart: JSON.parse(localStorage.getItem("forma_cart") || "[]"),
+      authed: localStorage.getItem("forma_auth") === "1",
+    };
+
+    const root = document.getElementById("root");
+    const toastEl = document.getElementById("toast");
+    const cartCount = document.getElementById("cartCount");
+
+    function money(n) {
+      return new Intl.NumberFormat("ru-RU").format(n) + " ₽";
+    }
+
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(() => toastEl.classList.remove("show"), 1800);
+    }
+
+    function saveCart() {
+      localStorage.setItem("forma_cart", JSON.stringify(state.cart));
+      cartCount.textContent = String(state.cart.reduce((a, c) => a + c.qty, 0));
+    }
+
+    function addToCart(id) {
+      const row = state.cart.find((c) => c.id === id);
+      if (row) row.qty += 1;
+      else state.cart.push({ id, qty: 1 });
+      saveCart();
+      toast("Добавлено в корзину");
+    }
+
+    function parseHash() {
+      const raw = (location.hash || "#/").replace(/^#/, "") || "/";
+      const parts = raw.split("/").filter(Boolean);
+      if (!parts.length) return { route: "home" };
+      if (parts[0] === "catalog") return { route: "catalog" };
+      if (parts[0] === "cart") return { route: "cart" };
+      if (parts[0] === "auth") return { route: "auth" };
+      if (parts[0] === "product" && parts[1]) return { route: "product", productId: parts[1] };
+      return { route: "home" };
+    }
+
+    function go(route, productId) {
+      if (route === "home") location.hash = "#/";
+      else if (route === "product") location.hash = `#/product/${productId || state.productId}`;
+      else location.hash = `#/${route}`;
+    }
+
+    function setNav() {
+      document.querySelectorAll(".nav button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.go === state.route || (state.route === "product" && b.dataset.go === "catalog"));
+      });
+    }
+
+    function renderHome() {
+      root.innerHTML = `
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Forma Home · Next.js commerce</p>
+            <h1>Мебель, которая грузится быстро</h1>
+            <p>Витрина с каталогом, PDP и checkout-потоком. JWT/OAuth и Core Web Vitals 99/100 — показательная сборка для портфолио.</p>
+            <div class="cta-row">
+              <button class="btn-primary" data-go="catalog">Открыть каталог</button>
+              <button class="btn-ghost" data-go="auth">Войти через OAuth</button>
+            </div>
+            <div class="score">Core Web Vitals · 99/100</div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-chip">Lumen Sofa<small>от ${money(89000)}</small></div>
+          </div>
+        </section>
+        <div class="strip">
+          <article><b>Catalog → Checkout</b><span>Полный путь покупки на синтетических данных</span></article>
+          <article><b>Auth</b><span>JWT + multi-provider OAuth mock</span></article>
+          <article><b>SEO</b><span>Next.js-стиль маршрутов и мета</span></article>
+          <article><b>CWV</b><span>Лёгкий UI без тяжёлых виджетов</span></article>
+        </div>`;
+    }
+
+    function renderCatalog() {
+      const cats = ["All", ...new Set(PRODUCTS.map((p) => p.cat))];
+      const list = PRODUCTS.filter((p) => state.filter === "All" || p.cat === state.filter);
+      root.innerHTML = `
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Collection</p>
+            <h1>Каталог</h1>
+          </div>
+          <div class="filters">
+            ${cats.map((c) => `<button data-filter="${c}" class="${state.filter === c ? "on" : ""}">${c}</button>`).join("")}
+          </div>
+        </div>
+        <div class="grid">
+          ${list.map((p) => `
+            <button class="product" data-product="${p.id}">
+              <div class="swatch" style="background:${p.tone}"></div>
+              <div class="meta">
+                <h3>${p.name}</h3>
+                <p>${p.cat}</p>
+                <div class="price">${money(p.price)}</div>
+              </div>
+            </button>`).join("")}
+        </div>`;
+    }
+
+    function renderProduct() {
+      const p = PRODUCTS.find((x) => x.id === state.productId) || PRODUCTS[0];
+      root.innerHTML = `
+        <section class="pdp">
+          <div class="pdp-art" style="background:${p.tone}"></div>
+          <div class="pdp-info">
+            <p class="eyebrow">${p.cat}</p>
+            <h1>${p.name}</h1>
+            <p class="desc">${p.blurb}</p>
+            <div class="price" style="font-size:22px;margin-bottom:8px">${money(p.price)}</div>
+            <div class="specs">
+              <div><span>Материал</span><b>${p.material}</b></div>
+              <div><span>Размеры</span><b>${p.dims}</b></div>
+              <div><span>Доставка</span><b>5–12 дней · mock</b></div>
+            </div>
+            <div class="cta-row">
+              <button class="btn-primary" id="addCart">В корзину</button>
+              <button class="btn-ghost" data-go="catalog">Назад в каталог</button>
+            </div>
+          </div>
+        </section>`;
+      document.getElementById("addCart").onclick = () => addToCart(p.id);
+    }
+
+    function renderCart() {
+      const rows = state.cart.map((c) => {
+        const p = PRODUCTS.find((x) => x.id === c.id);
+        return { ...c, p };
+      }).filter((r) => r.p);
+      const total = rows.reduce((a, r) => a + r.p.price * r.qty, 0);
+      root.innerHTML = `
+        <div class="panel">
+          <h1>Корзина</h1>
+          <p class="lead">${rows.length ? "Синтетический checkout — без реальной оплаты." : "Пока пусто. Загляните в каталог."}</p>
+          ${rows.map((r) => `
+            <div class="line">
+              <div>
+                <b>${r.p.name}</b>
+                <div style="color:var(--muted);font-size:12px;margin-top:4px">× ${r.qty}</div>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <b>${money(r.p.price * r.qty)}</b>
+                <button class="btn-ghost" style="padding:8px 12px" data-remove="${r.id}">−</button>
+              </div>
+            </div>`).join("")}
+          ${rows.length ? `<div class="line"><span>Итого</span><b>${money(total)}</b></div>
+            <div class="cta-row" style="margin-top:16px">
+              <button class="btn-primary" id="checkout">Оформить (demo)</button>
+              <button class="btn-ghost" data-go="catalog">Продолжить покупки</button>
+            </div>` : `<button class="btn-primary" data-go="catalog">В каталог</button>`}
+        </div>`;
+      document.getElementById("checkout")?.addEventListener("click", () => {
+        state.cart = [];
+        saveCart();
+        toast("Заказ принят · demo only");
+        render();
+      });
+    }
+
+    function renderAuth() {
+      root.innerHTML = `
+        <div class="panel">
+          <h1>Вход</h1>
+          <p class="lead">${state.authed ? "Вы вошли в demo-сессию (JWT mock)." : "Multi-provider OAuth + JWT — только имитация."}</p>
+          <div class="oauth">
+            <button data-oauth="Google">Продолжить с Google</button>
+            <button data-oauth="Apple">Продолжить с Apple</button>
+            <button data-oauth="Yandex">Продолжить с Yandex</button>
+          </div>
+          ${state.authed ? `<button class="btn-ghost" style="margin-top:14px" id="logout">Выйти</button>` : ""}
+        </div>`;
+      document.querySelectorAll("[data-oauth]").forEach((b) => {
+        b.onclick = () => {
+          state.authed = true;
+          localStorage.setItem("forma_auth", "1");
+          toast(`OAuth · ${b.dataset.oauth} (mock)`);
+          render();
+        };
+      });
+      document.getElementById("logout")?.addEventListener("click", () => {
+        state.authed = false;
+        localStorage.removeItem("forma_auth");
+        toast("Сессия сброшена");
+        render();
+      });
+    }
+
+    function render() {
+      const parsed = parseHash();
+      state.route = parsed.route;
+      if (parsed.productId) state.productId = parsed.productId;
+      setNav();
+      if (state.route === "catalog") renderCatalog();
+      else if (state.route === "product") renderProduct();
+      else if (state.route === "cart") renderCart();
+      else if (state.route === "auth") renderAuth();
+      else renderHome();
+    }
+
+    document.body.addEventListener("click", (e) => {
+      const goBtn = e.target.closest("[data-go]");
+      if (goBtn) {
+        go(goBtn.dataset.go);
+        return;
+      }
+      const prod = e.target.closest("[data-product]");
+      if (prod) {
+        go("product", prod.dataset.product);
+        return;
+      }
+      const filter = e.target.closest("[data-filter]");
+      if (filter) {
+        state.filter = filter.dataset.filter;
+        renderCatalog();
+        return;
+      }
+      const remove = e.target.closest("[data-remove]");
+      if (remove) {
+        state.cart = state.cart.filter((c) => c.id !== remove.dataset.remove);
+        saveCart();
+        renderCart();
+      }
+    });
+
+    window.addEventListener("hashchange", render);
+    saveCart();
+    render();
+  </script>
+</body>
+</html>

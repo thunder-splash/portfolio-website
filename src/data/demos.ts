@@ -81,6 +81,85 @@ export const interactiveDemos: Record<string, InteractiveDemo> = {
       },
     ],
   },
+  forma: {
+    id: "forma",
+    baseUrl: "/demos/forma/",
+    scenes: [
+      {
+        id: "home",
+        path: "/",
+        label: { en: "Home", ru: "Главная", es: "Inicio" },
+      },
+      {
+        id: "catalog",
+        path: "/catalog",
+        label: { en: "Catalog", ru: "Каталог", es: "Catálogo" },
+      },
+      {
+        id: "product",
+        path: "/product/lumen-sofa",
+        label: { en: "Product", ru: "Товар", es: "Producto" },
+      },
+      {
+        id: "cart",
+        path: "/cart",
+        label: { en: "Cart", ru: "Корзина", es: "Carrito" },
+      },
+      {
+        id: "auth",
+        path: "/auth",
+        label: { en: "Auth", ru: "Вход", es: "Auth" },
+      },
+    ],
+  },
+  meridian: {
+    id: "meridian",
+    baseUrl: "/demos/meridian/",
+    scenes: [
+      {
+        id: "tree",
+        path: "/tree",
+        label: { en: "Tree", ru: "Дерево", es: "Árbol" },
+      },
+      {
+        id: "batch",
+        path: "/batch",
+        label: { en: "Batch", ru: "Batch", es: "Batch" },
+      },
+    ],
+  },
+  axioma: {
+    id: "axioma",
+    baseUrl: "/demos/axioma/",
+    scenes: [
+      {
+        id: "workbench",
+        path: "/workbench",
+        label: { en: "Workbench", ru: "Наряды", es: "Workbench" },
+      },
+      {
+        id: "assets",
+        path: "/assets",
+        label: { en: "Assets", ru: "Активы", es: "Activos" },
+      },
+      {
+        id: "admin",
+        path: "/admin",
+        label: { en: "Admin", ru: "Админ", es: "Admin" },
+      },
+    ],
+  },
+  mochi: {
+    id: "mochi",
+    baseUrl: "/demos/mochi/",
+    scenes: [
+      {
+        id: "home",
+        path: "/",
+        label: { en: "Pet", ru: "Питомец", es: "Mascota" },
+      },
+    ],
+  },
 };
 
 /** Map portfolio project ids → demo + default scene */
@@ -96,6 +175,11 @@ export const projectDemoMap: Record<
   "web3-bridge": { demoId: "sparkora", sceneId: "bridge" },
   "sparkora-engine": { demoId: "sparkora", sceneId: "engine" },
   "sparkora-hub": { demoId: "sparkora", sceneId: "home" },
+  "furniture-shop": { demoId: "forma", sceneId: "home" },
+  "hierarchy-dnd": { demoId: "meridian", sceneId: "tree" },
+  axioma: { demoId: "axioma", sceneId: "workbench" },
+  "axioma-admin": { demoId: "axioma", sceneId: "admin" },
+  "web3-tamagotchi": { demoId: "mochi", sceneId: "home" },
 };
 
 export function getProjectDemo(projectId: string) {
