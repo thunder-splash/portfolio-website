@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { metrics } from "@/data/portfolio";
@@ -14,26 +14,41 @@ function parseMetric(value: string) {
 
 function AnimatedValue({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const inView = useInView(ref, { once: true, amount: 0.4 });
   const { target, suffix } = parseMetric(value);
-  const motionValue = useMotionValue(0);
-  const spring = useSpring(motionValue, { stiffness: 70, damping: 22 });
 
   useEffect(() => {
-    if (inView && target !== null) motionValue.set(target);
-  }, [inView, target, motionValue]);
+    if (!inView || target === null || !ref.current) return;
 
-  useEffect(() => {
-    if (target === null || !ref.current) return;
-    const unsubscribe = spring.on("change", (latest) => {
-      if (!ref.current) return;
-      ref.current.textContent = `${Math.round(latest)}${suffix}`;
-    });
-    return unsubscribe;
-  }, [spring, target, suffix]);
+    const el = ref.current;
+    const durationMs = 900;
+    const start = performance.now();
+    let raf = 0;
+
+    const tick = (now: number) => {
+      const progress = Math.min(1, (now - start) / durationMs);
+      const eased = 1 - (1 - progress) ** 3;
+      el.textContent = `${Math.round(target * eased)}${suffix}`;
+      if (progress < 1) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      el.textContent = `${target}${suffix}`;
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, target, suffix]);
 
   if (target === null) return <span>{value}</span>;
-  return <span ref={ref} className="tabular-nums">{`0${suffix}`}</span>;
+
+  // Always paint the real number — animation only overrides the DOM text.
+  // Prevents permanent zeros if IntersectionObserver / RAF ever miss.
+  return (
+    <span ref={ref} className="tabular-nums">
+      {`${target}${suffix}`}
+    </span>
+  );
 }
 
 export function Metrics() {
@@ -52,7 +67,7 @@ export function Metrics() {
                 key={metric.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{
                   duration: 0.5,
                   delay: index * 0.08,
