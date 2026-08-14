@@ -211,7 +211,7 @@ export const experience = [
   },
   {
     id: "freelance",
-    company: "Freelance",
+    company: "Independent Contractor",
     stack: ["React", "Web3", "TypeScript", "Hono", "Vite", "Tailwind"],
     projects: [
       {

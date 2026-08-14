@@ -365,7 +365,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
           },
         },
         freelance: {
-          role: "Fullstack Web Developer",
+          role: "Technical Consultant",
           period: "May 2021 – Mar 2022 · Global",
           blurb:
             "Playful Web3 MVPs — a tamagotchi companion and a faceted NFT marketplace.",
@@ -385,7 +385,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
               title: "GEMIFY Marketplace",
               type: "Web3 MVP",
               summary:
-                "Full NFT market loop from the freelance build: carousel, collections, charted PDP, buy gate, deposit/withdraw, profile.",
+                "Full NFT market loop: carousel, collections, charted PDP, buy gate, deposit/withdraw, profile.",
               points: [
                 "Auto carousel + collection floors / volume",
                 "Search · sort · sparse/dense market grid",
@@ -675,7 +675,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
           },
         },
         freelance: {
-          role: "Fullstack Web Developer",
+          role: "Technical Consultant",
           period: "Май 2021 – Март 2022 · Global",
           blurb:
             "Игровые Web3 MVP — тамагочи-компаньон и NFT-маркетплейс с гранями.",
@@ -695,7 +695,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
               title: "GEMIFY — маркетплейс",
               type: "Web3 MVP",
               summary:
-                "Полный NFT-цикл из фриланс-билда: карусель, коллекции, PDP с графиком, buy gate, deposit/withdraw, профиль.",
+                "Полный NFT-цикл: карусель, коллекции, PDP с графиком, buy gate, deposit/withdraw, профиль.",
               points: [
                 "Авто-карусель + floor / volume коллекций",
                 "Search · sort · sparse/dense сетка маркета",
@@ -987,7 +987,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
           },
         },
         freelance: {
-          role: "Fullstack Web Developer",
+          role: "Technical Consultant",
           period: "May 2021 – Mar 2022 · Global",
           blurb:
             "MVPs Web3 con carácter — tamagotchi y marketplace NFT facetado.",
@@ -1007,7 +1007,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
               title: "GEMIFY — marketplace",
               type: "Web3 MVP",
               summary:
-                "Loop NFT completo del freelance: carrusel, colecciones, PDP con gráfica, buy gate, deposit/withdraw, perfil.",
+                "Loop NFT completo: carrusel, colecciones, PDP con gráfica, buy gate, deposit/withdraw, perfil.",
               points: [
                 "Carrusel auto + floor / volume de colecciones",
                 "Search · sort · grid sparse/dense",
