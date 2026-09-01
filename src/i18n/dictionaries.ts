@@ -47,9 +47,6 @@ export type Dictionary = {
     companySwitcherHint: string;
     selectCompany: string;
     activeCompany: string;
-    companiesHint: string;
-    selectCompany: string;
-    activeCompany: string;
     projectsLabel: string;
     projectsCount: string;
     pickProject: string;
@@ -186,9 +183,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
       companySwitcherHint: "Click a company to explore its projects",
       selectCompany: "Switch",
       activeCompany: "Selected",
-      companiesHint: "Click a company to explore its cases",
-      selectCompany: "View",
-      activeCompany: "Active",
       projectsLabel: "Projects",
       projectsCount: "{n} projects",
       pickProject: "Pick a case",
@@ -510,9 +504,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
       companySwitcherHint: "Нажми на компанию, чтобы переключить опыт",
       selectCompany: "Выбрать",
       activeCompany: "Выбрано",
-      companiesHint: "Нажми на компанию, чтобы посмотреть её кейсы",
-      selectCompany: "Открыть",
-      activeCompany: "Сейчас",
       projectsLabel: "Проекты",
       projectsCount: "{n} проекта",
       pickProject: "Выбери кейс",
@@ -830,9 +821,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
       companiesLabel: "Empresas",
       companySwitcherHint: "Haz clic en una empresa para ver sus proyectos",
       selectCompany: "Cambiar",
-      activeCompany: "Activa",
-      companiesHint: "Haz clic en una empresa para ver sus casos",
-      selectCompany: "Ver",
       activeCompany: "Activa",
       projectsLabel: "Proyectos",
       projectsCount: "{n} proyectos",
