@@ -15,6 +15,7 @@ export function Education() {
         <SectionHeading
           eyebrow={t.education.eyebrow}
           title={t.education.title}
+          accent="violet"
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -23,7 +24,7 @@ export function Education() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl border border-white/8 bg-white/[0.02] p-6"
+            className="rounded-2xl border border-cyan-400/20 bg-gradient-to-br from-cyan-400/[0.07] via-white/[0.02] to-transparent p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
           >
             <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/25 bg-cyan-400/10 text-cyan-300">
               <GraduationCap size={18} />
@@ -45,7 +46,7 @@ export function Education() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-2xl border border-white/8 bg-white/[0.02] p-6"
+            className="rounded-2xl border border-violet-400/20 bg-gradient-to-br from-violet-400/[0.07] via-white/[0.02] to-transparent p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
           >
             <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-400/25 bg-emerald-400/10 text-emerald-300">
               <Languages size={18} />

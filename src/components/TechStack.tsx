@@ -83,7 +83,11 @@ export function TechStack() {
   return (
     <section id="stack" className="relative scroll-mt-24 py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeading eyebrow={t.stack.eyebrow} title={t.stack.title} />
+        <SectionHeading
+          eyebrow={t.stack.eyebrow}
+          title={t.stack.title}
+          accent="cyan"
+        />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[minmax(180px,auto)]">
           {techCategories.map((category, index) => {

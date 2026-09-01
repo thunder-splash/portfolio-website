@@ -17,8 +17,12 @@ export function Footer() {
   ] as const;
 
   return (
-    <footer id="contact" className="relative scroll-mt-24 border-t border-white/5">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_50%_100%,rgba(34,211,238,0.08),transparent)]" />
+    <footer
+      id="contact"
+      className="relative scroll-mt-24 border-t border-violet-400/15 bg-[#04060b]"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_80%_at_50%_100%,rgba(167,139,250,0.08),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(34,211,238,0.06),transparent)]" />
 
       <div className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-24">
         <motion.div

@@ -44,9 +44,19 @@ export type Dictionary = {
     horizonTag: string;
     horizonToEdu: string;
     companiesLabel: string;
+    companySwitcherHint: string;
+    selectCompany: string;
+    activeCompany: string;
+    companiesHint: string;
+    selectCompany: string;
+    activeCompany: string;
     projectsLabel: string;
     projectsCount: string;
     pickProject: string;
+    filmstripHint: string;
+    selectCase: string;
+    viewingCase: string;
+    openDemoShortcut: string;
     pathLabel: string;
     pathFrom: string;
     pathTo: string;
@@ -173,9 +183,19 @@ export const dictionaries: Record<Locale, Dictionary> = {
       horizonTag: "Career",
       horizonToEdu: "04 · Background",
       companiesLabel: "Companies",
+      companySwitcherHint: "Click a company to explore its projects",
+      selectCompany: "Switch",
+      activeCompany: "Selected",
+      companiesHint: "Click a company to explore its cases",
+      selectCompany: "View",
+      activeCompany: "Active",
       projectsLabel: "Projects",
       projectsCount: "{n} projects",
       pickProject: "Pick a case",
+      filmstripHint: "Click a thumbnail to switch cases",
+      selectCase: "View case",
+      viewingCase: "Viewing",
+      openDemoShortcut: "Double-click for live demo",
       pathLabel: "The path",
       pathFrom: "Started with",
       pathTo: "Shipped",
@@ -487,9 +507,19 @@ export const dictionaries: Record<Locale, Dictionary> = {
       horizonTag: "Карьера",
       horizonToEdu: "04 · Образование",
       companiesLabel: "Компании",
+      companySwitcherHint: "Нажми на компанию, чтобы переключить опыт",
+      selectCompany: "Выбрать",
+      activeCompany: "Выбрано",
+      companiesHint: "Нажми на компанию, чтобы посмотреть её кейсы",
+      selectCompany: "Открыть",
+      activeCompany: "Сейчас",
       projectsLabel: "Проекты",
       projectsCount: "{n} проекта",
       pickProject: "Выбери кейс",
+      filmstripHint: "Нажми на карточку, чтобы переключить кейс",
+      selectCase: "Открыть кейс",
+      viewingCase: "Сейчас",
+      openDemoShortcut: "Двойной клик — живое демо",
       pathLabel: "Путь",
       pathFrom: "С чего начали",
       pathTo: "Чем закончили",
@@ -798,9 +828,19 @@ export const dictionaries: Record<Locale, Dictionary> = {
       horizonTag: "Carrera",
       horizonToEdu: "04 · Background",
       companiesLabel: "Empresas",
+      companySwitcherHint: "Haz clic en una empresa para ver sus proyectos",
+      selectCompany: "Cambiar",
+      activeCompany: "Activa",
+      companiesHint: "Haz clic en una empresa para ver sus casos",
+      selectCompany: "Ver",
+      activeCompany: "Activa",
       projectsLabel: "Proyectos",
       projectsCount: "{n} proyectos",
       pickProject: "Elige un caso",
+      filmstripHint: "Haz clic en una miniatura para cambiar de caso",
+      selectCase: "Ver caso",
+      viewingCase: "Activo",
+      openDemoShortcut: "Doble clic para demo en vivo",
       pathLabel: "El camino",
       pathFrom: "Empezamos con",
       pathTo: "Entregamos",

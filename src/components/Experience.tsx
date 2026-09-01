@@ -5,6 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
+  Briefcase,
   ChevronLeft,
   ChevronRight,
   Layers,
@@ -111,6 +112,7 @@ export function Experience() {
           eyebrow={t.work.eyebrow}
           title={t.work.title}
           description={t.work.invite}
+          accent="cyan"
         />
 
         <p className="mb-8 max-w-2xl font-mono text-[11px] leading-relaxed tracking-[0.04em] text-slate-500">
@@ -118,48 +120,98 @@ export function Experience() {
         </p>
 
         {/* Company switcher */}
-        <div
-          role="tablist"
-          aria-label={t.work.companiesLabel}
-          className="relative mb-6 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {experience.map((job, index) => {
-            const isActive = job.id === active;
-            return (
-              <button
-                key={job.id}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setActive(job.id)}
-                className={`group relative shrink-0 rounded-2xl border px-4 py-3 text-left transition ${
-                  isActive
-                    ? "border-cyan-400/40 bg-gradient-to-b from-cyan-400/15 to-cyan-400/[0.04] shadow-[0_0_32px_-12px_rgba(34,211,238,0.55)]"
-                    : "border-white/8 bg-white/[0.02] hover:border-white/14 hover:bg-white/[0.05]"
-                }`}
-              >
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <p
-                  className={`mt-1 font-display text-sm font-semibold sm:text-base ${
-                    isActive ? "text-white" : "text-slate-300"
+        <div className="mb-6 rounded-2xl border border-dashed border-emerald-400/25 bg-emerald-400/[0.04] p-3 sm:p-4">
+          <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Briefcase size={14} className="text-emerald-400" />
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500">
+                  {t.work.companiesLabel}
+                </p>
+              </div>
+              <p className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.06em] text-emerald-200/80">
+                <MousePointerClick size={12} className="shrink-0" />
+                {t.work.companySwitcherHint}
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-1 font-mono text-[10px] text-slate-600">
+              <ChevronLeft size={11} />
+              <span>{experience.length}</span>
+              <ChevronRight size={11} />
+            </span>
+          </div>
+
+          <div
+            role="tablist"
+            aria-label={t.work.companiesLabel}
+            className="relative -mx-1 flex gap-2 overflow-x-auto px-1 py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-[#071018] to-transparent"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l from-[#071018] to-transparent"
+            />
+
+            {experience.map((job, index) => {
+              const isActive = job.id === active;
+              return (
+                <button
+                  key={job.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActive(job.id)}
+                  className={`group relative shrink-0 cursor-pointer rounded-2xl border px-4 py-3 text-left transition duration-200 active:scale-[0.99] ${
+                    isActive
+                      ? "border-emerald-400/50 bg-gradient-to-b from-emerald-400/18 to-emerald-400/[0.05] shadow-[0_0_32px_-12px_rgba(52,211,153,0.55)]"
+                      : "border-white/12 bg-white/[0.04] hover:border-emerald-300/35 hover:bg-white/[0.07] hover:shadow-[0_12px_32px_-18px_rgba(52,211,153,0.45)]"
                   }`}
                 >
-                  {job.company}
-                </p>
-                <p className="mt-0.5 max-w-[11rem] truncate font-mono text-[10px] text-slate-500">
-                  {t.work.jobs[job.id].period.split("·")[0]?.trim()}
-                </p>
-                {isActive ? (
-                  <motion.span
-                    layoutId="work-company-glow"
-                    className="pointer-events-none absolute inset-x-3 -bottom-px h-px bg-gradient-to-r from-transparent via-cyan-300/80 to-transparent"
-                  />
-                ) : null}
-              </button>
-            );
-          })}
+                  {!isActive ? (
+                    <span className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-[#05070d]/60 opacity-0 backdrop-blur-[1px] transition group-hover:opacity-100 group-focus-visible:opacity-100">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300/40 bg-emerald-400/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-emerald-50">
+                        <MousePointerClick size={11} />
+                        {t.work.selectCompany}
+                      </span>
+                    </span>
+                  ) : null}
+
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p
+                    className={`mt-1 font-display text-sm font-semibold sm:text-base ${
+                      isActive ? "text-white" : "text-slate-300 group-hover:text-white"
+                    }`}
+                  >
+                    {job.company}
+                  </p>
+                  <p className="mt-0.5 max-w-[11rem] truncate font-mono text-[10px] text-slate-500">
+                    {t.work.jobs[job.id].period.split("·")[0]?.trim()}
+                  </p>
+
+                  {isActive ? (
+                    <>
+                      <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full border border-emerald-300/45 bg-emerald-400/20 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-emerald-50">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-70" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                        </span>
+                        {t.work.activeCompany}
+                      </span>
+                      <motion.span
+                        layoutId="work-company-glow"
+                        className="pointer-events-none absolute inset-x-3 -bottom-px h-px bg-gradient-to-r from-transparent via-emerald-300/80 to-transparent"
+                      />
+                    </>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="space-y-5">
@@ -193,12 +245,18 @@ export function Experience() {
           </AnimatePresence>
 
           {/* Filmstrip FIRST — pick case without page jump */}
-          <div>
-            <div className="mb-3 flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Layers size={14} className="text-cyan-400" />
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500">
-                  {t.work.pickProject}
+          <div className="rounded-2xl border border-dashed border-cyan-400/20 bg-cyan-400/[0.03] p-3 sm:p-4">
+            <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <Layers size={14} className="text-cyan-400" />
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500">
+                    {t.work.pickProject}
+                  </p>
+                </div>
+                <p className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.06em] text-cyan-200/80">
+                  <MousePointerClick size={12} className="shrink-0" />
+                  {t.work.filmstripHint}
                 </p>
               </div>
               <span className="inline-flex items-center gap-1 font-mono text-[10px] text-slate-600">
@@ -212,7 +270,7 @@ export function Experience() {
 
             <div
               ref={stripRef}
-              className="flex gap-3 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="-mx-1 flex gap-3 overflow-x-auto overscroll-x-contain px-1 py-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {current.projects.map((project, index) => {
                 const copy = jobCopy.projects[project.id];
@@ -223,6 +281,8 @@ export function Experience() {
                     key={project.id}
                     type="button"
                     data-project-id={project.id}
+                    aria-label={`${copy.title}${hasDemo ? ` — ${t.work.openDemoShortcut}` : ""}`}
+                    aria-pressed={isSelected}
                     onClick={() => selectProject(project.id)}
                     onDoubleClick={() => {
                       if (hasDemo) {
@@ -230,10 +290,10 @@ export function Experience() {
                         setPlaygroundOpen(true);
                       }
                     }}
-                    className={`group relative w-[min(70vw,220px)] shrink-0 overflow-hidden rounded-2xl border text-left transition ${
+                    className={`group relative w-[min(70vw,220px)] shrink-0 cursor-pointer overflow-hidden rounded-2xl border text-left transition duration-200 hover:shadow-[0_16px_40px_-20px_rgba(34,211,238,0.65)] active:scale-[0.99] ${
                       isSelected
-                        ? "border-cyan-400/50 shadow-[0_0_28px_-10px_rgba(34,211,238,0.55)]"
-                        : "border-white/8 hover:border-white/18"
+                        ? "border-cyan-400/55 shadow-[0_0_28px_-10px_rgba(34,211,238,0.55)]"
+                        : "border-white/10 bg-white/[0.02] hover:border-cyan-300/35 hover:bg-white/[0.05]"
                     }`}
                   >
                     <div className="relative aspect-[16/10] bg-[#070b14]">
@@ -242,17 +302,38 @@ export function Experience() {
                         alt={copy.title}
                         fill
                         sizes="220px"
-                        className="object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+                        className="object-cover object-top transition duration-500 group-hover:scale-[1.04]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#05070d]/90 via-[#05070d]/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#05070d]/95 via-[#05070d]/25 to-transparent" />
+
                       <span className="absolute top-2 left-2 rounded-md border border-white/10 bg-[#05070d]/65 px-1.5 py-0.5 font-mono text-[9px] text-slate-300 backdrop-blur-sm">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      {hasDemo ? (
-                        <span className="absolute top-2 right-2 inline-flex h-7 w-7 items-center justify-center rounded-full border border-cyan-400/40 bg-cyan-400/20 text-cyan-100 backdrop-blur-sm transition group-hover:scale-110 group-hover:bg-cyan-400/35">
-                          <Play size={11} fill="currentColor" />
+
+                      {isSelected ? (
+                        <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full border border-cyan-300/45 bg-cyan-400/20 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-cyan-50 backdrop-blur-sm">
+                          <span className="relative flex h-1.5 w-1.5">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-300 opacity-70" />
+                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-300" />
+                          </span>
+                          {t.work.viewingCase}
+                        </span>
+                      ) : hasDemo ? (
+                        <span className="absolute top-2 right-2 inline-flex items-center gap-1 rounded-full border border-cyan-400/35 bg-[#05070d]/70 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-cyan-100 backdrop-blur-sm">
+                          <Play size={9} fill="currentColor" />
+                          {t.work.interactiveBadge}
                         </span>
                       ) : null}
+
+                      {!isSelected ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-[#05070d]/55 opacity-0 backdrop-blur-[1px] transition duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-300/40 bg-cyan-400/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-cyan-50">
+                            <MousePointerClick size={12} />
+                            {t.work.selectCase}
+                          </span>
+                        </div>
+                      ) : null}
+
                       <div className="absolute right-2 bottom-2 left-2">
                         <p className="truncate font-display text-sm font-semibold text-white">
                           {copy.title}
@@ -260,7 +341,13 @@ export function Experience() {
                         <p className="mt-0.5 truncate font-mono text-[10px] text-slate-400">
                           {project.impact}
                         </p>
+                        {hasDemo ? (
+                          <p className="mt-1 truncate font-mono text-[9px] uppercase tracking-[0.1em] text-cyan-200/70 opacity-0 transition group-hover:opacity-100">
+                            {t.work.openDemoShortcut}
+                          </p>
+                        ) : null}
                       </div>
+
                       {isSelected ? (
                         <span className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-cyan-400/60 ring-inset" />
                       ) : null}

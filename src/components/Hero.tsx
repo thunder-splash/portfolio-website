@@ -126,6 +126,11 @@ export function Hero() {
         </motion.div>
       </div>
 
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-[#05070d]"
+      />
+
       <motion.div
         aria-hidden
         initial={{ opacity: 0 }}
