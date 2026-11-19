@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>tgorg — catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* palette mirrors apps/web/src/app/globals.css */
+:root{
+  --bg:#eef1f6; --bg-wash:#e4eaf3; --ink:#121826; --muted:#5c677a;
+  --accent:#0b7a72; --accent-hot:#0d9488; --accent-soft:rgba(11,122,114,.12);
+  --line:rgba(18,24,38,.1); --line-strong:rgba(18,24,38,.16);
+  --paper:#fff; --paper-soft:#f7f9fc;
+  --shadow:0 12px 36px rgba(18,24,38,.07); --shadow-sm:0 2px 8px rgba(18,24,38,.04);
+  --r:16px; --r-s:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  width:1440px;height:900px;overflow:hidden;color:var(--ink);
+  font:15px/1.5 Manrope,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(920px 380px at 0% -8%,rgba(11,122,114,.11),transparent 55%),
+    radial-gradient(720px 360px at 100% 0%,rgba(30,64,120,.07),transparent 50%),
+    linear-gradient(180deg,#f5f7fb 0%,var(--bg) 45%,var(--bg-wash) 100%);
+}
+.shell{width:1180px;margin:0 auto}
+header{height:64px;display:flex;align-items:center;gap:28px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.72);backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.02em}
+.logo i{width:28px;height:28px;border-radius:9px;background:linear-gradient(140deg,var(--accent-hot),var(--accent));display:grid;place-items:center;color:#f0fdfa;font-style:normal;font-size:14px;font-weight:800}
+nav{display:flex;gap:4px;font-size:13.5px;font-weight:600;color:var(--muted)}
+nav a{padding:7px 11px;border-radius:9px;text-decoration:none;color:inherit}
+nav a.on{background:var(--accent-soft);color:var(--accent)}
+.hsearch{margin-left:auto;display:flex;align-items:center;gap:8px}
+.inp{display:flex;align-items:center;gap:8px;width:300px;height:38px;padding:0 12px;border:1px solid var(--line-strong);border-radius:11px;background:var(--paper);color:#8b94a3;font-size:13.5px;box-shadow:var(--shadow-sm)}
+.btn{height:38px;padding:0 15px;border-radius:11px;background:var(--accent);color:#f0fdfa;font-weight:700;font-size:13.5px;display:grid;place-items:center;box-shadow:0 6px 16px rgba(11,122,114,.22)}
+.hero{padding:30px 0 20px}
+.crumb{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+h1{font-size:30px;letter-spacing:-.03em;font-weight:800;margin-bottom:7px}
+.sub{color:var(--muted);font-size:14.5px;max-width:620px}
+.chips{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.chip{padding:7px 13px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:13px;font-weight:600;color:#36414f;box-shadow:var(--shadow-sm)}
+.chip.on{background:#0b7a72;border-color:#0b7a72;color:#f0fdfa}
+.grid{display:grid;grid-template-columns:232px 1fr 272px;gap:18px;margin-top:22px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:15px}
+.t{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:11px}
+.fgroup{padding:13px 15px;border-bottom:1px solid var(--line)}
+.fgroup:last-child{border-bottom:0}
+.frow{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#36414f;padding:5px 0}
+.box{width:15px;height:15px;border-radius:5px;border:1.5px solid var(--line-strong);background:#fff}
+.box.on{background:var(--accent);border-color:var(--accent);position:relative}
+.box.on:after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:2px solid #fff;border-top:0;border-left:0;transform:rotate(42deg)}
+.frow span.n{margin-left:auto;font-size:12px;color:#9aa3b1;font-variant-numeric:tabular-nums}
+.range{height:4px;border-radius:3px;background:#e6ebf2;margin:10px 0 4px;position:relative}
+.range i{position:absolute;left:14%;right:28%;top:0;bottom:0;background:var(--accent);border-radius:3px}
+.range b{position:absolute;top:-4px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.list{display:flex;flex-direction:column;gap:11px}
+.ch{display:flex;gap:13px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
+.ava{width:50px;height:50px;border-radius:14px;flex:none;display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px}
+.ch-b{flex:1;min-width:0}
+.ch-n{display:flex;align-items:center;gap:7px;font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+.ver{width:15px;height:15px;border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:9px;font-weight:800}
+.hndl{font-size:12.5px;color:var(--muted);margin-top:1px}
+.desc{font-size:13px;color:#4a5566;margin-top:7px;line-height:1.45}
+.tags{display:flex;gap:6px;margin-top:9px}
+.tag{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:7px;background:var(--paper-soft);border:1px solid var(--line);color:#5c677a}
+.ch-r{text-align:right;flex:none;width:118px}
+.subs{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.subs small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+.er{margin-top:9px;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:4px 8px;display:inline-block}
+.price{margin-top:8px;font-size:12.5px;color:var(--muted)}
+.rail .row{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line)}
+.rail .row:last-child{border-bottom:0}
+.rk{width:19px;font-weight:800;color:#b4bdc9;font-size:13px;text-align:center}
+.mini{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;flex:none}
+.rn{font-size:13.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs{font-size:11.5px;color:var(--muted)}
+.up{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--accent)}
+.statline{display:flex;gap:9px;margin-top:13px}
+.stat{flex:1;background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat b{display:block;font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;color:var(--muted);font-weight:600}
+.srvs{display:flex;gap:7px;align-items:center;font-size:11.5px;color:var(--muted);margin-top:12px;font-weight:600}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+</style>
+</head>
+<body>
+<header><div class="shell" style="display:flex;align-items:center;gap:28px;height:100%">
+  <div class="logo"><i>tg</i>tgorg</div>
+  <nav>
+    <a class="on" href="#">Каталог</a><a href="#">Топ</a><a href="#">Популярное</a>
+    <a href="#">Статьи</a><a href="#">Добавить канал</a>
+  </nav>
+  <div class="hsearch">
+    <div class="inp"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa3b1" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Поиск по 48 219 каналам</div>
+    <div class="btn">Кабинет</div>
+  </div>
+</div></header>
+
+<div class="shell">
+  <div class="hero">
+    <div class="crumb">Главная · Каталог · <b style="color:#36414f">Технологии</b></div>
+    <h1>Каталог Telegram-каналов — Технологии</h1>
+    <div class="sub">1 284 канала в категории. Статистика обновляется воркером раз в сутки, цены — из заявок владельцев.</div>
+    <div class="chips">
+      <div class="chip on">Технологии</div><div class="chip">Разработка</div><div class="chip">AI</div>
+      <div class="chip">Дизайн</div><div class="chip">Крипта</div><div class="chip">Бизнес</div>
+      <div class="chip">Образование</div><div class="chip">Новости</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <aside class="card">
+      <div class="fgroup"><div class="t">Подписчики</div>
+        <div class="range"><i></i><b style="left:14%"></b><b style="left:70%"></b></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:#5c677a;font-variant-numeric:tabular-nums"><span>5 000</span><span>500 000</span></div>
+      </div>
+      <div class="fgroup"><div class="t">Язык</div>
+        <div class="frow"><div class="box on"></div>Русский<span class="n">1 102</span></div>
+        <div class="frow"><div class="box"></div>English<span class="n">388</span></div>
+        <div class="frow"><div class="box"></div>Українська<span class="n">94</span></div>
+      </div>
+      <div class="fgroup"><div class="t">Формат</div>
+        <div class="frow"><div class="box on"></div>Канал<span class="n">980</span></div>
+        <div class="frow"><div class="box"></div>Чат<span class="n">214</span></div>
+        <div class="frow"><div class="box"></div>Бот<span class="n">90</span></div>
+      </div>
+      <div class="fgroup"><div class="t">Прочее</div>
+        <div class="frow"><div class="box on"></div>Проверенные<span class="n">341</span></div>
+        <div class="frow"><div class="box"></div>С ценой рекламы<span class="n">612</span></div>
+        <div class="frow"><div class="box"></div>ER выше 20%<span class="n">157</span></div>
+      </div>
+    </aside>
+
+    <main class="list">
+      <div class="ch">
+        <div class="ava" style="background:linear-gradient(140deg,#0d9488,#0b7a72)">DN</div>
+        <div class="ch-b">
+          <div class="ch-n">Dev Notes<span class="ver">✓</span></div>
+          <div class="hndl">@devnotes_ru · Технологии / Разработка</div>
+          <div class="desc">Заметки о бэкенде, инфраструктуре и TypeScript. Разборы инцидентов, без рекламы курсов.</div>
+          <div class="tags"><span class="tag">TypeScript</span><span class="tag">Backend</span><span class="tag">DevOps</span></div>
+        </div>
+        <div class="ch-r"><div class="subs">184 203<small>подписчиков</small></div><div class="er">ER 28.4%</div><div class="price">реклама от 18 000 ₽</div></div>
+      </div>
+
+      <div class="ch">
+        <div class="ava" style="background:linear-gradient(140deg,#4f7df3,#2b56c7)">AI</div>
+        <div class="ch-b">
+          <div class="ch-n">AI Weekly<span class="ver">✓</span></div>
+          <div class="hndl">@ai_weekly · Технологии / AI</div>
+          <div class="desc">Еженедельный дайджест по моделям и инструментам. Разбор релизов и практические промпты.</div>
+          <div class="tags"><span class="tag">AI</span><span class="tag">Дайджест</span><span class="tag">Инструменты</span></div>
+        </div>
+        <div class="ch-r"><div class="subs">96 540<small>подписчиков</small></div><div class="er">ER 24.1%</div><div class="price">реклама от 11 000 ₽</div></div>
+      </div>
+
+      <div class="ch">
+        <div class="ava" style="background:linear-gradient(140deg,#f0893a,#d0631c)">FR</div>
+        <div class="ch-b">
+          <div class="ch-n">Frontend Daily</div>
+          <div class="hndl">@frontend_daily · Технологии / Разработка</div>
+          <div class="desc">Релизы React, Vite и браузеров каждый день. Короткие посты, ссылки на первоисточник.</div>
+          <div class="tags"><span class="tag">React</span><span class="tag">Браузеры</span><span class="tag">Новости</span></div>
+        </div>
+        <div class="ch-r"><div class="subs">61 877<small>подписчиков</small></div><div class="er">ER 19.6%</div><div class="price">реклама от 7 500 ₽</div></div>
+      </div>
+
+      <div class="ch">
+        <div class="ava" style="background:linear-gradient(140deg,#8b5cf6,#6d35e0)">SR</div>
+        <div class="ch-b">
+          <div class="ch-n">Serverless Room<span class="ver">✓</span></div>
+          <div class="hndl">@serverless_room · Технологии / Облака</div>
+          <div class="desc">Edge-рантаймы, очереди и стоимость облака. Кейсы миграций с цифрами по счетам.</div>
+          <div class="tags"><span class="tag">Cloud</span><span class="tag">Edge</span><span class="tag">FinOps</span></div>
+        </div>
+        <div class="ch-r"><div class="subs">34 912<small>подписчиков</small></div><div class="er">ER 31.2%</div><div class="price">реклама от 6 000 ₽</div></div>
+      </div>
+
+      <div class="ch">
+        <div class="ava" style="background:linear-gradient(140deg,#16a34a,#107a38)">DB</div>
+        <div class="ch-b">
+          <div class="ch-n">Postgres Bits</div>
+          <div class="hndl">@postgres_bits · Технологии / Базы данных</div>
+          <div class="desc">Планы запросов, индексы и миграции. Короткие заметки из продакшена.</div>
+          <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">SQL</span><span class="tag">Perf</span></div>
+        </div>
+        <div class="ch-r"><div class="subs">22 408<small>подписчиков</small></div><div class="er">ER 26.8%</div><div class="price">реклама от 4 200 ₽</div></div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="card pad">
+        <div class="t">Топ недели</div>
+        <div class="rail">
+          <div class="row"><div class="rk">1</div><div class="mini" style="background:linear-gradient(140deg,#0d9488,#0b7a72)">DN</div><div style="min-width:0"><div class="rn">Dev Notes</div><div class="rs">184 203</div></div><div class="up">+4.2%</div></div>
+          <div class="row"><div class="rk">2</div><div class="mini" style="background:linear-gradient(140deg,#4f7df3,#2b56c7)">AI</div><div style="min-width:0"><div class="rn">AI Weekly</div><div class="rs">96 540</div></div><div class="up">+3.8%</div></div>
+          <div class="row"><div class="rk">3</div><div class="mini" style="background:linear-gradient(140deg,#f0893a,#d0631c)">FR</div><div style="min-width:0"><div class="rn">Frontend Daily</div><div class="rs">61 877</div></div><div class="up">+2.1%</div></div>
+          <div class="row"><div class="rk">4</div><div class="mini" style="background:linear-gradient(140deg,#8b5cf6,#6d35e0)">SR</div><div style="min-width:0"><div class="rn">Serverless Room</div><div class="rs">34 912</div></div><div class="up">+1.9%</div></div>
+          <div class="row"><div class="rk">5</div><div class="mini" style="background:linear-gradient(140deg,#16a34a,#107a38)">DB</div><div style="min-width:0"><div class="rn">Postgres Bits</div><div class="rs">22 408</div></div><div class="up">+1.4%</div></div>
+        </div>
+      </div>
+
+      <div class="card pad" style="margin-top:14px">
+        <div class="t">Индекс каталога</div>
+        <div class="statline">
+          <div class="stat"><b>48 219</b><span>каналов</span></div>
+          <div class="stat"><b>86 мс</b><span>поиск p95</span></div>
+        </div>
+        <div class="statline">
+          <div class="stat"><b>24 ч</b><span>цикл воркера</span></div>
+          <div class="stat"><b>412</b><span>в модерации</span></div>
+        </div>
+        <div class="srvs"><span class="dot"></span>Meilisearch · BullMQ · SSR из Postgres</div>
+      </div>
+    </aside>
+  </div>
+</div>
+</body>
+</html>

@@ -11,7 +11,9 @@
     "sync:fasttable-demo": "node scripts/sync-fasttable-demo.mjs",
     "sync:sparkora-demo": "node scripts/sync-sparkora-demo.mjs",
     "capture:sparkora": "node scripts/capture-sparkora-demo.mjs",
-    "capture:multicode": "node scripts/capture-multicode-demos.mjs"
+    "capture:multicode": "node scripts/capture-multicode-demos.mjs",
+    "capture:lab": "node scripts/capture-lab.mjs",
+    "verify:lab": "node scripts/verify-lab.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

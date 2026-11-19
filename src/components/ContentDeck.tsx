@@ -2,6 +2,7 @@
 
 import { Education } from "@/components/Education";
 import { Experience } from "@/components/Experience";
+import { LabShowcase } from "@/components/LabShowcase";
 import { Metrics } from "@/components/Metrics";
 import { SectionFrame } from "@/components/SectionFrame";
 import { SectionHorizon } from "@/components/SectionHorizon";
@@ -41,9 +42,18 @@ export function ContentDeck() {
         <Experience />
       </SectionFrame>
 
+      <SectionFrame variant="forge">
+        <SectionHorizon
+          left={t.work.horizonToLab}
+          right={t.lab.horizonTag}
+          tone="amber"
+        />
+        <LabShowcase />
+      </SectionFrame>
+
       <SectionFrame variant="calm">
         <SectionHorizon
-          left={t.work.horizonToEdu}
+          left={t.lab.horizonToEdu}
           right={t.education.horizonTag}
           tone="violet"
         />

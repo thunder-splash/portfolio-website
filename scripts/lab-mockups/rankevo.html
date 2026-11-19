@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Rankevo — lead queue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@450;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* palette mirrors frontend/src/styles/studio.css */
+:root{--bg:#0c0c0c;--elev:#121212;--panel:#161616;--panel2:#1b1b1b;--ink:#f2f2f0;--muted:#8a8a84;
+  --line:#2a2a28;--line-soft:#222220;--accent:#d8ff4a;--accent-ink:#101400;--accent-dim:rgba(216,255,74,.12);
+  --danger:#ff5c5c;--warn:#ff9f43;--ok:#7dffb3;--hot:#ff5c5c;--warm:#ffb020;--cold:#8a9bb0;--r:10px;
+  --font:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);
+  font:14px/1.5 var(--font);-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:196px 1fr}
+aside{background:var(--elev);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column}
+.lg{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15.5px;letter-spacing:-.02em}
+.lg i{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:13px}
+.env{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--muted);margin:5px 0 18px 37px;text-transform:uppercase}
+.nav a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;color:#c8c8c2;font-weight:500;font-size:13.5px;text-decoration:none;margin-bottom:2px}
+.nav a.on{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(216,255,74,.2)}
+.nav a .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sep{height:1px;background:var(--line);margin:13px 2px}
+.coll{margin-top:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:12px}
+.coll h3{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:9px}
+.cr{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:#c8c8c2}
+.sw{margin-left:auto;width:28px;height:16px;border-radius:9px;background:#2e2e2b;position:relative}
+.sw i{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6b6b66}
+.sw.on{background:rgba(216,255,74,.26)}.sw.on i{left:14px;background:var(--accent)}
+main{min-width:0;display:flex;flex-direction:column;padding:18px 22px}
+.top{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+h1{font-size:21px;letter-spacing:-.025em;font-weight:700}
+.run{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--ok);background:rgba(125,255,179,.1);border:1px solid rgba(125,255,179,.22);border-radius:7px;padding:4px 9px}
+.run:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.search{margin-left:auto;width:230px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--panel);display:flex;align-items:center;gap:8px;padding:0 11px;font-size:12.5px;color:#6b6b66}
+.btn{height:32px;padding:0 13px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:12.5px;display:grid;place-items:center}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.k{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:11px 13px}
+.k span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.k b{display:block;font-size:22px;font-weight:700;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.k em{font-style:normal;font-size:11px;color:var(--ok);font-family:var(--mono)}
+.k em.d{color:var(--danger)}
+.wrap{flex:1;display:grid;grid-template-columns:1fr 288px;gap:14px;min-height:0}
+.tbl{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden;display:flex;flex-direction:column}
+.tbar{display:flex;align-items:center;gap:6px;padding:10px 13px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.f{font-family:var(--mono);font-size:11px;padding:4px 9px;border-radius:7px;color:var(--muted);border:1px solid transparent}
+.f.on{background:var(--accent-dim);color:var(--accent);border-color:rgba(216,255,74,.2)}
+table{width:100%;border-collapse:collapse}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 13px;font-weight:500;border-bottom:1px solid var(--line)}
+td{padding:11px 13px;border-bottom:1px solid var(--line-soft);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.sc{display:flex;align-items:center;gap:8px}
+.scv{font-family:var(--mono);font-size:14px;font-weight:600;width:26px;font-variant-numeric:tabular-nums}
+.scb{width:52px;height:5px;border-radius:3px;background:#2a2a28;overflow:hidden}
+.scb i{display:block;height:100%;border-radius:3px}
+.hot .scv{color:var(--hot)}.warm .scv{color:var(--warm)}.cold .scv{color:var(--cold)}
+.hot .scb i{background:var(--hot)}.warm .scb i{background:var(--warm)}.cold .scb i{background:var(--cold)}
+.co{font-weight:600;letter-spacing:-.01em}
+.ct{font-size:11.5px;color:var(--muted)}
+.src{font-family:var(--mono);font-size:11px;color:#c8c8c2;background:#1f1f1d;border:1px solid var(--line);border-radius:6px;padding:3px 8px;display:inline-block}
+.it{font-size:12px;color:#c8c8c2}
+.st{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:6px}
+.st.n{background:rgba(216,255,74,.1);color:var(--accent)}
+.st.r{background:rgba(125,255,179,.1);color:var(--ok)}
+.st.e{background:rgba(255,159,67,.1);color:var(--warn)}
+.st.c{background:#232320;color:var(--muted)}
+.side{display:flex;flex-direction:column;gap:12px;min-height:0}
+.card{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:13px}
+h2{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:11px}
+.sp{display:flex;align-items:center;gap:9px;padding:6px 0}
+.spn{font-size:12.5px;width:72px;color:#c8c8c2}
+.spb{flex:1;height:6px;border-radius:3px;background:#242422;overflow:hidden}
+.spb i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.spv{font-family:var(--mono);font-size:11.5px;color:var(--muted);width:34px;text-align:right}
+.ai{font-size:12.5px;color:#c8c8c2;line-height:1.6}
+.ai code{font-family:var(--mono);font-size:11.5px;color:var(--accent);background:var(--accent-dim);border-radius:5px;padding:1px 5px}
+.dq{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.dq span{font-family:var(--mono);font-size:10.5px;color:var(--danger);background:rgba(255,92,92,.1);border:1px solid rgba(255,92,92,.2);border-radius:6px;padding:3px 7px}
+.foot{font-family:var(--mono);font-size:10.5px;color:#55554f;margin-top:12px;display:flex;gap:8px;align-items:center}
+</style>
+</head>
+<body>
+<aside>
+  <div class="lg"><i>R</i>Rankevo</div>
+  <div class="env">lead intelligence</div>
+  <div class="nav">
+    <a class="on" href="#">Queue<span class="n">142</span></a>
+    <a href="#">Board<span class="n">38</span></a>
+    <a href="#">Pipeline</a>
+    <a href="#">AI filter</a>
+    <a href="#">Sources<span class="n">20</span></a>
+    <div class="sep"></div>
+    <a href="#">Scoring config</a>
+    <a href="#">Operators</a>
+  </div>
+  <div class="coll">
+    <h3>Collectors</h3>
+    <div class="cr">Reddit posts<span class="sw on"><i></i></span></div>
+    <div class="cr">Reddit comments<span class="sw on"><i></i></span></div>
+    <div class="cr">G2 reviews<span class="sw on"><i></i></span></div>
+    <div class="cr">Job boards<span class="sw"><i></i></span></div>
+  </div>
+</aside>
+
+<main>
+  <div class="top">
+    <h1>Lead queue</h1>
+    <span class="run">4 collectors running</span>
+    <div class="search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b6b66" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search leads</div>
+    <div class="btn">Export</div>
+  </div>
+
+  <div class="kpis">
+    <div class="k"><span>In queue</span><b>142</b><em>+31 today</em></div>
+    <div class="k"><span>Hot (score 80+)</span><b>18</b><em>+6 today</em></div>
+    <div class="k"><span>Dedup rate</span><b>23.4%</b><em>412 merged</em></div>
+    <div class="k"><span>Disqualified</span><b>96</b><em class="d">by rules</em></div>
+    <div class="k"><span>Replies</span><b>11</b><em>7.7% of sent</em></div>
+  </div>
+
+  <div class="wrap">
+    <div class="tbl">
+      <div class="tbar">
+        <span class="f on">All</span><span class="f">Hot</span><span class="f">New today</span>
+        <span class="f">Needs review</span><span class="f">Replied</span>
+        <span class="f" style="margin-left:auto">sort: score desc</span>
+      </div>
+      <table>
+        <tr><th>Score</th><th>Company / contact</th><th>Source</th><th>Intent signal</th><th>Status</th><th>Seen</th></tr>
+        <tr class="hot"><td><div class="sc"><span class="scv">94</span><span class="scb"><i style="width:94%"></i></span></div></td>
+          <td><div class="co">Northwind Labs</div><div class="ct">ops lead · 40–80 seats</div></td>
+          <td><span class="src">reddit/r/saas</span></td><td class="it">“looking to replace our current vendor”</td>
+          <td><span class="st n">new</span></td><td class="ct">8m</td></tr>
+        <tr class="hot"><td><div class="sc"><span class="scv">89</span><span class="scb"><i style="width:89%"></i></span></div></td>
+          <td><div class="co">Brightfold</div><div class="ct">head of growth</div></td>
+          <td><span class="src">g2/reviews</span></td><td class="it">3★ review of a competitor, churn wording</td>
+          <td><span class="st e">emailed</span></td><td class="ct">22m</td></tr>
+        <tr class="hot"><td><div class="sc"><span class="scv">86</span><span class="scb"><i style="width:86%"></i></span></div></td>
+          <td><div class="co">Kestrel Systems</div><div class="ct">cto</div></td>
+          <td><span class="src">reddit/comments</span></td><td class="it">budget + timeline in one comment</td>
+          <td><span class="st r">replied</span></td><td class="ct">1h</td></tr>
+        <tr class="warm"><td><div class="sc"><span class="scv">74</span><span class="scb"><i style="width:74%"></i></span></div></td>
+          <td><div class="co">Palemoon Studio</div><div class="ct">founder</div></td>
+          <td><span class="src">g2/reviews</span></td><td class="it">asks for migration help</td>
+          <td><span class="st n">new</span></td><td class="ct">2h</td></tr>
+        <tr class="warm"><td><div class="sc"><span class="scv">68</span><span class="scb"><i style="width:68%"></i></span></div></td>
+          <td><div class="co">Verity Freight</div><div class="ct">ops manager</div></td>
+          <td><span class="src">reddit/r/logistics</span></td><td class="it">pain phrase matched ×2</td>
+          <td><span class="st e">emailed</span></td><td class="ct">3h</td></tr>
+        <tr class="warm"><td><div class="sc"><span class="scv">61</span><span class="scb"><i style="width:61%"></i></span></div></td>
+          <td><div class="co">Oakline Health</div><div class="ct">product owner</div></td>
+          <td><span class="src">job-board</span></td><td class="it">hiring for the role we replace</td>
+          <td><span class="st c">queued</span></td><td class="ct">5h</td></tr>
+        <tr class="cold"><td><div class="sc"><span class="scv">42</span><span class="scb"><i style="width:42%"></i></span></div></td>
+          <td><div class="co">Tinsmith Co</div><div class="ct">unknown contact</div></td>
+          <td><span class="src">reddit/posts</span></td><td class="it">weak signal, no budget wording</td>
+          <td><span class="st c">queued</span></td><td class="ct">7h</td></tr>
+        <tr class="cold"><td><div class="sc"><span class="scv">37</span><span class="scb"><i style="width:37%"></i></span></div></td>
+          <td><div class="co">Harbor Nine</div><div class="ct">marketing</div></td>
+          <td><span class="src">g2/reviews</span></td><td class="it">positive review of incumbent</td>
+          <td><span class="st c">queued</span></td><td class="ct">9h</td></tr>
+        <tr class="warm"><td><div class="sc"><span class="scv">66</span><span class="scb"><i style="width:66%"></i></span></div></td>
+          <td><div class="co">Glasshouse Retail</div><div class="ct">it director</div></td>
+          <td><span class="src">reddit/r/devops</span></td><td class="it">contract renewal in 2 months</td>
+          <td><span class="st e">emailed</span></td><td class="ct">11h</td></tr>
+        <tr class="warm"><td><div class="sc"><span class="scv">59</span><span class="scb"><i style="width:59%"></i></span></div></td>
+          <td><div class="co">Marrow &amp; Pine</div><div class="ct">coo</div></td>
+          <td><span class="src">g2/reviews</span></td><td class="it">complains about onboarding time</td>
+          <td><span class="st n">new</span></td><td class="ct">13h</td></tr>
+        <tr class="cold"><td><div class="sc"><span class="scv">31</span><span class="scb"><i style="width:31%"></i></span></div></td>
+          <td><div class="co">Quillon Media</div><div class="ct">unknown contact</div></td>
+          <td><span class="src">reddit/posts</span></td><td class="it">disqualifier hit: agency pitch</td>
+          <td><span class="st c">dropped</span></td><td class="ct">15h</td></tr>
+      </table>
+    </div>
+
+    <div class="side">
+      <div class="card">
+        <h2>Source performance</h2>
+        <div class="sp"><span class="spn">reddit posts</span><span class="spb"><i style="width:82%"></i></span><span class="spv">41%</span></div>
+        <div class="sp"><span class="spn">reddit cmts</span><span class="spb"><i style="width:64%"></i></span><span class="spv">32%</span></div>
+        <div class="sp"><span class="spn">g2 reviews</span><span class="spb"><i style="width:38%"></i></span><span class="spv">19%</span></div>
+        <div class="sp"><span class="spn">job boards</span><span class="spb"><i style="width:16%"></i></span><span class="spv">8%</span></div>
+      </div>
+      <div class="card" style="flex:1">
+        <h2>Scoring — config, not code</h2>
+        <div class="ai">Phrase library, multipliers and thresholds live in DB tables. A plugin only emits a lead; the central engine scores it and the identity registry decides the merge.
+          <div style="margin-top:10px">weights: <code>intent ×2.4</code> <code>seats ×1.6</code> <code>recency ×1.2</code></div>
+        </div>
+        <h2 style="margin-top:14px">Active disqualifiers</h2>
+        <div class="dq"><span>student</span><span>job seeker</span><span>agency pitch</span><span>&lt; 5 seats</span><span>competitor staff</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Flask CRM facade · 20 source plugins · central dedup · Postgres + SQLite fast-path · pytest in CI</div>
+</main>
+</body>
+</html>

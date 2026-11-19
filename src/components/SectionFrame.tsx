@@ -2,7 +2,12 @@
 
 import type { ReactNode } from "react";
 
-export type SectionFrameVariant = "default" | "band" | "spotlight" | "calm";
+export type SectionFrameVariant =
+  | "default"
+  | "band"
+  | "spotlight"
+  | "calm"
+  | "forge";
 
 type SectionFrameProps = {
   variant?: SectionFrameVariant;
@@ -39,6 +44,22 @@ const variantBg: Record<SectionFrameVariant, ReactNode> = {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_95%_75%,rgba(52,211,153,0.09),transparent_52%)]" />
       <div className="pointer-events-none absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400/20 via-emerald-400/35 to-transparent" />
+    </>
+  ),
+  forge: (
+    <>
+      <div className="pointer-events-none absolute inset-0 bg-[#060a11]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_50%_at_85%_0%,rgba(251,191,36,0.09),transparent_58%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_5%_90%,rgba(34,211,238,0.07),transparent_55%)]" />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.3]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(148,163,184,0.05) 0, rgba(148,163,184,0.05) 1px, transparent 1px, transparent 64px)",
+        }}
+      />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/35 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
     </>
   ),
   calm: (

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>True Protein — storefront</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* palette mirrors src/app/globals.css */
+:root{--bg:#070b14;--fg:#f4f7ff;--accent:#3d7eff;--muted:#9db0d0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  width:1440px;height:900px;overflow:hidden;color:var(--fg);
+  font:15px/1.5 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(1200px 600px at 10% -10%,rgba(61,126,255,.25),transparent 55%),
+    radial-gradient(900px 500px at 90% 0%,rgba(30,90,180,.2),transparent 50%),
+    var(--bg);
+}
+.shell{width:1230px;margin:0 auto}
+.topbar{height:34px;display:flex;align-items:center;font-size:12px;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.06);letter-spacing:.02em}
+.topbar b{color:#cfe0ff;font-weight:700}
+header{height:70px;display:flex;align-items:center;gap:26px;border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{font-family:Unbounded,Manrope,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.logo i{width:30px;height:30px;border-radius:10px;background:linear-gradient(140deg,#5b94ff,#2a5fd6);display:grid;place-items:center;font-style:normal;font-size:14px;color:#fff}
+nav{display:flex;gap:3px;font-size:13.5px;font-weight:600;color:#b8c7e4}
+nav a{padding:8px 12px;border-radius:10px;text-decoration:none;color:inherit}
+nav a.on{background:rgba(61,126,255,.15);color:#9dc0ff}
+.hact{margin-left:auto;display:flex;align-items:center;gap:10px}
+.srch{width:230px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;color:#7f93b5}
+.icbtn{width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);display:grid;place-items:center;position:relative}
+.badge{position:absolute;top:-5px;right:-5px;min-width:17px;height:17px;border-radius:9px;background:var(--accent);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;padding:0 4px}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;margin-top:26px}
+.heroL{border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:28px;background:
+  radial-gradient(540px 260px at 8% 0%,rgba(61,126,255,.22),transparent 60%),rgba(255,255,255,.035);position:relative;overflow:hidden}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9dc0ff;border:1px solid rgba(61,126,255,.35);background:rgba(61,126,255,.1);padding:5px 11px;border-radius:999px}
+h1{font-family:Unbounded,Manrope,sans-serif;font-size:36px;line-height:1.1;letter-spacing:-.03em;margin:15px 0 10px;font-weight:800}
+.lead{color:var(--muted);font-size:14.5px;max-width:460px;line-height:1.55}
+.cta{display:flex;gap:10px;margin-top:20px}
+.b1{height:44px;padding:0 20px;border-radius:12px;background:var(--accent);color:#fff;font-weight:700;font-size:14px;display:grid;place-items:center;box-shadow:0 10px 26px rgba(61,126,255,.3)}
+.b2{height:44px;padding:0 18px;border-radius:12px;border:1px solid rgba(255,255,255,.14);color:#dbe6fb;font-weight:600;font-size:14px;display:grid;place-items:center}
+.goals{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:10px}
+.goal{border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:13px 14px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;justify-content:center}
+.goal b{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+.goal span{font-size:11.5px;color:var(--muted)}
+.goal i{display:grid;place-items:center;width:32px;height:32px;border-radius:11px;margin-bottom:10px;background:rgba(61,126,255,.16);border:1px solid rgba(61,126,255,.26)}
+.goal .bars{display:flex;gap:2.5px;align-items:flex-end;height:14px}
+.goal .bars u{display:block;width:3px;border-radius:2px;background:#8ab4ff;text-decoration:none}
+.sect{display:flex;align-items:flex-end;justify-content:space-between;margin:26px 0 14px}
+.sect h2{font-family:Unbounded,Manrope,sans-serif;font-size:20px;letter-spacing:-.02em;font-weight:700}
+.sect span{font-size:13px;color:var(--muted);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.p{border:1px solid rgba(255,255,255,.09);border-radius:18px;background:rgba(255,255,255,.035);overflow:hidden}
+.shot{height:138px;position:relative;display:grid;place-items:center}
+.jar{width:60px;height:86px;border-radius:12px 12px 10px 10px;position:relative;box-shadow:0 14px 28px rgba(0,0,0,.4)}
+.jar:before{content:"";position:absolute;left:12px;right:12px;top:-9px;height:12px;border-radius:5px;background:rgba(255,255,255,.22)}
+.jar:after{content:"";position:absolute;left:9px;right:9px;top:30px;height:26px;border-radius:5px;background:rgba(255,255,255,.14)}
+.tagd{position:absolute;top:11px;left:11px;font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:4px 8px;border-radius:7px;background:rgba(61,126,255,.18);border:1px solid rgba(61,126,255,.35);color:#b7d0ff}
+.tagd.hit{background:rgba(255,176,32,.14);border-color:rgba(255,176,32,.38);color:#ffcd73}
+.pb{padding:13px 14px 15px;border-top:1px solid rgba(255,255,255,.07)}
+.brand{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7f93b5;font-weight:700}
+.pn{font-size:14.5px;font-weight:700;letter-spacing:-.01em;margin:4px 0 8px;line-height:1.3}
+.prow{display:flex;align-items:center;justify-content:space-between}
+.pp{font-size:17px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pp s{display:block;font-size:11.5px;font-weight:600;color:#6d80a2;text-decoration:none}
+.add{width:36px;height:36px;border-radius:11px;background:var(--accent);display:grid;place-items:center;box-shadow:0 8px 18px rgba(61,126,255,.3)}
+.strip{margin-top:20px;display:flex;align-items:center;gap:18px;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:13px 18px;background:linear-gradient(100deg,rgba(61,126,255,.14),rgba(255,255,255,.03))}
+.strip b{font-size:14px}
+.strip span{font-size:12.5px;color:var(--muted)}
+.code{margin-left:auto;font-family:ui-monospace,Consolas,monospace;font-size:13px;font-weight:700;letter-spacing:.12em;color:#9dc0ff;border:1px dashed rgba(61,126,255,.5);border-radius:10px;padding:7px 14px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">Доставка по РБ и РФ · самовывоз в Минске · <b>оплата при получении</b> &nbsp;·&nbsp; поддержка в Telegram</div>
+  <header>
+    <div class="logo"><i>TP</i>TRUE PROTEIN</div>
+    <nav><a class="on" href="#">Каталог</a><a href="#">Бренды</a><a href="#">Цели</a><a href="#">Акции</a><a href="#">Замена</a><a href="#">Доставка</a><a href="#">Блог</a></nav>
+    <div class="hact">
+      <div class="srch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7f93b5" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Протеин, креатин…</div>
+      <div class="icbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cfe0ff" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="icbtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cfe0ff" stroke-width="2"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h3l2.6 12.3a2 2 0 0 0 2 1.7h8.2a2 2 0 0 0 2-1.5L22 8H6.3"/></svg><span class="badge">3</span></div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="heroL">
+      <span class="pill">Своя платформа вместо Tilda</span>
+      <h1>Спортпит под твою цель,<br/>а не под витрину</h1>
+      <div class="lead">Шесть целей — готовый стек добавок с расчётом на месяц. Каталог, корзина и заказы живут в одной базе с админкой и Telegram-ботом.</div>
+      <div class="cta"><div class="b1">Подобрать под цель</div><div class="b2">Весь каталог · 412</div></div>
+    </div>
+    <div class="goals">
+      <div class="goal"><i><div class="bars"><u style="height:6px"></u><u style="height:10px"></u><u style="height:14px"></u></div></i><b>Масса</b><span>8 добавок</span></div>
+      <div class="goal"><i><div class="bars"><u style="height:14px"></u><u style="height:9px"></u><u style="height:5px"></u></div></i><b>Сушка</b><span>6 добавок</span></div>
+      <div class="goal"><i><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8ab4ff" stroke-width="2.2"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></i><b>Энергия</b><span>5 добавок</span></div>
+      <div class="goal"><i><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8ab4ff" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></i><b>Суставы</b><span>4 добавки</span></div>
+      <div class="goal"><i><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8ab4ff" stroke-width="2.2"><path d="M12 21s-8-5-8-11a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11z"/></svg></i><b>Иммунитет</b><span>7 добавок</span></div>
+      <div class="goal"><i><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8ab4ff" stroke-width="2.2"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></i><b>Сон</b><span>3 добавки</span></div>
+    </div>
+  </section>
+
+  <div class="sect"><h2>Хиты продаж</h2><span>Импортировано из Tilda — 412 позиций, 38 брендов</span></div>
+  <div class="cards">
+    <div class="p">
+      <div class="shot" style="background:radial-gradient(130px 90px at 50% 40%,rgba(61,126,255,.2),transparent 70%)">
+        <span class="tagd hit">ХИТ</span>
+        <div class="jar" style="background:linear-gradient(160deg,#2f4a86,#15233f)"></div>
+      </div>
+      <div class="pb"><div class="brand">Optimum</div><div class="pn">Whey Protein 100% · 2.27 кг</div>
+        <div class="prow"><div class="pp">189 ₽<s>За порцию 30 г</s></div><div class="add"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div></div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="shot" style="background:radial-gradient(130px 90px at 50% 40%,rgba(255,176,32,.14),transparent 70%)">
+        <span class="tagd">−15%</span>
+        <div class="jar" style="background:linear-gradient(160deg,#6d5423,#2a2010)"></div>
+      </div>
+      <div class="pb"><div class="brand">Scitec</div><div class="pn">Creatine Monohydrate · 500 г</div>
+        <div class="prow"><div class="pp">79 ₽<s>За порцию 5 г</s></div><div class="add"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div></div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="shot" style="background:radial-gradient(130px 90px at 50% 40%,rgba(125,255,179,.12),transparent 70%)">
+        <span class="tagd">НОВОЕ</span>
+        <div class="jar" style="background:linear-gradient(160deg,#1f6049,#0d2a21)"></div>
+      </div>
+      <div class="pb"><div class="brand">Maxler</div><div class="pn">BCAA 2:1:1 Powder · 420 г</div>
+        <div class="prow"><div class="pp">118 ₽<s>За порцию 7 г</s></div><div class="add"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div></div>
+      </div>
+    </div>
+    <div class="p">
+      <div class="shot" style="background:radial-gradient(130px 90px at 50% 40%,rgba(216,120,255,.12),transparent 70%)">
+        <span class="tagd hit">ХИТ</span>
+        <div class="jar" style="background:linear-gradient(160deg,#54306b,#231330)"></div>
+      </div>
+      <div class="pb"><div class="brand">NOW</div><div class="pn">Omega-3 1000 мг · 180 капсул</div>
+        <div class="prow"><div class="pp">64 ₽<s>За порцию 2 капс.</s></div><div class="add"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div><b>Промокод на первый заказ</b><br/><span>Скидка считается на сервере, в корзине и в карточке заказа у менеджера — одна логика</span></div>
+    <div class="code">TRUE10</div>
+  </div>
+</div>
+</body>
+</html>

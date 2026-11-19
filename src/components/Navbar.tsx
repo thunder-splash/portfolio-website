@@ -17,6 +17,7 @@ export function Navbar() {
     { href: "#stack", label: t.nav.stack },
     { href: "#metrics", label: t.nav.impact },
     { href: "#work", label: t.nav.work },
+    { href: "#lab", label: t.nav.lab },
     { href: "#education", label: t.nav.education },
     { href: "#contact", label: t.nav.contact },
   ];

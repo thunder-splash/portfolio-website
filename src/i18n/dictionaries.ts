@@ -5,6 +5,7 @@ export type Dictionary = {
     stack: string;
     impact: string;
     work: string;
+    lab: string;
     education: string;
     contact: string;
     hire: string;
@@ -42,7 +43,7 @@ export type Dictionary = {
     title: string;
     invite: string;
     horizonTag: string;
-    horizonToEdu: string;
+    horizonToLab: string;
     companiesLabel: string;
     companySwitcherHint: string;
     selectCompany: string;
@@ -90,6 +91,34 @@ export type Dictionary = {
       }
     >;
   };
+  lab: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    horizonTag: string;
+    horizonToEdu: string;
+    note: string;
+    gridHint: string;
+    open: string;
+    close: string;
+    prev: string;
+    next: string;
+    shotOf: string;
+    stackLabel: string;
+    highlightsLabel: string;
+    figuresLabel: string;
+    figures: Record<string, string>;
+    projects: Record<
+      string,
+      {
+        title: string;
+        kind: string;
+        pitch: string;
+        summary: string;
+        points: string[];
+      }
+    >;
+  };
   education: {
     eyebrow: string;
     title: string;
@@ -114,6 +143,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       stack: "Stack",
       impact: "Impact",
       work: "Work",
+      lab: "Lab",
       education: "Edu",
       contact: "Contact",
       hire: "Hire Me",
@@ -178,7 +208,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       invite:
         "Company → case → path (started → shipped) → live demo. Built to be touched, not skimmed.",
       horizonTag: "Career",
-      horizonToEdu: "04 · Background",
+      horizonToLab: "04 · Lab",
       companiesLabel: "Companies",
       companySwitcherHint: "Click a company to explore its projects",
       selectCompany: "Switch",
@@ -410,8 +440,117 @@ export const dictionaries: Record<Locale, Dictionary> = {
         },
       },
     },
+    lab: {
+      eyebrow: "04 — Lab",
+      title: "Projects I own end to end",
+      description:
+        "Products built outside the employment timeline — my own and for direct clients. Backend, frontend, bot and deploy on me.",
+      horizonTag: "Lab",
+      horizonToEdu: "05 · Background",
+      note: "Screens use synthetic data: no real customers, balances or credentials.",
+      gridHint: "Pick a project to see the detail",
+      open: "Open case",
+      close: "Close",
+      prev: "Previous project",
+      next: "Next project",
+      shotOf: "Screen",
+      stackLabel: "Stack",
+      highlightsLabel: "What is inside",
+      figuresLabel: "At a glance",
+      figures: {
+        surface: "surfaces",
+        search: "search",
+        deploy: "pipeline",
+        catalog: "SKUs",
+        migration: "migrated",
+        delivery: "delivery",
+        packages: "packages",
+        payments: "payments",
+        batch: "batch",
+        sources: "sources",
+        scoring: "scoring",
+        tests: "tests",
+        uptime: "runtime",
+        rate: "rate limit",
+        ship: "ships as",
+      },
+      projects: {
+        tgorg: {
+          title: "tgorg — Telegram channel catalog",
+          kind: "Own product",
+          pitch: "SEO catalog with its own search, moderation and ranking — no CMS.",
+          summary:
+            "A pnpm monorepo: a Next.js storefront that renders catalog pages straight from Postgres, a Hono API, and a BullMQ worker that keeps channel statistics fresh.",
+          points: [
+            "Server-rendered category and channel pages read Postgres through Drizzle, so every page is indexable on its own URL.",
+            "Meilisearch covers typo-tolerant search across the catalog; the worker refreshes subscriber and ER numbers on a daily cycle.",
+            "Docker Compose behind Nginx, GitHub Actions pipeline: typecheck and build on every PR, then deploy, migrate and restart on the server.",
+          ],
+        },
+        trueprotein: {
+          title: "True Protein — store that replaced Tilda",
+          kind: "Client product",
+          pitch: "Storefront, admin panel and Telegram bot on one database.",
+          summary:
+            "A sports nutrition shop moved off a site builder onto its own Next.js platform, so catalog, orders and the manager's workflow finally share one source of truth.",
+          points: [
+            "Catalog imported from the old CSV export — 412 items and 38 brands, with a separate media import script.",
+            "Goal-based picker instead of a flat catalog: six goals each resolve to a ready stack of supplements.",
+            "Every order lands in the manager's Telegram as a card; the status buttons in that chat write to the same Prisma database as the admin panel.",
+          ],
+        },
+        keys: {
+          title: "Keys Reseller — bot shop with instant delivery",
+          kind: "Own product",
+          pitch: "Telegram bot plus an SEO storefront over a partner API.",
+          summary:
+            "Payment, stock purchase and delivery run without a human in the loop: the API buys from the partner over a signed channel and hands the code back to the buyer.",
+          points: [
+            "Turborepo with a Fastify API, a grammY bot and a Next.js SSR storefront, plus an HMAC partner SDK as a shared package.",
+            "Crypto checkout: an invoice is issued, and once it is paid the order flows through a BullMQ queue to delivery.",
+            "Markup and the profit floor are computed server-side in a separate package with unit tests, so no sale can fall below the floor.",
+          ],
+        },
+        otklik: {
+          title: "OtklikHH — job application bot",
+          kind: "Own product",
+          pitch: "Your filters in, a batch of applications out — with a report on every skip.",
+          summary:
+            "A Bun monorepo where the bot, the Telegram mini app, the operator console, the API and the worker all share the same domain, payments and notification packages.",
+          points: [
+            "Playwright drives the real apply flow in a browser session per client, with proxies and session recovery.",
+            "Every run reports what was sent and why anything was skipped, so a quiet failure cannot hide.",
+            "A separate antifraud lab runs fingerprint suites on throwaway profiles, kept away from production data.",
+          ],
+        },
+        rankevo: {
+          title: "Rankevo — lead intelligence CRM",
+          kind: "Client product",
+          pitch: "Twenty sources, one write contract, scoring that lives in the database.",
+          summary:
+            "The CRM is the single source of truth: every collector is a plugin that writes through one facade, deduplication is central, and the scoring engine is driven by configuration rather than code.",
+          points: [
+            "Source plugins never decide identity — a central registry merges duplicates, with a local SQLite fast path in front of it.",
+            "Phrase library, disqualifiers, multipliers and thresholds are database rows, so the operator retunes scoring without a deploy.",
+            "React 19 + Vite console: queue, kanban board, pipeline, AI filter and per-source performance, with the collector switches on the same screen.",
+          ],
+        },
+        autobuyer: {
+          title: "LZT AutoBuyer — desktop trading panel",
+          kind: "Client product",
+          pitch: "Watches a marketplace API around the clock and buys by your filters.",
+          summary:
+            "A Windows desktop tool: a Python core with a web-rendered interface, delivered as a single executable with its own updater notes and operator manual.",
+          points: [
+            "The request interval adapts to the rate budget the API reports in each response and backs off on its own after a 429.",
+            "Safety rails first: test mode, an explicit confirmation before live buying, a per-session spend cap and a seller blacklist.",
+            "A Telegram companion mirrors the app — lot cards with buy buttons, filter toggles, balance alerts, and IMAP checks on the mail of purchased accounts.",
+          ],
+        },
+      },
+    },
     education: {
-      eyebrow: "04 — Background",
+      eyebrow: "05 — Background",
       title: "Edu & languages",
       horizonTag: "Profile",
       educationLabel: "Education",
@@ -424,7 +563,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     contact: {
-      eyebrow: "05 — Contact",
+      eyebrow: "06 — Contact",
       title: "Let's build something massive.",
       email: "Email",
       telegram: "Telegram",
@@ -435,6 +574,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       stack: "Стек",
       impact: "Результаты",
       work: "Опыт",
+      lab: "Лаб",
       education: "Образование",
       contact: "Контакты",
       hire: "Связаться",
@@ -499,7 +639,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       invite:
         "Компания → кейс → путь (с чего → к чему) → живое демо. Блок сделан, чтобы его трогали.",
       horizonTag: "Карьера",
-      horizonToEdu: "04 · Образование",
+      horizonToLab: "04 · Лаборатория",
       companiesLabel: "Компании",
       companySwitcherHint: "Нажми на компанию, чтобы переключить опыт",
       selectCompany: "Выбрать",
@@ -727,8 +867,117 @@ export const dictionaries: Record<Locale, Dictionary> = {
         },
       },
     },
+    lab: {
+      eyebrow: "04 — Лаборатория",
+      title: "Проекты, где я отвечаю за всё",
+      description:
+        "То, что сделано вне найма — свои продукты и заказы напрямую. Бэкенд, фронт, бот и деплой на мне.",
+      horizonTag: "Лаборатория",
+      horizonToEdu: "05 · Образование",
+      note: "На скринах синтетические данные: ни реальных клиентов, ни балансов, ни доступов.",
+      gridHint: "Выбери проект, чтобы раскрыть детали",
+      open: "Открыть кейс",
+      close: "Закрыть",
+      prev: "Предыдущий проект",
+      next: "Следующий проект",
+      shotOf: "Экран",
+      stackLabel: "Стек",
+      highlightsLabel: "Что внутри",
+      figuresLabel: "Коротко",
+      figures: {
+        surface: "поверхности",
+        search: "поиск",
+        deploy: "пайплайн",
+        catalog: "позиций",
+        migration: "переезд с",
+        delivery: "выдача",
+        packages: "пакетов",
+        payments: "оплата",
+        batch: "пачка",
+        sources: "источников",
+        scoring: "скоринг",
+        tests: "тесты",
+        uptime: "режим",
+        rate: "лимит API",
+        ship: "поставка",
+      },
+      projects: {
+        tgorg: {
+          title: "tgorg — каталог Telegram-каналов",
+          kind: "Свой продукт",
+          pitch: "SEO-каталог со своим поиском, модерацией и рейтингом — без CMS.",
+          summary:
+            "pnpm-монорепа: витрина на Next.js рендерит страницы прямо из Postgres, API на Hono, и воркер BullMQ держит статистику каналов свежей.",
+          points: [
+            "Страницы категорий и каналов рендерятся на сервере из Postgres через Drizzle — каждая индексируется по своему URL.",
+            "Meilisearch закрывает поиск с опечатками по всему каталогу, воркер раз в сутки обновляет подписчиков и ER.",
+            "Docker Compose за Nginx и пайплайн GitHub Actions: typecheck и сборка на каждый PR, затем выкладка, миграции и рестарт на сервере.",
+          ],
+        },
+        trueprotein: {
+          title: "True Protein — магазин вместо Tilda",
+          kind: "Клиентский продукт",
+          pitch: "Витрина, админка и Telegram-бот на одной базе.",
+          summary:
+            "Магазин спортпита переехал с конструктора на свою платформу на Next.js: каталог, заказы и работа менеджера наконец живут в одном источнике правды.",
+          points: [
+            "Каталог импортирован из старой выгрузки CSV — 412 позиций и 38 брендов, медиа подтягивает отдельный скрипт.",
+            "Вместо плоского каталога — подбор под цель: шесть целей, у каждой готовый стек добавок.",
+            "Каждый заказ падает менеджеру в Telegram карточкой, а кнопки статусов в чате пишут в ту же базу Prisma, что и админка.",
+          ],
+        },
+        keys: {
+          title: "Keys Reseller — бот-магазин с мгновенной выдачей",
+          kind: "Свой продукт",
+          pitch: "Telegram-бот плюс SEO-витрина поверх партнёрского API.",
+          summary:
+            "Оплата, закупка стока и выдача проходят без человека: API покупает у партнёра по подписанному каналу и отдаёт код покупателю.",
+          points: [
+            "Turborepo: API на Fastify, бот на grammY и SSR-витрина на Next.js, а HMAC-клиент партнёра вынесен в общий пакет.",
+            "Оплата криптой: выставляется счёт, после подтверждения заказ уходит через очередь BullMQ на выдачу.",
+            "Наценка и пол прибыли считаются на сервере в отдельном пакете с юнит-тестами — продажа ниже пола невозможна.",
+          ],
+        },
+        otklik: {
+          title: "OtklikHH — бот автооткликов на hh.ru",
+          kind: "Свой продукт",
+          pitch: "На входе твои фильтры, на выходе пачка откликов и отчёт по каждому пропуску.",
+          summary:
+            "Монорепа на Bun, где бот, мини-приложение Telegram, операторская, API и воркер делят общие пакеты домена, платежей и уведомлений.",
+          points: [
+            "Playwright проходит настоящий сценарий отклика в сессии браузера под каждого клиента — с прокси и восстановлением сессии.",
+            "Каждый запуск отчитывается, что отправлено и почему что-то пропущено: тихо сломаться не получится.",
+            "Антифрод-лаборатория гоняет fingerprint-сьюты на отдельных профилях, в стороне от продовых данных.",
+          ],
+        },
+        rankevo: {
+          title: "Rankevo — CRM для квалификации лидов",
+          kind: "Клиентский продукт",
+          pitch: "Двадцать источников, один контракт записи, скоринг живёт в базе.",
+          summary:
+            "CRM — единственный источник правды: каждый коллектор это плагин, который пишет через один фасад, дедупликация централизована, а движок скоринга управляется конфигом, а не кодом.",
+          points: [
+            "Плагины источников не решают, кто есть кто: дубли сводит центральный реестр, перед ним — быстрый локальный SQLite.",
+            "Библиотека фраз, дисквалификаторы, множители и пороги — это строки в базе, так что оператор перенастраивает скоринг без деплоя.",
+            "Консоль на React 19 и Vite: очередь, канбан, воронка, AI-фильтр и эффективность источников, тумблеры коллекторов рядом.",
+          ],
+        },
+        autobuyer: {
+          title: "LZT AutoBuyer — десктопная панель для маркета",
+          kind: "Клиентский продукт",
+          pitch: "Круглосуточно следит за API маркетплейса и выкупает по твоим фильтрам.",
+          summary:
+            "Десктопный инструмент под Windows: ядро на Python, интерфейс рендерится как веб, всё собирается в один exe со своей историей версий и инструкцией для оператора.",
+          points: [
+            "Интервал запросов подстраивается под остаток лимита, который API сообщает в каждом ответе, и сам отступает после 429.",
+            "Сначала страховка: режим «Тест», подтверждение перед боевым запуском, лимит трат за сессию и чёрный список продавцов.",
+            "Telegram-спутник дублирует приложение — карточки лотов с кнопкой покупки, переключение фильтров, тревоги по балансу и проверка почты купленных аккаунтов по IMAP.",
+          ],
+        },
+      },
+    },
     education: {
-      eyebrow: "04 — Образование",
+      eyebrow: "05 — Образование",
       title: "Образование и языки",
       horizonTag: "Профиль",
       educationLabel: "Образование",
@@ -742,7 +991,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     contact: {
-      eyebrow: "05 — Контакты",
+      eyebrow: "06 — Контакты",
       title: "Давайте сделаем что-то масштабное.",
       email: "Email",
       telegram: "Telegram",
@@ -753,6 +1002,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       stack: "Stack",
       impact: "Impacto",
       work: "Trabajo",
+      lab: "Lab",
       education: "Edu",
       contact: "Contacto",
       hire: "Contrátame",
@@ -817,7 +1067,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       invite:
         "Empresa → caso → camino (inicio → entrega) → demo en vivo. Hecho para tocarse, no para ojearse.",
       horizonTag: "Carrera",
-      horizonToEdu: "04 · Background",
+      horizonToLab: "04 · Laboratorio",
       companiesLabel: "Empresas",
       companySwitcherHint: "Haz clic en una empresa para ver sus proyectos",
       selectCompany: "Cambiar",
@@ -1046,8 +1296,117 @@ export const dictionaries: Record<Locale, Dictionary> = {
         },
       },
     },
+    lab: {
+      eyebrow: "04 — Laboratorio",
+      title: "Proyectos que llevo de punta a punta",
+      description:
+        "Productos hechos fuera del empleo: propios y para clientes directos. Backend, frontend, bot y despliegue a mi cargo.",
+      horizonTag: "Laboratorio",
+      horizonToEdu: "05 · Background",
+      note: "Las capturas usan datos sintéticos: ni clientes reales, ni saldos, ni credenciales.",
+      gridHint: "Elige un proyecto para ver el detalle",
+      open: "Abrir caso",
+      close: "Cerrar",
+      prev: "Proyecto anterior",
+      next: "Proyecto siguiente",
+      shotOf: "Pantalla",
+      stackLabel: "Stack",
+      highlightsLabel: "Qué hay dentro",
+      figuresLabel: "De un vistazo",
+      figures: {
+        surface: "superficies",
+        search: "búsqueda",
+        deploy: "pipeline",
+        catalog: "artículos",
+        migration: "migrado de",
+        delivery: "entrega",
+        packages: "paquetes",
+        payments: "pagos",
+        batch: "lote",
+        sources: "fuentes",
+        scoring: "scoring",
+        tests: "tests",
+        uptime: "régimen",
+        rate: "límite API",
+        ship: "se entrega",
+      },
+      projects: {
+        tgorg: {
+          title: "tgorg — catálogo de canales de Telegram",
+          kind: "Producto propio",
+          pitch: "Catálogo SEO con búsqueda, moderación y ranking propios, sin CMS.",
+          summary:
+            "Monorepo pnpm: una tienda en Next.js que renderiza las páginas directo desde Postgres, una API en Hono y un worker BullMQ que mantiene fresca la estadística de los canales.",
+          points: [
+            "Las páginas de categoría y canal se renderizan en el servidor desde Postgres con Drizzle, así cada una se indexa en su propia URL.",
+            "Meilisearch cubre la búsqueda tolerante a erratas; el worker actualiza suscriptores y ER en un ciclo diario.",
+            "Docker Compose tras Nginx y pipeline de GitHub Actions: typecheck y build en cada PR, luego despliegue, migración y reinicio en el servidor.",
+          ],
+        },
+        trueprotein: {
+          title: "True Protein — tienda que reemplazó a Tilda",
+          kind: "Producto de cliente",
+          pitch: "Tienda, panel de administración y bot de Telegram sobre una sola base.",
+          summary:
+            "Una tienda de nutrición deportiva salió del constructor hacia su propia plataforma en Next.js: catálogo, pedidos y el trabajo del gestor comparten por fin una única fuente de verdad.",
+          points: [
+            "Catálogo importado desde la exportación CSV anterior: 412 artículos y 38 marcas, con un script aparte para los medios.",
+            "En vez de un catálogo plano, selección por objetivo: seis objetivos, cada uno con su stack de suplementos listo.",
+            "Cada pedido llega al gestor en Telegram como tarjeta, y los botones de estado de ese chat escriben en la misma base Prisma que el panel.",
+          ],
+        },
+        keys: {
+          title: "Keys Reseller — tienda-bot con entrega instantánea",
+          kind: "Producto propio",
+          pitch: "Bot de Telegram más una tienda SEO sobre una API de partner.",
+          summary:
+            "Pago, compra de stock y entrega ocurren sin intervención humana: la API compra al partner por un canal firmado y devuelve el código al comprador.",
+          points: [
+            "Turborepo con API en Fastify, bot en grammY y tienda SSR en Next.js, más un SDK HMAC del partner como paquete compartido.",
+            "Pago en cripto: se emite la factura y, al confirmarse, el pedido pasa por una cola BullMQ hacia la entrega.",
+            "El margen y el suelo de beneficio se calculan en el servidor, en un paquete con tests unitarios: ninguna venta baja del suelo.",
+          ],
+        },
+        otklik: {
+          title: "OtklikHH — bot de candidaturas automáticas",
+          kind: "Producto propio",
+          pitch: "Entran tus filtros, sale un lote de candidaturas y un informe de cada descarte.",
+          summary:
+            "Monorepo en Bun donde el bot, la mini app de Telegram, la consola del operador, la API y el worker comparten los paquetes de dominio, pagos y notificaciones.",
+          points: [
+            "Playwright recorre el flujo real de postulación en una sesión de navegador por cliente, con proxies y recuperación de sesión.",
+            "Cada ejecución informa qué se envió y por qué se saltó algo: un fallo silencioso no pasa desapercibido.",
+            "Un laboratorio antifraude ejecuta suites de fingerprint en perfiles aparte, lejos de los datos de producción.",
+          ],
+        },
+        rankevo: {
+          title: "Rankevo — CRM de inteligencia de leads",
+          kind: "Producto de cliente",
+          pitch: "Veinte fuentes, un solo contrato de escritura, scoring que vive en la base.",
+          summary:
+            "El CRM es la única fuente de verdad: cada colector es un plugin que escribe por una sola fachada, la deduplicación es central y el motor de scoring se gobierna por configuración, no por código.",
+          points: [
+            "Los plugins no deciden identidades: un registro central fusiona duplicados, con un SQLite local como vía rápida por delante.",
+            "Biblioteca de frases, descalificadores, multiplicadores y umbrales son filas de base de datos, así el operador reajusta el scoring sin desplegar.",
+            "Consola en React 19 y Vite: cola, tablero kanban, embudo, filtro con IA y rendimiento por fuente, con los interruptores de colectores a la vista.",
+          ],
+        },
+        autobuyer: {
+          title: "LZT AutoBuyer — panel de escritorio para un marketplace",
+          kind: "Producto de cliente",
+          pitch: "Vigila la API de un marketplace sin parar y compra según tus filtros.",
+          summary:
+            "Herramienta de escritorio para Windows: núcleo en Python con interfaz renderizada como web, entregada en un único ejecutable con su historial de versiones y manual de operador.",
+          points: [
+            "El intervalo de peticiones se adapta al presupuesto de límite que la API informa en cada respuesta y retrocede solo tras un 429.",
+            "Primero los seguros: modo de prueba, confirmación explícita antes del modo real, tope de gasto por sesión y lista negra de vendedores.",
+            "Un acompañante en Telegram refleja la app: tarjetas de lote con botón de compra, interruptores de filtros, alertas de saldo y comprobación IMAP del correo de las cuentas compradas.",
+          ],
+        },
+      },
+    },
     education: {
-      eyebrow: "04 — Background",
+      eyebrow: "05 — Background",
       title: "Edu e idiomas",
       horizonTag: "Perfil",
       educationLabel: "Educación",
@@ -1060,7 +1419,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     contact: {
-      eyebrow: "05 — Contacto",
+      eyebrow: "06 — Contacto",
       title: "Construyamos algo grande.",
       email: "Email",
       telegram: "Telegram",

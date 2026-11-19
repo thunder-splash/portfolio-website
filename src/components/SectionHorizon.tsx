@@ -4,7 +4,7 @@ type SectionHorizonProps = {
   left: string;
   right: string;
   className?: string;
-  tone?: "cyan" | "emerald" | "violet";
+  tone?: "cyan" | "emerald" | "violet" | "amber";
 };
 
 const toneStyles = {
@@ -25,6 +25,12 @@ const toneStyles = {
     leftDot: "bg-violet-400/65",
     rightDot: "bg-violet-300/50",
     fill: "from-violet-400/10",
+  },
+  amber: {
+    line: "via-amber-400/40",
+    leftDot: "bg-amber-400/65",
+    rightDot: "bg-amber-300/50",
+    fill: "from-amber-400/10",
   },
 } as const;
 
