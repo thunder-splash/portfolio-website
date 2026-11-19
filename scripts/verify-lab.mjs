@@ -1,8 +1,9 @@
 /**
- * Renders the running site and captures the Lab section at several breakpoints,
- * plus the opened case dialog. Artifacts land in .demo-screenshots/lab-check.
+ * Renders the running site and checks the Lab section at several breakpoints:
+ * the grid, the case dialog and the live-demo playground.
+ * Artifacts land in .demo-screenshots/lab-check.
  *
- *   npm run dev          # in another terminal
+ *   npm start                      # in another shell
  *   node scripts/verify-lab.mjs [baseUrl]
  */
 import { chromium } from "playwright";
@@ -32,13 +33,12 @@ const browser = await chromium.launch({
   executablePath: fs.existsSync(chromePath) ? chromePath : undefined,
 });
 
-// the dev server may still be booting
 for (let i = 0; i < 90; i++) {
   try {
     const res = await fetch(base, { signal: AbortSignal.timeout(3000) });
     if (res.ok) break;
   } catch {
-    /* not up yet */
+    /* booting */
   }
   await new Promise((r) => setTimeout(r, 2000));
 }
@@ -59,8 +59,7 @@ for (const bp of breakpoints) {
   await page.goto(`${base}/#lab`, { waitUntil: "networkidle", timeout: 60000 });
   await page.waitForSelector("#lab", { timeout: 30000 });
 
-  // scroll through the section so every scroll-triggered card animates in,
-  // then come back to the top of it for the capture
+  // walk the section so every scroll-triggered card animates in
   await page.evaluate(async () => {
     const section = document.querySelector("#lab");
     if (!section) return;
@@ -80,15 +79,26 @@ for (const bp of breakpoints) {
     .locator("#lab")
     .screenshot({ path: path.join(outDir, `lab-${bp.name}.png`) });
 
-  // open the first case
-  await page.locator("#lab button[aria-label]").first().click();
+  // 1. case dialog
+  await page.locator('#lab [data-detail], #lab button:has-text("Подробно")').first()
+    .click({ timeout: 5000 })
+    .catch(async () => {
+      await page.locator("#lab button").nth(1).click({ timeout: 5000 });
+    });
   await page.waitForSelector('[role="dialog"]', { timeout: 10000 });
-  await page.waitForTimeout(900);
-  await page.screenshot({
-    path: path.join(outDir, `dialog-${bp.name}.png`),
-  });
+  await page.waitForTimeout(800);
+  await page.screenshot({ path: path.join(outDir, `dialog-${bp.name}.png`) });
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(500);
 
-  // overflow check inside the dialog
+  // 2. live demo playground, opened from a card cover
+  await page.locator("#lab button").first().click({ timeout: 5000 });
+  const frame = await page
+    .waitForSelector("iframe", { timeout: 15000 })
+    .catch(() => null);
+  await page.waitForTimeout(2600);
+  await page.screenshot({ path: path.join(outDir, `demo-${bp.name}.png`) });
+
   const overflow = await page.evaluate(() => {
     const el = document.scrollingElement;
     return el ? el.scrollWidth - el.clientWidth : 0;
@@ -96,7 +106,7 @@ for (const bp of breakpoints) {
 
   console.log(
     `${bp.name.padEnd(8)} ${String(bp.width).padStart(4)}px  ` +
-      `h-overflow:${overflow}px  errors:${errors.length}`,
+      `h-overflow:${overflow}px  iframe:${frame ? "yes" : "NO"}  errors:${errors.length}`,
   );
   if (errors.length) console.log("   ", errors.slice(0, 2).join(" | "));
 

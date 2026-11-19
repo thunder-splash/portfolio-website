@@ -4,8 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Play, X } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
+import { ProjectPlayground } from "@/components/ProjectPlayground";
+import { getProjectDemo } from "@/data/demos";
 import { labProjects, type LabAccent, type LabProject } from "@/data/labProjects";
 import { useI18n } from "@/i18n/LanguageProvider";
 
@@ -53,9 +55,12 @@ const accentClasses: Record<
 export function LabShowcase() {
   const { t } = useI18n();
   const [openId, setOpenId] = useState<string | null>(null);
+  const [demoId, setDemoId] = useState<string | null>(null);
 
   const openIndex = labProjects.findIndex((p) => p.id === openId);
   const active = openIndex >= 0 ? labProjects[openIndex] : null;
+  const demoProject = labProjects.find((p) => p.id === demoId) ?? null;
+  const demoLink = demoProject ? getProjectDemo(demoProject.id) : null;
 
   const step = useCallback(
     (dir: -1 | 1) => {
@@ -92,6 +97,7 @@ export function LabShowcase() {
               project={project}
               index={i}
               onOpen={() => setOpenId(project.id)}
+              onDemo={() => setDemoId(project.id)}
             />
           ))}
         </div>
@@ -105,7 +111,22 @@ export function LabShowcase() {
         project={active}
         onClose={() => setOpenId(null)}
         onStep={step}
+        onDemo={() => {
+          if (active) setDemoId(active.id);
+        }}
       />
+
+      {demoProject && demoLink ? (
+        <ProjectPlayground
+          open
+          onClose={() => setDemoId(null)}
+          demo={demoLink.demo}
+          initialScene={demoLink.scene}
+          previewImage={demoProject.shots[0].src}
+          title={t.lab.projects[demoProject.id].title}
+          labels={t.work.playground}
+        />
+      ) : null}
     </section>
   );
 }
@@ -114,10 +135,12 @@ function LabCard({
   project,
   index,
   onOpen,
+  onDemo,
 }: {
   project: LabProject;
   index: number;
   onOpen: () => void;
+  onDemo: () => void;
 }) {
   const { t } = useI18n();
   const copy = t.lab.projects[project.id];
@@ -125,9 +148,7 @@ function LabCard({
   const cover = project.shots[0];
 
   return (
-    <motion.button
-      type="button"
-      onClick={onOpen}
+    <motion.div
       initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -136,10 +157,14 @@ function LabCard({
         delay: Math.min(index * 0.05, 0.25),
         ease: [0.22, 1, 0.36, 1],
       }}
-      aria-label={`${copy.title} — ${t.lab.open}`}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025] text-left transition duration-300 hover:-translate-y-1 hover:bg-white/[0.045] focus-visible:ring-2 focus-visible:ring-amber-300/60 focus-visible:outline-none ${accent.ring} ${accent.glow}`}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/8 bg-white/[0.025] transition duration-300 hover:-translate-y-1 hover:bg-white/[0.045] ${accent.ring} ${accent.glow}`}
     >
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#070b12]">
+      <button
+        type="button"
+        onClick={onDemo}
+        aria-label={`${copy.title} — ${t.lab.openDemo}`}
+        className="relative block aspect-[16/10] w-full cursor-pointer overflow-hidden bg-[#070b12] focus-visible:ring-2 focus-visible:ring-amber-300/60 focus-visible:outline-none"
+      >
         <Image
           src={cover.src}
           alt={copy.title}
@@ -149,17 +174,25 @@ function LabCard({
             cover.kind === "phone" ? "object-contain p-3" : "object-cover"
           }`}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05080f] via-[#05080f]/15 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05080f] via-[#05080f]/10 to-transparent" />
 
         <span
-          className={`absolute top-3 left-3 rounded-md border px-2 py-1 font-mono text-[10px] tracking-[0.1em] uppercase backdrop-blur-sm ${accent.chip}`}
+          className={`pointer-events-none absolute top-3 left-3 rounded-md border bg-[#05080f]/80 px-2 py-1 font-mono text-[10px] tracking-[0.1em] uppercase backdrop-blur-sm ${accent.chip}`}
         >
           {copy.kind}
         </span>
-        <span className="absolute top-3 right-3 rounded-md border border-white/10 bg-black/40 px-2 py-1 font-mono text-[10px] tracking-[0.1em] text-slate-300 backdrop-blur-sm">
-          {project.year}
+        <span className="pointer-events-none absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-md border border-emerald-400/45 bg-[#05080f]/80 px-2 py-1 font-mono text-[10px] tracking-[0.1em] text-emerald-300 uppercase backdrop-blur-sm">
+          <Play size={9} fill="currentColor" />
+          {t.lab.demoBadge}
         </span>
-      </div>
+
+        <span className="pointer-events-none absolute inset-0 grid place-items-center opacity-0 transition duration-300 group-hover:opacity-100">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/65 px-4 py-2.5 font-mono text-[11px] tracking-[0.12em] text-white uppercase backdrop-blur-md">
+            <Play size={12} fill="currentColor" />
+            {t.lab.openDemo}
+          </span>
+        </span>
+      </button>
 
       <div className="relative -mt-px flex flex-1 flex-col gap-3 p-4 sm:p-5">
         <div>
@@ -186,15 +219,17 @@ function LabCard({
             </span>
           ) : null}
 
-          <span
-            className={`ml-auto inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.12em] uppercase opacity-0 transition group-hover:opacity-100 ${accent.text}`}
+          <button
+            type="button"
+            onClick={onOpen}
+            className={`ml-auto inline-flex items-center gap-1 rounded-md px-1.5 py-1 font-mono text-[10px] tracking-[0.12em] uppercase transition hover:bg-white/5 ${accent.text}`}
           >
             {t.lab.open}
             <ArrowRight size={11} />
-          </span>
+          </button>
         </div>
       </div>
-    </motion.button>
+    </motion.div>
   );
 }
 
@@ -202,10 +237,12 @@ function LabDialog({
   project,
   onClose,
   onStep,
+  onDemo,
 }: {
   project: LabProject | null;
   onClose: () => void;
   onStep: (dir: -1 | 1) => void;
+  onDemo: () => void;
 }) {
   const { t } = useI18n();
   const [mounted, setMounted] = useState(false);
@@ -332,6 +369,18 @@ function LabDialog({
                       priority
                     />
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={onDemo}
+                    className="group/d absolute inset-x-3 bottom-3 inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/15 px-4 py-3 font-display text-sm font-semibold text-emerald-100 backdrop-blur-md transition hover:border-emerald-300/50 hover:bg-emerald-400/25 sm:inset-x-4 sm:bottom-4"
+                    style={{
+                      bottom: project.shots.length > 1 ? "5.1rem" : undefined,
+                    }}
+                  >
+                    <Play size={13} fill="currentColor" />
+                    {t.lab.openDemo}
+                  </button>
 
                   {project.shots.length > 1 ? (
                     <div className="mt-3 flex gap-2">

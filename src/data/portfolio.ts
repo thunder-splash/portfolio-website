@@ -16,7 +16,7 @@ export const techCategories = [
   {
     id: "ai",
     accent: "cyan" as const,
-    span: "md:col-span-2 md:row-span-2",
+    span: "md:col-span-2",
     skills: [
       "OpenAI API",
       "Claude API",
@@ -79,7 +79,7 @@ export const techCategories = [
   {
     id: "devops",
     accent: "slate" as const,
-    span: "md:col-span-2",
+    span: "md:col-span-4",
     skills: [
       "Vite",
       "Webpack",

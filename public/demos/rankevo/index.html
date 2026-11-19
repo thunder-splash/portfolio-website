@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rankevo — demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@450;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#0c0c0c;--elev:#121212;--panel:#161616;--panel2:#1b1b1b;--ink:#f2f2f0;--muted:#8a8a84;
+  --line:#2a2a28;--line-soft:#222220;--accent:#d8ff4a;--accent-ink:#101400;--accent-dim:rgba(216,255,74,.12);
+  --danger:#ff5c5c;--warn:#ff9f43;--ok:#7dffb3;--hot:#ff5c5c;--warm:#ffb020;--cold:#8a9bb0;--r:10px;
+  --font:"Space Grotesk",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden;display:flex;min-height:100vh}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;text-align:left}
+aside{width:196px;flex:none;background:var(--elev);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.lg{display:flex;align-items:center;gap:9px;font-weight:700;font-size:15.5px;letter-spacing:-.02em}
+.lg i{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:13px}
+.env{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--muted);margin:5px 0 18px 37px;text-transform:uppercase}
+.nav button{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;color:#c8c8c2;font-weight:500;font-size:13.5px;margin-bottom:2px;width:100%}
+.nav button.on{background:var(--accent-dim);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(216,255,74,.2)}
+.nav button:hover:not(.on){background:#1b1b1b}
+.nav .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sep{height:1px;background:var(--line);margin:13px 2px}
+.coll{margin-top:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:12px}
+.coll h3{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:9px}
+.cr{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:12.5px;color:#c8c8c2;width:100%}
+.sw{margin-left:auto;width:28px;height:16px;border-radius:9px;background:#2e2e2b;position:relative;flex:none;transition:.15s}
+.sw i{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#6b6b66;transition:.15s}
+.sw.on{background:rgba(216,255,74,.26)}.sw.on i{left:14px;background:var(--accent)}
+main{flex:1;min-width:0;display:flex;flex-direction:column;padding:18px 22px 28px}
+.top{display:flex;align-items:center;gap:13px;margin-bottom:16px;flex-wrap:wrap}
+h1{font-size:21px;letter-spacing:-.025em;font-weight:700}
+.run{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--ok);background:rgba(125,255,179,.1);border:1px solid rgba(125,255,179,.22);border-radius:7px;padding:4px 9px}
+.run:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.run.off{color:var(--muted);background:#1b1b1b;border-color:var(--line)}
+.run.off:before{background:var(--muted)}
+.search{margin-left:auto;width:230px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--panel);display:flex;align-items:center;gap:8px;padding:0 11px}
+.search input{border:0;background:none;outline:0;color:var(--ink);font:inherit;font-size:12.5px;width:100%}
+.search input::placeholder{color:#6b6b66}
+.btn{height:32px;padding:0 13px;border-radius:8px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:12.5px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.k{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:11px 13px}
+.k span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.k b{display:block;font-size:22px;font-weight:700;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.k em{font-style:normal;font-size:11px;color:var(--ok);font-family:var(--mono)}
+.k em.d{color:var(--danger)}
+.wrap{flex:1;display:grid;grid-template-columns:1fr 288px;gap:14px;align-items:start}
+.tbl{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden}
+.tbar{display:flex;align-items:center;gap:6px;padding:10px 13px;border-bottom:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+.f{font-family:var(--mono);font-size:11px;padding:4px 9px;border-radius:7px;color:var(--muted);border:1px solid transparent}
+.f.on{background:var(--accent-dim);color:var(--accent);border-color:rgba(216,255,74,.2)}
+.f:hover:not(.on){background:#242422}
+table{width:100%;border-collapse:collapse}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 13px;font-weight:500;border-bottom:1px solid var(--line);cursor:pointer}
+th.sorted{color:var(--accent)}
+td{padding:11px 13px;border-bottom:1px solid var(--line-soft);font-size:13px;vertical-align:middle}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:#191917}
+tbody tr.sel td{background:rgba(216,255,74,.07)}
+tr:last-child td{border-bottom:0}
+.sc{display:flex;align-items:center;gap:8px}
+.scv{font-family:var(--mono);font-size:14px;font-weight:600;width:26px;font-variant-numeric:tabular-nums}
+.scb{width:52px;height:5px;border-radius:3px;background:#2a2a28;overflow:hidden}
+.scb i{display:block;height:100%;border-radius:3px}
+.hot .scv{color:var(--hot)}.warm .scv{color:var(--warm)}.cold .scv{color:var(--cold)}
+.hot .scb i{background:var(--hot)}.warm .scb i{background:var(--warm)}.cold .scb i{background:var(--cold)}
+.co{font-weight:600;letter-spacing:-.01em}
+.ct{font-size:11.5px;color:var(--muted)}
+.src{font-family:var(--mono);font-size:11px;color:#c8c8c2;background:#1f1f1d;border:1px solid var(--line);border-radius:6px;padding:3px 8px;display:inline-block}
+.it{font-size:12px;color:#c8c8c2}
+.st{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:6px;white-space:nowrap}
+.st.new{background:rgba(216,255,74,.1);color:var(--accent)}
+.st.replied{background:rgba(125,255,179,.1);color:var(--ok)}
+.st.emailed{background:rgba(255,159,67,.1);color:var(--warn)}
+.st.queued,.st.dropped{background:#232320;color:var(--muted)}
+.side{display:flex;flex-direction:column;gap:12px}
+.card{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:13px}
+h2{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:11px}
+.sp{display:flex;align-items:center;gap:9px;padding:6px 0}
+.spn{font-size:12.5px;width:78px;color:#c8c8c2}
+.spb{flex:1;height:6px;border-radius:3px;background:#242422;overflow:hidden}
+.spb i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.spv{font-family:var(--mono);font-size:11.5px;color:var(--muted);width:34px;text-align:right}
+.ai{font-size:12.5px;color:#c8c8c2;line-height:1.6}
+.ai code{font-family:var(--mono);font-size:11.5px;color:var(--accent);background:var(--accent-dim);border-radius:5px;padding:1px 5px}
+.dq{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.dq span{font-family:var(--mono);font-size:10.5px;color:var(--danger);background:rgba(255,92,92,.1);border:1px solid rgba(255,92,92,.2);border-radius:6px;padding:3px 7px}
+.foot{font-family:var(--mono);font-size:10.5px;color:#55554f;margin-top:12px}
+/* board */
+.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;align-items:start}
+.col{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:10px;min-height:200px}
+.ch{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:9px}
+.lead{border:1px solid var(--line);border-radius:8px;background:var(--panel2);padding:9px;margin-bottom:7px;width:100%}
+.lead:hover{border-color:rgba(216,255,74,.35)}
+.lead .ln{font-size:12.5px;font-weight:600}
+.lead .lm{font-size:10.5px;color:var(--muted);margin-top:3px}
+.lead .lb{display:flex;align-items:center;gap:6px;margin-top:7px}
+.mv{display:flex;gap:4px;margin-top:8px}
+.mv button{flex:1;font-family:var(--mono);font-size:10px;padding:4px;border-radius:6px;background:#242422;color:var(--muted);text-align:center}
+.mv button:hover{background:var(--accent-dim);color:var(--accent)}
+/* detail */
+.det{display:grid;grid-template-columns:1fr 300px;gap:14px;align-items:start}
+.sig{border-left:2px solid var(--accent);padding:8px 12px;background:#17170f;border-radius:0 8px 8px 0;font-size:13px;color:#dcdcd6;margin-bottom:9px}
+.sig small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:5px}
+.wrow{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:12.5px}
+.wrow b{margin-left:auto;font-family:var(--mono);color:var(--accent)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1b1b19;border:1px solid var(--line);color:var(--ink);font-size:13px;font-weight:600;padding:11px 18px;border-radius:10px;box-shadow:0 18px 44px rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+@media(max-width:1100px){.wrap,.det{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.board{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){aside{display:none}main{padding:14px}.search{width:100%;margin:0}th:nth-child(4),td:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="lg"><i>R</i>Rankevo</div>
+  <div class="env">lead intelligence</div>
+  <div class="nav" id="nav">
+    <button data-go="queue" class="on">Queue<span class="n" id="nq">0</span></button>
+    <button data-go="board">Board<span class="n">5</span></button>
+    <button data-go="lead">Lead</button>
+    <div class="sep"></div>
+    <button data-go="queue">Sources<span class="n">4</span></button>
+  </div>
+  <div class="coll">
+    <h3>Collectors</h3>
+    <div id="colls"></div>
+  </div>
+</aside>
+
+<main id="app"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+const LEADS = [
+  {id:1,co:"Northwind Labs",p:"ops lead · 40–80 seats",src:"reddit/r/saas",sig:"“looking to replace our current vendor”",sc:94,st:"new",seen:"8m",stage:"new"},
+  {id:2,co:"Brightfold",p:"head of growth",src:"g2/reviews",sig:"3★ review of a competitor, churn wording",sc:89,st:"emailed",seen:"22m",stage:"emailed"},
+  {id:3,co:"Kestrel Systems",p:"cto",src:"reddit/comments",sig:"budget + timeline in one comment",sc:86,st:"replied",seen:"1h",stage:"replied"},
+  {id:4,co:"Palemoon Studio",p:"founder",src:"g2/reviews",sig:"asks for migration help",sc:74,st:"new",seen:"2h",stage:"researched"},
+  {id:5,co:"Verity Freight",p:"ops manager",src:"reddit/r/logistics",sig:"pain phrase matched ×2",sc:68,st:"emailed",seen:"3h",stage:"emailed"},
+  {id:6,co:"Oakline Health",p:"product owner",src:"job-board",sig:"hiring for the role we replace",sc:61,st:"queued",seen:"5h",stage:"researched"},
+  {id:7,co:"Glasshouse Retail",p:"it director",src:"reddit/r/devops",sig:"contract renewal in 2 months",sc:66,st:"emailed",seen:"11h",stage:"emailed"},
+  {id:8,co:"Marrow & Pine",p:"coo",src:"g2/reviews",sig:"complains about onboarding time",sc:59,st:"new",seen:"13h",stage:"new"},
+  {id:9,co:"Tinsmith Co",p:"unknown contact",src:"reddit/posts",sig:"weak signal, no budget wording",sc:42,st:"queued",seen:"7h",stage:"new"},
+  {id:10,co:"Harbor Nine",p:"marketing",src:"g2/reviews",sig:"positive review of incumbent",sc:37,st:"queued",seen:"9h",stage:"new"},
+  {id:11,co:"Quillon Media",p:"unknown contact",src:"reddit/posts",sig:"disqualifier hit: agency pitch",sc:31,st:"dropped",seen:"15h",stage:"new"},
+  {id:12,co:"Ferrous Works",p:"plant manager",src:"job-board",sig:"two roles open for the same workflow",sc:71,st:"new",seen:"16h",stage:"researched"},
+];
+const SOURCES = [
+  {id:"reddit/posts",n:"reddit posts",on:true},
+  {id:"reddit/comments",n:"reddit cmts",on:true},
+  {id:"g2/reviews",n:"g2 reviews",on:true},
+  {id:"job-board",n:"job boards",on:false},
+];
+const STAGES = [["new","New"],["researched","Researched"],["emailed","Emailed"],["replied","Replied"],["won","Won"]];
+const state = {page:"queue",q:"",filter:"all",sort:"sc",dir:-1,sel:1,leads:LEADS.map(l=>({...l})),src:SOURCES.map(s=>({...s}))};
+const $=s=>document.querySelector(s);
+let tid; const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tid);tid=setTimeout(()=>t.classList.remove("show"),1900);};
+const temp = s => s>=80?"hot":s>=55?"warm":"cold";
+const onSources = () => state.src.filter(s=>s.on).map(s=>s.id);
+
+function rows(){
+  const q=state.q.trim().toLowerCase();
+  let r = state.leads.filter(l=>{
+    if(!onSources().includes(l.src)) return false;
+    if(state.filter==="hot" && l.sc<80) return false;
+    if(state.filter==="new" && l.st!=="new") return false;
+    if(state.filter==="replied" && l.st!=="replied") return false;
+    if(q && !(l.co+" "+l.p+" "+l.sig+" "+l.src).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const key = state.sort;
+  r.sort((a,b)=> key==="sc" ? (a.sc-b.sc)*state.dir : String(a[key]).localeCompare(String(b[key]))*state.dir);
+  return r;
+}
+
+function queue(){
+  const r = rows();
+  const hot = r.filter(l=>l.sc>=80).length;
+  return `
+  <div class="top">
+    <h1>Lead queue</h1>
+    <span class="run ${onSources().length?"":"off"}">${onSources().length} collectors running</span>
+    <div class="search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b6b66" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" placeholder="Search leads" value="${state.q}" /></div>
+    <button class="btn" data-export="1">Export</button>
+  </div>
+  <div class="kpis">
+    <div class="k"><span>In queue</span><b>${r.length}</b><em>of ${state.leads.length} total</em></div>
+    <div class="k"><span>Hot (80+)</span><b>${hot}</b><em>+6 today</em></div>
+    <div class="k"><span>Dedup rate</span><b>23.4%</b><em>412 merged</em></div>
+    <div class="k"><span>Disqualified</span><b>${state.leads.filter(l=>l.st==="dropped").length}</b><em class="d">by rules</em></div>
+    <div class="k"><span>Replies</span><b>${state.leads.filter(l=>l.st==="replied").length}</b><em>7.7% of sent</em></div>
+  </div>
+  <div class="wrap">
+    <div class="tbl">
+      <div class="tbar">
+        ${[["all","All"],["hot","Hot"],["new","New today"],["replied","Replied"]].map(([k,l])=>`<button class="f ${state.filter===k?"on":""}" data-filter="${k}">${l}</button>`).join("")}
+        <span class="f" style="margin-left:auto">sort: ${state.sort} ${state.dir<0?"desc":"asc"}</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th class="${state.sort==="sc"?"sorted":""}" data-sort="sc">Score</th>
+          <th class="${state.sort==="co"?"sorted":""}" data-sort="co">Company / contact</th>
+          <th class="${state.sort==="src"?"sorted":""}" data-sort="src">Source</th>
+          <th>Intent signal</th>
+          <th class="${state.sort==="st"?"sorted":""}" data-sort="st">Status</th>
+          <th>Seen</th>
+        </tr></thead>
+        <tbody>
+        ${r.length ? r.map(l=>`
+          <tr class="${temp(l.sc)} ${l.id===state.sel?"sel":""}" data-lead="${l.id}">
+            <td><div class="sc"><span class="scv">${l.sc}</span><span class="scb"><i style="width:${l.sc}%"></i></span></div></td>
+            <td><div class="co">${l.co}</div><div class="ct">${l.p}</div></td>
+            <td><span class="src">${l.src}</span></td>
+            <td class="it">${l.sig}</td>
+            <td><span class="st ${l.st}">${l.st}</span></td>
+            <td class="ct">${l.seen}</td>
+          </tr>`).join("")
+        : `<tr><td colspan="6" style="padding:34px;text-align:center;color:var(--muted)">Nothing matches — turn a collector back on or clear the search</td></tr>`}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="side">
+      <div class="card">
+        <h2>Source performance</h2>
+        ${state.src.map(s=>{
+          const n = state.leads.filter(l=>l.src===s.id).length;
+          const pct = Math.round(n/state.leads.length*100);
+          return `<div class="sp"><span class="spn">${s.n}</span><span class="spb"><i style="width:${s.on?pct*3:0}%"></i></span><span class="spv">${s.on?pct+"%":"off"}</span></div>`;
+        }).join("")}
+      </div>
+      <div class="card">
+        <h2>Scoring — config, not code</h2>
+        <div class="ai">Phrase library, multipliers and thresholds live in DB tables. A plugin only emits a lead; the central engine scores it and the identity registry decides the merge.
+          <div style="margin-top:10px">weights: <code>intent ×2.4</code> <code>seats ×1.6</code> <code>recency ×1.2</code></div>
+        </div>
+        <h2 style="margin-top:14px">Active disqualifiers</h2>
+        <div class="dq"><span>student</span><span>job seeker</span><span>agency pitch</span><span>&lt; 5 seats</span><span>competitor staff</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">Flask CRM facade · 20 source plugins · central dedup · SQLite fast-path · pytest in CI</div>`;
+}
+
+function board(){
+  return `
+  <div class="top"><h1>Pipeline board</h1><span class="run">drag-free demo · use the arrows on a card</span></div>
+  <div class="board">
+    ${STAGES.map(([k,label])=>{
+      const ls = state.leads.filter(l=>l.stage===k);
+      return `<div class="col">
+        <div class="ch"><span>${label}</span><span>${ls.length}</span></div>
+        ${ls.map(l=>`<div class="lead">
+          <div class="ln">${l.co}</div>
+          <div class="lm">${l.p}</div>
+          <div class="lb"><span class="scv ${temp(l.sc)}" style="font-family:var(--mono);font-weight:600">${l.sc}</span><span class="src">${l.src}</span></div>
+          <div class="mv"><button data-mv="${l.id}:-1">←</button><button data-lead2="${l.id}">open</button><button data-mv="${l.id}:1">→</button></div>
+        </div>`).join("") || '<div class="ct" style="padding:12px 4px">empty</div>'}
+      </div>`;
+    }).join("")}
+  </div>
+  <div class="foot">Stage changes write through the same CRM facade the collectors use — one contract for machines and humans.</div>`;
+}
+
+function lead(){
+  const l = state.leads.find(x=>x.id===state.sel) || state.leads[0];
+  const w = [["intent phrase","×2.4",34],["seat range","×1.6",22],["recency","×1.2",14],["source weight","×1.1",12],["profile match","×1.0",12]];
+  return `
+  <div class="top"><h1>${l.co}</h1><span class="st ${l.st}">${l.st}</span>
+    <button class="btn" style="margin-left:auto" data-go="queue">Back to queue</button></div>
+  <div class="det">
+    <div>
+      <div class="card">
+        <h2>Signals that scored</h2>
+        <div class="sig">${l.sig}<small>${l.src} · ${l.seen} ago</small></div>
+        <div class="sig">Mentions a renewal window and names the incumbent tool.<small>${l.src} · 1d ago</small></div>
+        <div class="sig">Company size resolved to the 40–80 seat band by the enrichment step.<small>identity registry · merged 2 records</small></div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h2>Outreach</h2>
+        <div class="ai">Draft is produced by the AI filter, then an operator approves it. Nothing leaves the system unreviewed.
+        <div style="margin-top:10px;border:1px solid var(--line);border-radius:8px;padding:11px;background:#131311;font-size:12.5px;color:#dcdcd6">
+          Hi — saw your note about replacing the current vendor before the renewal. We move teams your size over in about a week, and I can send the exact migration checklist if useful.
+        </div></div>
+        <div style="display:flex;gap:7px;margin-top:11px">
+          <button class="btn" data-act="approve">Approve &amp; send</button>
+          <button class="f" style="border:1px solid var(--line);padding:8px 12px" data-act="snooze">Snooze</button>
+          <button class="f" style="border:1px solid var(--line);padding:8px 12px;color:var(--danger)" data-act="drop">Disqualify</button>
+        </div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="card">
+        <h2>Score breakdown · ${l.sc}</h2>
+        ${w.map(([n,m,v])=>`<div class="wrow">${n}<b>${m}</b><span style="font-family:var(--mono);color:var(--muted);width:26px;text-align:right">${v}</span></div>`).join("")}
+      </div>
+      <div class="card">
+        <h2>Identity</h2>
+        <div class="ai">2 source records merged into one lead by the central registry — a plugin never decides this itself.
+        <div class="dq" style="margin-top:9px"><span style="color:var(--accent);background:var(--accent-dim);border-color:rgba(216,255,74,.2)">${l.src}</span><span style="color:var(--accent);background:var(--accent-dim);border-color:rgba(216,255,74,.2)">g2/reviews</span></div></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const v={queue,board,lead};
+  $("#app").innerHTML=(v[state.page]||queue)();
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===state.page));
+  $("#nq").textContent = rows().length;
+  $("#colls").innerHTML = state.src.map(s=>`<button class="cr" data-src="${s.id}">${s.n}<span class="sw ${s.on?"on":""}"><i></i></span></button>`).join("");
+}
+function go(p){state.page=p;const h="#/"+p;if(location.hash!==h)location.hash=h;render();window.scrollTo({top:0});}
+
+document.addEventListener("click", e=>{
+  const t=e.target.closest("[data-go],[data-filter],[data-sort],[data-lead],[data-lead2],[data-src],[data-mv],[data-act],[data-export]");
+  if(!t)return;
+  if(t.dataset.go) return go(t.dataset.go);
+  if(t.dataset.filter){ state.filter=t.dataset.filter; return render(); }
+  if(t.dataset.sort){ const k=t.dataset.sort; state.dir = state.sort===k ? -state.dir : -1; state.sort=k; return render(); }
+  if(t.dataset.lead){ state.sel=+t.dataset.lead; return go("lead"); }
+  if(t.dataset.lead2){ state.sel=+t.dataset.lead2; return go("lead"); }
+  if(t.dataset.src){ const s=state.src.find(x=>x.id===t.dataset.src); if(s){s.on=!s.on; toast(`${s.n} ${s.on?"включён":"выключен"} — очередь пересобрана`);} return render(); }
+  if(t.dataset.mv){ const [id,d]=t.dataset.mv.split(":"); const l=state.leads.find(x=>x.id===+id);
+    const i=STAGES.findIndex(s=>s[0]===l.stage); const n=Math.max(0,Math.min(STAGES.length-1,i+ +d));
+    l.stage=STAGES[n][0]; return render(); }
+  if(t.dataset.export) return toast("CSV собран бы на сервере — в демо выгрузка отключена");
+  const a=t.dataset.act;
+  if(a==="approve"){ const l=state.leads.find(x=>x.id===state.sel); l.st="emailed"; l.stage="emailed"; toast("Письмо отправлено, лид переведён в Emailed"); return render(); }
+  if(a==="snooze"){ toast("Отложено на 3 дня"); return; }
+  if(a==="drop"){ const l=state.leads.find(x=>x.id===state.sel); l.st="dropped"; toast("Дисквалифицирован — правило уйдёт в библиотеку"); return go("queue"); }
+});
+document.addEventListener("input", e=>{
+  if(e.target.id!=="q") return;
+  state.q=e.target.value; const pos=e.target.selectionStart;
+  render(); const q=$("#q"); q.focus(); q.setSelectionRange(pos,pos);
+});
+
+function fromHash(){
+  const w=(location.hash||"").replace(/^#\/?/,"").trim();
+  state.page=["queue","board","lead"].includes(w)?w:"queue";
+  render();
+}
+window.addEventListener("hashchange",fromHash);
+fromHash();
+</script>
+</body>
+</html>

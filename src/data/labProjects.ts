@@ -82,7 +82,10 @@ export const labProjects: readonly LabProject[] = [
       "Next.js",
       "HMAC SDK",
     ],
-    shots: [{ src: "/lab/keys-reseller.png", kind: "wide" }],
+    shots: [
+      { src: "/lab/keys-reseller.png", kind: "wide" },
+      { src: "/lab/keys-bot.png", kind: "phone" },
+    ],
     figures: [
       { id: "delivery", value: "~11 s" },
       { id: "packages", value: "6 pkg" },
@@ -128,7 +131,10 @@ export const labProjects: readonly LabProject[] = [
       "Vite",
       "pytest",
     ],
-    shots: [{ src: "/lab/rankevo.png", kind: "wide" }],
+    shots: [
+      { src: "/lab/rankevo.png", kind: "wide" },
+      { src: "/lab/rankevo-board.png", kind: "wide" },
+    ],
     figures: [
       { id: "sources", value: "20" },
       { id: "scoring", value: "config" },

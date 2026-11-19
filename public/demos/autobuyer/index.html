@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LZT AutoBuyer Fortnite</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2.5 3h3l2.6 12.3a2 2 0 0 0 2 1.7h8.2a2 2 0 0 0 2-1.5L22 8H6.3"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h8M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.6v14.8a1 1 0 0 0 1.5.86l12.3-7.4a1 1 0 0 0 0-1.72L8.5 3.74A1 1 0 0 0 7 4.6z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4"/><path d="m10.5 12.5 9-9M16.5 6.5l3 3M13.5 9.5l2 2"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 2.5 10.5l7.5 2.8L12.8 21z"/><path d="m10 13.3 4.5-4.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7 9l5-5 5 5M4 20h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8.5 3 8.5H3S6 15 6 8"/><path d="M10.3 21a2 2 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17v.01"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-cmd" viewBox="0 0 24 24"><path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3z"/></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></symbol>
+</svg>
+
+<div class="app">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="side">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8"/><circle cx="16" cy="16" r="7.5"/><path d="M16 4.5v5M16 22.5v5M4.5 16h5M22.5 16h5"/><circle cx="16" cy="16" r="1.6" class="fill"/></svg>
+      <div class="brand-b"><div class="brand-t">LZT AutoBuyer</div><div class="brand-s">Fortnite</div></div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button data-page="dash" class="active"><svg class="ic"><use href="#i-home"/></svg><span>Обзор</span></button>
+      <button data-page="filters"><svg class="ic"><use href="#i-filter"/></svg><span>Фильтры</span><b class="nb" id="navFilters"></b></button>
+      <button data-page="purchases"><svg class="ic"><use href="#i-cart"/></svg><span>Покупки</span><b class="nb" id="navBought"></b></button>
+      <button data-page="log"><svg class="ic"><use href="#i-list"/></svg><span>Журнал</span><i class="nd" id="navLogDot"></i></button>
+      <button data-page="settings"><svg class="ic"><use href="#i-gear"/></svg><span>Настройки</span></button>
+    </nav>
+
+    <div class="side-grow"></div>
+
+    <nav class="nav nav-2">
+      <button id="cmdHint"><svg class="ic"><use href="#i-search"/></svg><span>Команды</span><kbd>Ctrl K</kbd></button>
+      <button data-page="help"><svg class="ic"><use href="#i-help"/></svg><span>Инструкция</span></button>
+    </nav>
+
+    <button class="acct" id="acct" title="Аккаунт LZT — настройки подключения">
+      <span class="acct-ava" id="acctAva">?</span>
+      <span class="acct-b"><span class="acct-n" id="acctName">Не подключено</span><span class="acct-s" id="acctSub">Добавь API токен</span></span>
+      <span class="acct-dot" id="acctDot"></span>
+    </button>
+    <button class="ver" id="ver" title="Что нового — история версий"></button>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <header class="bar">
+      <h1 id="pageTitle">Обзор</h1>
+      <div class="status" id="status"><i></i><span id="statusText">Остановлен</span></div>
+      <div class="bar-r">
+        <button class="pill-demo" id="demoPill" hidden title="Демо-маркет: лоты и покупки ненастоящие. Нажми, чтобы выключить"><svg class="ic s"><use href="#i-flask"/></svg>Демо-маркет<svg class="ic s x"><use href="#i-x"/></svg></button>
+        <div class="seg mode" id="modeSeg" title="Тест — ищет и уведомляет, деньги не списывает. Боевой — покупает по-настоящему">
+          <button data-mode="test" class="on">Тест</button><button data-mode="live">Боевой</button>
+        </div>
+        <button class="run" id="runBtn"><svg class="ic f"><use href="#i-play"/></svg><span id="runText">Запустить</span></button>
+      </div>
+    </header>
+
+    <div class="pages">
+      <!-- ============ OVERVIEW ============ -->
+      <section class="page active" id="page-dash">
+        <div class="setup" id="setup" hidden>
+          <div class="setup-h">
+            <div><div class="setup-t">Три шага до первой покупки</div><div class="setup-d">Сделай по порядку — остальное программа делает сама</div></div>
+            <button class="btn ghost sm" id="setupDemo"><svg class="ic s"><use href="#i-flask"/></svg>Попробовать без денег</button>
+          </div>
+          <div class="steps" id="steps"></div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric"><div class="m-l" id="mFoundL">Найдено</div><div class="m-v" id="mFound">0</div><div class="m-s" id="mFoundS">за сессию</div></div>
+          <div class="metric"><div class="m-l">Куплено</div><div class="m-v" id="mBought">0</div><div class="m-s" id="mBoughtS">всего</div></div>
+          <div class="metric"><div class="m-l">Потрачено</div><div class="m-v" id="mSpent">0 ₽</div><div class="m-s" id="mSpentS">за всё время</div></div>
+          <div class="metric"><div class="m-l">Баланс LZT</div><div class="m-v" id="mBal">—</div><div class="m-s" id="mBalS">не подключено</div></div>
+          <div class="metric"><div class="m-l">Скорость</div><div class="m-v" id="mSpeed">—</div><div class="m-s" id="mSpeedS">пинг до LZT</div></div>
+        </div>
+
+        <div class="ov">
+          <div class="panel feed-panel">
+            <div class="ph">
+              <div class="pt">Лента <span class="cnt" id="feedCnt">0</span></div>
+              <div class="seg sm" id="feedSeg"><button data-f="all" class="on">Все</button><button data-f="bought">Покупки</button><button data-f="fail">Ошибки</button></div>
+            </div>
+            <div class="fhead"><span>Время</span><span>Лот</span><span>Фильтр</span><span class="r">Цена</span><span>Статус</span><span></span></div>
+            <div class="feed scroll" id="feed"></div>
+          </div>
+
+          <div class="ov-side">
+            <div class="panel">
+              <div class="ph"><div class="pt">Фильтры <span class="cnt" id="ovFCnt">0</span></div><button class="link" data-go="filters">Все <svg class="ic s"><use href="#i-arrow"/></svg></button></div>
+              <div class="ovf scroll" id="ovFilters"></div>
+            </div>
+            <div class="panel">
+              <div class="ph"><div class="seg sm" id="sideSeg"><button data-f="buys" class="on">Покупки</button><button data-f="watch">Слежу за ценой <b class="cnt" id="watchCnt">0</b></button></div><button class="link" data-go="purchases" id="allBuysLink">Все <svg class="ic s"><use href="#i-arrow"/></svg></button></div>
+              <div class="ovb scroll" id="ovBuys"></div>
+              <div class="ovb scroll" id="ovWatch" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ FILTERS ============ -->
+      <section class="page" id="page-filters">
+        <div class="fl">
+          <div class="panel fl-list">
+            <div class="fl-top">
+              <div class="search"><svg class="ic s"><use href="#i-search"/></svg><input id="fSearch" placeholder="Найти фильтр"></div>
+              <button class="btn primary sm sq" id="fNew" title="Новый фильтр (N)"><svg class="ic s"><use href="#i-plus"/></svg></button>
+            </div>
+            <div class="fitems scroll" id="flist"></div>
+            <div class="fl-foot">
+              <button class="link" id="allOn" title="Включить все фильтры">Вкл. все</button>
+              <button class="link" id="allOff" title="Выключить все фильтры">Выкл. все</button>
+              <span class="grow"></span>
+              <button class="btn ghost xs sq" id="expFilters" title="Экспорт: скопировать все фильтры"><svg class="ic s"><use href="#i-upload"/></svg></button>
+              <button class="btn ghost xs sq" id="impFilters" title="Импорт фильтров"><svg class="ic s"><use href="#i-download"/></svg></button>
+            </div>
+          </div>
+
+          <div class="panel ed" id="editor">
+            <div class="ed-h">
+              <div class="ed-ht">
+                <input class="ed-name" id="eName" placeholder="Название фильтра" spellcheck="false">
+                <div class="ed-sub" id="eSub">Новый фильтр</div>
+              </div>
+              <label class="swl" id="eEnabledWrap" title="Участвует ли фильтр в поиске"><span>Включён</span><span class="sw"><input type="checkbox" id="eEnabled"><i></i></span></label>
+              <div class="ed-act">
+                <button class="btn ghost sm" id="eTest"><svg class="ic s"><use href="#i-search"/></svg>Проверить выдачу</button>
+                <button class="btn ghost sm sq" id="eOpen" title="Открыть выдачу на lzt.market"><svg class="ic s"><use href="#i-ext"/></svg></button>
+                <button class="btn ghost sm sq" id="eDup" title="Дублировать"><svg class="ic s"><use href="#i-copy"/></svg></button>
+                <button class="btn ghost sm sq danger" id="eDel" title="Удалить"><svg class="ic s"><use href="#i-trash"/></svg></button>
+              </div>
+            </div>
+
+            <div class="testres" id="eTestRes" hidden></div>
+
+            <div class="ed-b scroll">
+              <div class="sec">
+                <div class="sec-h"><b>Что ищем</b><span>Аккаунты Fortnite: цена и слова в названии</span></div>
+                <div class="row"><label for="eUrl">Ссылка с lzt.market<small>Настрой фильтры Fortnite на сайте и вставь адрес страницы — всё подтянется</small></label>
+                  <div class="ctl"><div class="inp-ic"><svg class="ic s"><use href="#i-link"/></svg><input class="inp" id="eUrl" placeholder="https://lzt.market/epicgames/fortnite?…" spellcheck="false"></div></div></div>
+                <div class="row"><label>Цена за аккаунт<small>«До» — потолок трат для автопокупки</small></label>
+                  <div class="ctl rng"><div class="inp-u"><input class="inp" id="eMin" type="number" min="0" placeholder="от"><i>₽</i></div><span class="dash">—</span><div class="inp-u"><input class="inp" id="eMax" type="number" min="0" placeholder="до"><i>₽</i></div></div></div>
+                <div class="row"><label for="eInc">В названии есть<small>Любое из слов, через запятую</small></label><div class="ctl"><input class="inp" id="eInc" placeholder="og, renegade, galaxy"></div></div>
+                <div class="row"><label for="eExc">Исключить слова</label><div class="ctl"><input class="inp" id="eExc" placeholder="бан, без почты"></div></div>
+              </div>
+
+              <div class="sec" id="secFn">
+                <div class="sec-h"><b>Аккаунт Fortnite</b><span>Пустое поле — не важно</span></div>
+                <div class="row"><label>Скинов</label><div class="ctl rng"><input class="inp" id="eSmin" type="number" min="0" placeholder="от"><span class="dash">—</span><input class="inp" id="eSmax" type="number" min="0" placeholder="до"></div></div>
+                <div class="row"><label>V-Bucks</label><div class="ctl rng"><input class="inp" id="eVbmin" type="number" min="0" placeholder="от"><span class="dash">—</span><input class="inp" id="eVbmax" type="number" min="0" placeholder="до"></div></div>
+                <div class="row"><label for="eEmail">Почта</label><div class="ctl"><select class="inp" id="eEmail"><option value="">Не важно</option><option value="native">Родная</option><option value="market">От маркета</option><option value="autoreg">Авторег</option><option value="no">Без почты</option></select></div></div>
+                <div class="row"><label for="eChange">Смена почты</label><div class="ctl"><select class="inp" id="eChange"><option value="">Не важно</option><option value="yes">Можно сменить</option><option value="no">Нельзя</option></select></div></div>
+                <div class="row"><label for="eEg">Гарантия</label><div class="ctl"><select class="inp" id="eEg"><option value="">Не важно</option><option value="-1">12 часов</option><option value="0">24 часа</option><option value="1">3 дня</option><option value="2">На момент покупки</option></select></div></div>
+              </div>
+
+              <div class="sec">
+                <div class="sec-h"><b>Покупка</b><span>Что делать, когда лот подходит</span></div>
+                <div class="row"><label>Действие</label>
+                  <div class="ctl"><div class="seg wide" id="eAction"><button data-v="notify" class="on"><svg class="ic s"><use href="#i-bell"/></svg>Только уведомить</button><button data-v="buy"><svg class="ic s"><use href="#i-bolt"/></svg>Покупать сразу</button></div>
+                  <div class="ctl-hint" id="eActionHint"></div></div></div>
+                <div class="row"><label>Проверка перед оплатой<small>Без проверки быстрее, но можно получить невалид</small></label>
+                  <div class="ctl"><div class="seg wide" id="eMode"><button data-v="check" class="on">С проверкой LZT</button><button data-v="instant">Без проверки</button></div></div></div>
+                <div class="row"><label for="eLimit">Лимит покупок<small>Пусто — без лимита</small></label><div class="ctl"><div class="inp-u w"><input class="inp" id="eLimit" type="number" min="0" placeholder="∞"><i>шт.</i></div></div></div>
+                <div class="row"><label for="eDelay">Пауза между покупками</label><div class="ctl"><div class="inp-u w"><input class="inp" id="eDelay" type="number" min="0" step="0.5" placeholder="0"><i>сек</i></div></div></div>
+                <div class="row"><label for="eSales">Продавец<small>Минимум продаж у продавца, 0 — любой</small></label><div class="ctl"><div class="inp-u w"><input class="inp" id="eSales" type="number" min="0" placeholder="0"><i>продаж</i></div></div></div>
+                <div class="row"><label>Чёрный список<small>Вкл — объявления продавцов из списка (Настройки → Защита) не приходят и не покупаются. Выкл — приходят</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="eBl"><i></i></label></div></div>
+                <div class="row"><label>Уже висящие лоты<small>Выключено — только новые после запуска</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="eExisting"><i></i></label></div></div>
+              </div>
+
+              <div class="sec">
+                <div class="sec-h"><b>Уведомления и очередь</b></div>
+                <div class="row"><label>Telegram<small>Карточка лота с кнопкой «Купить»</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="eNotify"><i></i></label></div></div>
+                <div class="row"><label>Следить за ценой<small>Найденный лот добавится в избранное LZT, а при изменении цены придёт сообщение</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="eWatch"><i></i></label></div></div>
+                <div class="row"><label>Приоритет<small>Как часто опрашивать по сравнению с другими</small></label>
+                  <div class="ctl"><div class="seg" id="ePrio"><button data-v="1" class="on">Обычный</button><button data-v="2">×2</button><button data-v="3">×3</button></div></div></div>
+              </div>
+
+              <details class="sec adv" id="secAdv">
+                <summary class="sec-h"><b>Для продвинутых</b><span>Параметры запроса к API</span><svg class="ic s chev"><use href="#i-chev"/></svg></summary>
+                <div class="row"><label>Раздел API</label><div class="ctl"><code class="slug" id="eSlug">/epicgames  +  epicgames_game[]=fortnite</code></div></div>
+                <div class="row top"><label>Доп. параметры<small>Всё, чего нет в полях выше: ключ — значение</small></label>
+                  <div class="ctl"><div class="params" id="eParams"></div><button class="btn ghost xs" id="eAddParam"><svg class="ic s"><use href="#i-plus"/></svg>Параметр</button></div></div>
+              </details>
+            </div>
+
+            <div class="savebar" id="saveBar">
+              <span class="sb-t" id="saveText">Есть несохранённые изменения</span>
+              <button class="btn ghost sm" id="eRevert">Отменить</button>
+              <button class="btn primary sm" id="eSave"><svg class="ic s"><use href="#i-check"/></svg><span id="eSaveText">Сохранить</span><kbd>Ctrl S</kbd></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PURCHASES ============ -->
+      <section class="page" id="page-purchases">
+        <div class="toolbar">
+          <div class="kv"><span>Покупок</span><b id="pTotal">0</b></div>
+          <div class="kv"><span>Сумма</span><b id="pSum">0 ₽</b></div>
+          <div class="kv"><span>Средняя скорость</span><b id="pMs">—</b></div>
+          <span class="grow"></span>
+          <button class="btn ghost sm" id="exportCsv"><svg class="ic s"><use href="#i-download"/></svg>Экспорт в Excel</button>
+          <button class="btn ghost sm" id="openData"><svg class="ic s"><use href="#i-folder"/></svg>Папка данных</button>
+        </div>
+        <div class="panel tbl-wrap scroll">
+          <table class="tbl">
+            <thead><tr><th>Время</th><th>Аккаунт</th><th class="r">Цена</th><th>Фильтр</th><th>Данные для входа</th><th>Почта</th><th class="r">Скорость</th><th></th></tr></thead>
+            <tbody id="ptable"></tbody>
+          </table>
+          <div class="empty" id="pEmpty"><svg class="ic"><use href="#i-cart"/></svg><b>Покупок пока нет</b><span>Здесь появятся купленные аккаунты с логинами и паролями</span></div>
+        </div>
+      </section>
+
+      <!-- ============ LOG ============ -->
+      <section class="page" id="page-log">
+        <div class="toolbar">
+          <div class="seg sm" id="logSeg"><button class="on" data-lv="all">Все</button><button data-lv="ok">Успех</button><button data-lv="warn">Предупреждения</button><button data-lv="err">Ошибки</button></div>
+          <span class="grow"></span>
+          <label class="swl"><span>Автопрокрутка</span><span class="sw"><input type="checkbox" id="logAuto" checked><i></i></span></label>
+        </div>
+        <div class="panel logbox scroll" id="logbox"></div>
+      </section>
+
+      <!-- ============ SETTINGS ============ -->
+      <section class="page" id="page-settings">
+        <div class="settings scroll">
+          <div class="sec">
+            <div class="sec-h"><b>Подключение к LZT Market</b><span>Токен с правом <code>market</code> — lolz.live/account/api</span></div>
+            <div class="row"><label>Аккаунт<small>Откроется LZT в твоём браузере — нажми «Разрешить»</small></label>
+              <div class="ctl"><button class="btn primary" id="lztLogin"><svg class="ic s"><use href="#i-key"/></svg><span>Войти через LZT</span></button>
+              <div class="ctl-hint" id="loginRes"></div></div></div>
+            <div class="row"><label for="apiToken">Или токен вручную<small>Если вход не сработал — вставь токен с lolz.live/account/api</small></label>
+              <div class="ctl"><div class="inp-btn"><input class="inp" type="password" id="apiToken" placeholder="eyJ0eXAiOiJKV1Qi…" spellcheck="false"><button class="btn ghost sm sq" data-eye="apiToken" title="Показать"><svg class="ic s"><use href="#i-eye"/></svg></button><button class="btn primary sm" id="checkToken">Проверить</button></div>
+              <div class="ctl-hint" id="tokenRes"></div></div></div>
+            <div class="row top"><label>Дополнительные аккаунты<small>Покупка идёт с первого аккаунта, где хватает баланса; поиск — по очереди со всех (у каждого свой лимит). Свои объявления любого аккаунта не показываются</small></label>
+              <div class="ctl"><div class="acc-list" id="accList"></div>
+                <div class="inp-btn"><input class="inp" type="password" id="accToken" placeholder="токен другого аккаунта" spellcheck="false" autocomplete="off"><button class="btn ghost sm" id="accAdd">Добавить</button><button class="btn ghost sm" id="accLogin" title="В браузере должен быть открыт другой аккаунт LZT">Войти через LZT</button></div>
+                <div class="ctl-hint" id="accRes">Перед «Войти через LZT» выйди из основного аккаунта в браузере и зайди в другой. Проверь правила LZT про несколько аккаунтов</div></div></div>
+            <details class="sub-adv">
+              <summary><svg class="ic s chev"><use href="#i-chev"/></svg>Для продвинутых</summary>
+              <div class="row"><label for="oauthId">Client ID приложения LZT<small>Своё приложение: lolz.live/account/api/client-add. Пусто — встроенное</small></label>
+                <div class="ctl"><div class="inp-btn"><input class="inp" id="oauthId" spellcheck="false" autocomplete="off"><button class="btn ghost sm" id="oauthReset">Сбросить</button></div>
+                <div class="ctl-hint" id="oauthRes"></div></div></div>
+              <div class="row"><label for="oauthRedir">Адрес возврата<small>Должен совпадать с Redirect URI приложения. <code>http://127.0.0.1:…</code> — вход в браузере, <code>https://…</code> — во встроенном окне</small></label>
+                <div class="ctl"><input class="inp" id="oauthRedir" spellcheck="false" autocomplete="off"></div></div>
+            </details>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Telegram</b><span>Создай бота у @BotFather и напиши ему /start</span></div>
+            <div class="row"><label for="tgToken">Токен бота</label>
+              <div class="ctl"><div class="inp-btn"><input class="inp" type="password" id="tgToken" placeholder="123456:ABC-DEF…" spellcheck="false"><button class="btn ghost sm sq" data-eye="tgToken" title="Показать"><svg class="ic s"><use href="#i-eye"/></svg></button></div></div></div>
+            <div class="row"><label for="tgChats">Chat ID<small>Можно несколько через запятую</small></label>
+              <div class="ctl"><div class="inp-btn"><input class="inp" id="tgChats" placeholder="123456789, -100123…"><button class="btn primary sm" id="testTg">Проверить</button></div>
+              <div class="ctl-hint" id="tgRes"></div></div></div>
+            <div class="row"><label for="tgProxy">Прокси для Telegram<small>Если Telegram заблокирован. Пусто — системный прокси Windows, если включён</small></label>
+              <div class="ctl"><input class="inp" id="tgProxy" placeholder="socks5://логин:пароль@host:port  или  http://host:port" spellcheck="false" autocomplete="off"></div></div>
+            <div class="row"><label>Скидка: купить, если согласятся<small>Кнопка «💸 Скидка» в карточке. Вкл — LZT сам купит аккаунт, когда продавец примет цену</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="discAuto"><i></i></label></div></div>
+            <div class="row"><label>Ответы продавцов<small>Пересылать уведомления LZT о скидках и предложенной цене</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="lztNotify"><i></i></label></div></div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Карточка в Telegram</b><span>Что писать про найденный аккаунт</span></div>
+            <div class="row top"><label for="tgTpl">Текст сообщения<small><code>{поле}</code> — подставится значение, строка с пустым полем не выводится. <code>[[ … ]]</code> — необязательный кусок. Можно &lt;b&gt;жирный&lt;/b&gt;, &lt;i&gt;курсив&lt;/i&gt;</small></label>
+              <div class="ctl"><textarea class="inp ta tpl" id="tgTpl" spellcheck="false"></textarea>
+                <div class="chips" id="tgVars"></div>
+                <div class="btns"><button class="btn ghost xs" id="tgTplReset">Вернуть стандартный</button></div></div></div>
+            <div class="row top"><label for="rareSkins">Редкие скины<small>Через запятую. Варианты одного скина — через «/», например: Travis Scott/Трэвис Скотт</small></label>
+              <div class="ctl"><textarea class="inp ta sm" id="rareSkins" spellcheck="false"></textarea></div></div>
+            <div class="row top"><label>Пример<small>Так будет выглядеть сообщение</small></label>
+              <div class="ctl"><div class="tg-prev" id="tgPreview"></div></div></div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Проверка почты купленных аккаунтов</b><span>Защита от возврата аккаунта продавцом</span></div>
+            <div class="row"><label>Проверять почту<small>Сразу после покупки ищет во всей почте тикеты в поддержку Epic на восстановление и сброс пароля, потом следит за новыми письмами Epic и сменой пароля почты</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="mailCheck"><i></i></label></div></div>
+            <div class="row"><label for="mailHours">Следить после покупки</label><div class="ctl"><div class="inp-u w"><input class="inp" type="number" id="mailHours" min="1" max="720"><i>ч</i></div></div></div>
+            <div class="row"><label for="mailEvery">Проверять раз в<small>Почты с IMAP — без ограничений; через LZT — не чаще 5 раз в минуту на всё</small></label><div class="ctl"><div class="inp-u w"><input class="inp" type="number" id="mailEvery" min="5" max="240"><i>мин</i></div></div></div>
+            <div class="row top"><label for="mailManual">Свои почты<small>Аккаунты, купленные не через программу. По строке: <code>почта:пароль</code> или ссылка на лот LZT. Проверяются, пока стоят в списке</small></label>
+              <div class="ctl"><textarea class="inp ta sm" id="mailManual" spellcheck="false" placeholder="name@notletters.com:пароль&#10;https://lzt.market/123456789/"></textarea>
+                <div class="mm-list" id="mailManualList"></div></div></div>
+            <div class="row top"><label for="imapHosts">IMAP-серверы<small>Firstmail, Notletters, SmakMail, Mail.ru, Rambler, Яндекс, GMX уже знаю. Для других — строка <code>домен = сервер</code>, иначе пробую <code>imap.домен</code>. Сами почты сюда не пиши — для них поле выше</small></label>
+              <div class="ctl"><textarea class="inp ta sm" id="imapHosts" spellcheck="false" placeholder="smakmail.com = imap.smakmail.com&#10;mydomain.ru = mail.mydomain.ru:993"></textarea></div></div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Скорость опроса</b><span>Фильтры опрашиваются по кругу</span></div>
+            <div class="row"><label>Пауза между запросами</label>
+              <div class="ctl"><div class="range"><input type="range" id="interval" min="0.5" max="10" step="0.1"><b class="mono"><span id="intervalV">3.0</span> c</b></div>
+              <div class="ctl-hint" id="intervalHint"></div></div></div>
+            <div class="row"><label>Авто-скорость<small>Подстраивается под лимит LZT — быстро и без ошибок 429</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="autoSpeed"><i></i></label></div></div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Защита от лишних трат</b><span>Сохраняется автоматически</span></div>
+            <div class="row"><label for="spendLimit">Лимит трат за сессию<small>Пусто — без лимита</small></label><div class="ctl"><div class="inp-u w"><input class="inp" type="number" id="spendLimit" min="0" placeholder="∞"><i>₽</i></div></div></div>
+            <div class="row"><label for="lowBal">Предупредить, если баланс ниже<small>Сообщение в Telegram</small></label><div class="ctl"><div class="inp-u w"><input class="inp" type="number" id="lowBal" min="0" placeholder="не следить"><i>₽</i></div></div></div>
+            <div class="row"><label for="sellerBl">Чёрный список продавцов<small>Ники через запятую</small></label><div class="ctl"><input class="inp" id="sellerBl" placeholder="scam_guy, bad_seller"></div></div>
+            <div class="row"><label>Звук<small>Сигнал при находке и покупке</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="sound"><i></i></label></div></div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Работа 24/7</b></div>
+            <div class="row"><label>Сворачивать в трей<small>Крестик прячет окно, поиск продолжается</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="trayOpt"><i></i></label></div></div>
+            <div class="row"><label>Запуск вместе с Windows<small>Стартует свёрнутой в трей</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="autostartOpt"><i></i></label></div></div>
+            <div class="row"><label>Сразу запускать поиск<small>При открытии программы</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="autorunOpt"><i></i></label></div></div>
+            <div class="row"><label>Файлы</label><div class="ctl btns"><button class="btn ghost sm" id="mkShortcut">Ярлык на рабочий стол</button><button class="btn ghost sm" id="openData2"><svg class="ic s"><use href="#i-folder"/></svg>Папка данных</button></div></div>
+          </div>
+
+          <div class="sec">
+            <div class="sec-h"><b>Демо-маркет</b><span>Имитация LZT: лоты появляются сами, покупки ненастоящие, баланс 5000 ₽</span></div>
+            <div class="row"><label>Включить демо<small>Пока включено, настоящий LZT не используется</small></label><div class="ctl"><label class="sw"><input type="checkbox" id="demoOpt"><i></i></label></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HELP ============ -->
+      <section class="page flush" id="page-help">
+        <iframe src="help.html" class="help-frame" title="Инструкция"></iframe>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="modal-bg" id="impModal">
+  <div class="modal">
+    <div class="modal-h"><b>Импорт фильтров</b><button class="btn ghost sm sq" id="impClose"><svg class="ic s"><use href="#i-x"/></svg></button></div>
+    <div class="modal-b">
+      <p class="muted">Вставь текст, скопированный кнопкой «Экспорт» (можно с другого компьютера). Фильтры добавятся к текущим.</p>
+      <textarea id="impText" class="inp ta" placeholder='[{"name": "...", "category": "epicgames", ...}]' spellcheck="false"></textarea>
+    </div>
+    <div class="modal-f"><button class="btn ghost sm" id="impCancel">Отмена</button><button class="btn primary sm" id="impGo">Импортировать</button></div>
+  </div>
+</div>
+
+<div class="modal-bg cmd-bg" id="cmdModal">
+  <div class="cmd">
+    <div class="cmd-in"><svg class="ic"><use href="#i-search"/></svg><input id="cmdInput" placeholder="Что сделать? Запустить, новый фильтр, журнал…" autocomplete="off" spellcheck="false"><kbd>Esc</kbd></div>
+    <div class="cmd-list scroll" id="cmdList"></div>
+    <div class="cmd-foot"><span><kbd>↑</kbd><kbd>↓</kbd> выбрать</span><span><kbd>Enter</kbd> выполнить</span></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="clModal">
+  <div class="modal cl" role="dialog" aria-modal="true" aria-labelledby="clTitle">
+    <div class="modal-h"><b id="clTitle">Что нового</b><button class="btn ghost sm sq" id="clClose" aria-label="Закрыть"><svg class="ic s"><use href="#i-x"/></svg></button></div>
+    <div class="modal-b cl-b" id="clBody"></div>
+    <div class="modal-f"><button class="btn ghost sm" id="clAll">Вся история</button><button class="btn primary sm" id="clOk">Понятно</button></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="askModal">
+  <div class="modal ask" role="dialog" aria-modal="true">
+    <div class="modal-b"><div class="ask-t" id="askT"></div><div class="ask-d" id="askD"></div></div>
+    <div class="modal-f"><button class="btn ghost sm" id="askNo">Отмена</button><button class="btn primary sm" id="askYes">OK</button></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<script src="demo-bridge.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -191,6 +191,63 @@ export const interactiveDemos: Record<string, InteractiveDemo> = {
       },
     ],
   },
+
+  /* ---- Lab: own and direct-client products ---- */
+  tgorg: {
+    id: "tgorg",
+    baseUrl: "/demos/tgorg/",
+    scenes: [
+      { id: "catalog", path: "/catalog", label: { en: "Catalog", ru: "Каталог", es: "Catálogo" } },
+      { id: "channel", path: "/channel", label: { en: "Channel", ru: "Канал", es: "Canal" } },
+      { id: "admin", path: "/admin", label: { en: "Moderation", ru: "Модерация", es: "Moderación" } },
+    ],
+  },
+  trueprotein: {
+    id: "trueprotein",
+    baseUrl: "/demos/trueprotein/",
+    scenes: [
+      { id: "shop", path: "/shop", label: { en: "Storefront", ru: "Витрина", es: "Tienda" } },
+      { id: "cart", path: "/cart", label: { en: "Cart", ru: "Корзина", es: "Carrito" } },
+      { id: "admin", path: "/admin", label: { en: "Admin + bot", ru: "Админка и бот", es: "Admin y bot" } },
+    ],
+  },
+  keys: {
+    id: "keys",
+    baseUrl: "/demos/keys/",
+    scenes: [
+      { id: "shop", path: "/shop", label: { en: "Storefront", ru: "Витрина", es: "Tienda" } },
+      { id: "bot", path: "/bot", label: { en: "Bot checkout", ru: "Покупка в боте", es: "Compra en bot" } },
+      { id: "admin", path: "/admin", label: { en: "Orders", ru: "Заказы", es: "Pedidos" } },
+    ],
+  },
+  otklik: {
+    id: "otklik",
+    baseUrl: "/demos/otklik/",
+    scenes: [
+      { id: "app", path: "/app", label: { en: "Mini app", ru: "Мини-апп", es: "Mini app" } },
+      { id: "console", path: "/console", label: { en: "Console", ru: "Операторская", es: "Consola" } },
+      { id: "bot", path: "/bot", label: { en: "Bot", ru: "Бот", es: "Bot" } },
+    ],
+  },
+  rankevo: {
+    id: "rankevo",
+    baseUrl: "/demos/rankevo/",
+    scenes: [
+      { id: "queue", path: "/queue", label: { en: "Queue", ru: "Очередь", es: "Cola" } },
+      { id: "board", path: "/board", label: { en: "Board", ru: "Доска", es: "Tablero" } },
+      { id: "lead", path: "/lead", label: { en: "Lead", ru: "Лид", es: "Lead" } },
+    ],
+  },
+  autobuyer: {
+    id: "autobuyer",
+    baseUrl: "/demos/autobuyer/",
+    scenes: [
+      { id: "dash", path: "/dash", label: { en: "Overview", ru: "Обзор", es: "Resumen" } },
+      { id: "filters", path: "/filters", label: { en: "Filters", ru: "Фильтры", es: "Filtros" } },
+      { id: "purchases", path: "/purchases", label: { en: "Purchases", ru: "Покупки", es: "Compras" } },
+      { id: "settings", path: "/settings", label: { en: "Settings", ru: "Настройки", es: "Ajustes" } },
+    ],
+  },
 };
 
 /** Map portfolio project ids → demo + default scene */
@@ -212,6 +269,12 @@ export const projectDemoMap: Record<
   "axioma-admin": { demoId: "axioma", sceneId: "admin" },
   "web3-tamagotchi": { demoId: "mochi", sceneId: "home" },
   "gemify-market": { demoId: "gemify", sceneId: "home" },
+  tgorg: { demoId: "tgorg", sceneId: "catalog" },
+  trueprotein: { demoId: "trueprotein", sceneId: "shop" },
+  keys: { demoId: "keys", sceneId: "shop" },
+  otklik: { demoId: "otklik", sceneId: "app" },
+  rankevo: { demoId: "rankevo", sceneId: "queue" },
+  autobuyer: { demoId: "autobuyer", sceneId: "dash" },
 };
 
 export function getProjectDemo(projectId: string) {

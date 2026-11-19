@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>tgorg — демо каталога</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#eef1f6; --bg-wash:#e4eaf3; --ink:#121826; --muted:#5c677a;
+  --accent:#0b7a72; --accent-hot:#0d9488; --accent-soft:rgba(11,122,114,.12);
+  --line:rgba(18,24,38,.1); --line-strong:rgba(18,24,38,.16);
+  --paper:#fff; --paper-soft:#f7f9fc;
+  --shadow:0 12px 36px rgba(18,24,38,.07); --shadow-sm:0 2px 8px rgba(18,24,38,.04);
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  min-height:100%;color:var(--ink);font:15px/1.5 Manrope,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:
+    radial-gradient(920px 380px at 0% -8%,rgba(11,122,114,.11),transparent 55%),
+    radial-gradient(720px 360px at 100% 0%,rgba(30,64,120,.07),transparent 50%),
+    linear-gradient(180deg,#f5f7fb 0%,var(--bg) 45%,var(--bg-wash) 100%);
+}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input{font:inherit}
+.shell{width:min(1180px,calc(100% - 32px));margin:0 auto}
+header{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);background:rgba(255,255,255,.82);backdrop-filter:blur(10px)}
+.hin{height:64px;display:flex;align-items:center;gap:20px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:18px;letter-spacing:-.02em;flex:none}
+.logo i{width:28px;height:28px;border-radius:9px;background:linear-gradient(140deg,var(--accent-hot),var(--accent));display:grid;place-items:center;color:#f0fdfa;font-style:normal;font-size:14px;font-weight:800}
+nav{display:flex;gap:4px;font-size:13.5px;font-weight:600;color:var(--muted)}
+nav button{padding:7px 11px;border-radius:9px}
+nav button.on{background:var(--accent-soft);color:var(--accent)}
+nav button:hover:not(.on){background:rgba(18,24,38,.05)}
+.srch{margin-left:auto;display:flex;align-items:center;gap:8px;width:290px;height:38px;padding:0 12px;border:1px solid var(--line-strong);border-radius:11px;background:var(--paper);box-shadow:var(--shadow-sm)}
+.srch input{border:0;outline:0;background:none;width:100%;font-size:13.5px}
+.srch input::placeholder{color:#9aa3b1}
+.hero{padding:26px 0 16px}
+.crumb{font-size:12.5px;color:var(--muted);margin-bottom:9px}
+.crumb b{color:#36414f}
+h1{font-size:29px;letter-spacing:-.03em;font-weight:800;margin-bottom:6px}
+.sub{color:var(--muted);font-size:14.5px;max-width:650px}
+.chips{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}
+.chip{padding:7px 13px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:13px;font-weight:600;color:#36414f;box-shadow:var(--shadow-sm)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#f0fdfa}
+.grid{display:grid;grid-template-columns:230px 1fr 268px;gap:18px;margin-top:20px;padding-bottom:40px;align-items:start}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:15px}
+.t{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin-bottom:11px}
+.fgroup{padding:13px 15px;border-bottom:1px solid var(--line)}
+.fgroup:last-child{border-bottom:0}
+.frow{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#36414f;padding:5px 0;width:100%;text-align:left}
+.box{width:15px;height:15px;border-radius:5px;border:1.5px solid var(--line-strong);background:#fff;flex:none;position:relative}
+.box.on{background:var(--accent);border-color:var(--accent)}
+.box.on:after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:2px solid #fff;border-top:0;border-left:0;transform:rotate(42deg)}
+.frow .n{margin-left:auto;font-size:12px;color:#9aa3b1;font-variant-numeric:tabular-nums}
+.sortbar{display:flex;align-items:center;gap:8px;margin-bottom:11px;font-size:12.5px;color:var(--muted)}
+.sortbar b{color:var(--ink);font-weight:700}
+.sortbtn{margin-left:auto;display:flex;gap:4px}
+.sortbtn button{padding:5px 10px;border-radius:8px;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--paper)}
+.sortbtn button.on{background:var(--accent);border-color:var(--accent);color:#f0fdfa}
+.list{display:flex;flex-direction:column;gap:11px}
+.ch{display:flex;gap:13px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow);width:100%;text-align:left;transition:transform .15s,box-shadow .15s,border-color .15s}
+.ch:hover{transform:translateY(-2px);border-color:rgba(11,122,114,.35);box-shadow:0 16px 40px rgba(18,24,38,.1)}
+.ava{width:50px;height:50px;border-radius:14px;flex:none;display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px}
+.ch-b{flex:1;min-width:0}
+.ch-n{display:flex;align-items:center;gap:7px;font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+.ver{width:15px;height:15px;border-radius:50%;background:var(--accent);display:grid;place-items:center;color:#fff;font-size:9px;font-weight:800;flex:none}
+.hndl{font-size:12.5px;color:var(--muted);margin-top:1px}
+.desc{font-size:13px;color:#4a5566;margin-top:7px;line-height:1.45}
+.tags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.tag{font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:7px;background:var(--paper-soft);border:1px solid var(--line);color:#5c677a}
+.ch-r{text-align:right;flex:none;width:120px}
+.subs{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.subs small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
+.er{margin-top:9px;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:4px 8px;display:inline-block}
+.price{margin-top:8px;font-size:12.5px;color:var(--muted)}
+.empty{padding:38px 16px;text-align:center;color:var(--muted);background:var(--paper);border:1px dashed var(--line-strong);border-radius:var(--r)}
+.empty b{display:block;color:var(--ink);margin-bottom:5px}
+.rail .row{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);width:100%;text-align:left}
+.rail .row:last-child{border-bottom:0}
+.rk{width:19px;font-weight:800;color:#b4bdc9;font-size:13px;text-align:center;flex:none}
+.mini{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;flex:none}
+.rn{display:block;font-size:13.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs{display:block;font-size:11.5px;color:var(--muted)}
+.ch-n,.hndl,.desc,.tags,.subs,.er,.price{display:block}
+.ch-n{display:flex}
+.up{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--accent);flex:none}
+.statline{display:flex;gap:9px;margin-top:13px}
+.stat{flex:1;background:var(--paper-soft);border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat b{display:block;font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;color:var(--muted);font-weight:600}
+.srvs{display:flex;gap:7px;align-items:center;font-size:11.5px;color:var(--muted);margin-top:12px;font-weight:600}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+/* channel page */
+.chan{display:grid;grid-template-columns:1fr 290px;gap:18px;padding-bottom:40px;align-items:start}
+.chead{display:flex;gap:16px;align-items:flex-start}
+.bigava{width:76px;height:76px;border-radius:20px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px;flex:none}
+.chart{display:flex;align-items:flex-end;gap:7px;height:120px;margin-top:6px}
+.chart i{flex:1;background:linear-gradient(180deg,var(--accent-hot),var(--accent));border-radius:7px 7px 3px 3px;display:block}
+.post{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:9px;background:var(--paper-soft);font-size:13.5px;color:#36414f}
+.post .m{font-size:11.5px;color:var(--muted);margin-top:7px}
+.buyad{background:linear-gradient(150deg,var(--accent),#0a5c55);color:#eafaf6;border-radius:var(--r);padding:16px;box-shadow:0 14px 30px rgba(11,122,114,.25)}
+.buyad .p{font-size:26px;font-weight:800;letter-spacing:-.03em;margin:5px 0 2px}
+.buyad button{margin-top:12px;width:100%;height:42px;border-radius:12px;background:#fffdf9;color:var(--accent);font-weight:800;font-size:14px}
+/* admin */
+.adm{padding-bottom:40px}
+.mod{display:flex;align-items:center;gap:13px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px;box-shadow:var(--shadow-sm)}
+.mod .ab{flex:1;min-width:0}
+.mod .an{font-weight:700;font-size:14.5px}
+.mod .am{font-size:12px;color:var(--muted);margin-top:2px}
+.act{display:flex;gap:7px;flex:none}
+.act button{height:34px;padding:0 14px;border-radius:10px;font-size:13px;font-weight:700;border:1px solid var(--line)}
+.act .ok{background:var(--accent);border-color:var(--accent);color:#f0fdfa}
+.act .no{background:#fff;color:#b4453a;border-color:rgba(180,69,58,.3)}
+.flash{animation:fade .5s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#121826;color:#fff;font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .chan{grid-template-columns:1fr}
+  .srch{width:auto;flex:1;min-width:120px}
+  nav{display:none}
+  .ch{flex-wrap:wrap}
+  .ch-r{width:auto;text-align:left;display:flex;gap:12px;align-items:center}
+  .er,.price{margin-top:0}
+}
+</style>
+</head>
+<body>
+<header><div class="shell hin">
+  <div class="logo"><i>tg</i>tgorg</div>
+  <nav id="nav">
+    <button data-go="catalog" class="on">Каталог</button>
+    <button data-go="channel">Канал</button>
+    <button data-go="admin">Модерация</button>
+  </nav>
+  <div class="srch">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa3b1" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" placeholder="Поиск по каналам — попробуй «пост» или «ai»" />
+  </div>
+</div></header>
+
+<main class="shell" id="app"></main>
+<div class="toast" id="toast"></div>
+
+<script>
+const CH = [
+  {id:"devnotes",n:"Dev Notes",h:"@devnotes_ru",cat:"Разработка",ver:true,subs:184203,er:28.4,price:18000,lang:"ru",kind:"Канал",
+   d:"Заметки о бэкенде, инфраструктуре и TypeScript. Разборы инцидентов, без рекламы курсов.",tags:["TypeScript","Backend","DevOps"],c:"linear-gradient(140deg,#0d9488,#0b7a72)",ini:"DN"},
+  {id:"aiweekly",n:"AI Weekly",h:"@ai_weekly",cat:"AI",ver:true,subs:96540,er:24.1,price:11000,lang:"ru",kind:"Канал",
+   d:"Еженедельный дайджест по моделям и инструментам. Разбор релизов и практические промпты.",tags:["AI","Дайджест","Инструменты"],c:"linear-gradient(140deg,#4f7df3,#2b56c7)",ini:"AI"},
+  {id:"frontend",n:"Frontend Daily",h:"@frontend_daily",cat:"Разработка",ver:false,subs:61877,er:19.6,price:7500,lang:"ru",kind:"Канал",
+   d:"Релизы React, Vite и браузеров каждый день. Короткие посты, ссылки на первоисточник.",tags:["React","Браузеры","Новости"],c:"linear-gradient(140deg,#f0893a,#d0631c)",ini:"FR"},
+  {id:"serverless",n:"Serverless Room",h:"@serverless_room",cat:"Облака",ver:true,subs:34912,er:31.2,price:6000,lang:"ru",kind:"Чат",
+   d:"Edge-рантаймы, очереди и стоимость облака. Кейсы миграций с цифрами по счетам.",tags:["Cloud","Edge","FinOps"],c:"linear-gradient(140deg,#8b5cf6,#6d35e0)",ini:"SR"},
+  {id:"postgres",n:"Postgres Bits",h:"@postgres_bits",cat:"Базы данных",ver:false,subs:22408,er:26.8,price:4200,lang:"ru",kind:"Канал",
+   d:"Планы запросов, индексы и миграции. Короткие заметки из продакшена.",tags:["PostgreSQL","SQL","Perf"],c:"linear-gradient(140deg,#16a34a,#107a38)",ini:"DB"},
+  {id:"rustlog",n:"Rust Log",h:"@rust_log",cat:"Разработка",ver:false,subs:18740,er:22.4,price:3600,lang:"en",kind:"Канал",
+   d:"Weekly notes on Rust releases, crates and performance traps.",tags:["Rust","Perf","Weekly"],c:"linear-gradient(140deg,#c2410c,#7c2d12)",ini:"RL"},
+  {id:"designbot",n:"Design Bot",h:"@design_bot",cat:"Дизайн",ver:false,subs:9120,er:17.1,price:2000,lang:"ru",kind:"Бот",
+   d:"Бот с подборками интерфейсов: присылает три референса в день по твоей теме.",tags:["Дизайн","Бот","Референсы"],c:"linear-gradient(140deg,#db2777,#9d174d)",ini:"DB"},
+  {id:"aipapers",n:"AI Papers RU",h:"@ai_papers_ru",cat:"AI",ver:true,subs:41260,er:20.8,price:5400,lang:"ru",kind:"Канал",
+   d:"Разборы свежих статей простым языком. Один пост — одна идея и зачем она на практике.",fullD:true,tags:["AI","Research","Разборы"],c:"linear-gradient(140deg,#0ea5e9,#0369a1)",ini:"AP"},
+];
+
+const MOD = [
+  {id:1,n:"Crypto Signals Pro",h:"@crypto_signals_pro",why:"Обещает доход, нет раскрытия рисков"},
+  {id:2,n:"Хроники сисадмина",h:"@sysadmin_tales",why:"Дубль существующего канала в каталоге"},
+  {id:3,n:"Go Weekly",h:"@go_weekly_ru",why:"Статистика не подтянулась — воркер вернул 404"},
+  {id:4,n:"Книжная полка",h:"@book_shelf",why:"Категория не совпадает с содержимым"},
+];
+
+const state = {
+  page:"catalog", q:"", cat:"Все", lang:{ru:true,en:false}, kind:{Канал:true,Чат:false,Бот:false},
+  onlyVer:false, sort:"subs", channel:"devnotes", mod:MOD.map(m=>({...m,status:null})),
+};
+const fmt = n => n.toLocaleString("ru-RU");
+const $ = s => document.querySelector(s);
+
+let tid;
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+  clearTimeout(tid); tid = setTimeout(()=>t.classList.remove("show"),1900);
+}
+
+function visible(){
+  const q = state.q.trim().toLowerCase();
+  let list = CH.filter(c=>{
+    if(state.cat!=="Все" && c.cat!==state.cat) return false;
+    if(!state.lang[c.lang]) return false;
+    if(!state.kind[c.kind]) return false;
+    if(state.onlyVer && !c.ver) return false;
+    if(q && !(c.n+" "+c.h+" "+c.d+" "+c.tags.join(" ")).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const by = {subs:(a,b)=>b.subs-a.subs, er:(a,b)=>b.er-a.er, price:(a,b)=>a.price-b.price};
+  return list.sort(by[state.sort]);
+}
+
+function cats(){ return ["Все",...new Set(CH.map(c=>c.cat))]; }
+
+function catalog(){
+  const list = visible();
+  const count = n => CH.filter(n).length;
+  return `
+  <div class="hero">
+    <div class="crumb">Главная · Каталог · <b>${state.cat}</b></div>
+    <h1>Каталог Telegram-каналов${state.cat==="Все"?"":" — "+state.cat}</h1>
+    <div class="sub">Поиск, фильтры и сортировка работают по-настоящему — это те же запросы, что уходят в Meilisearch и Postgres.</div>
+    <div class="chips">${cats().map(c=>`<button class="chip ${c===state.cat?"on":""}" data-cat="${c}">${c}</button>`).join("")}</div>
+  </div>
+  <div class="grid">
+    <aside class="card">
+      <div class="fgroup"><div class="t">Язык</div>
+        <button class="frow" data-lang="ru"><span class="box ${state.lang.ru?"on":""}"></span>Русский<span class="n">${count(c=>c.lang==="ru")}</span></button>
+        <button class="frow" data-lang="en"><span class="box ${state.lang.en?"on":""}"></span>English<span class="n">${count(c=>c.lang==="en")}</span></button>
+      </div>
+      <div class="fgroup"><div class="t">Формат</div>
+        ${["Канал","Чат","Бот"].map(k=>`<button class="frow" data-kind="${k}"><span class="box ${state.kind[k]?"on":""}"></span>${k}<span class="n">${count(c=>c.kind===k)}</span></button>`).join("")}
+      </div>
+      <div class="fgroup"><div class="t">Прочее</div>
+        <button class="frow" data-ver="1"><span class="box ${state.onlyVer?"on":""}"></span>Только проверенные<span class="n">${count(c=>c.ver)}</span></button>
+      </div>
+    </aside>
+
+    <section>
+      <div class="sortbar"><b>${list.length}</b> из ${CH.length} каналов
+        <span class="sortbtn">
+          <button data-sort="subs" class="${state.sort==="subs"?"on":""}">подписчики</button>
+          <button data-sort="er" class="${state.sort==="er"?"on":""}">ER</button>
+          <button data-sort="price" class="${state.sort==="price"?"on":""}">цена</button>
+        </span>
+      </div>
+      <div class="list">
+        ${list.length ? list.map(c=>`
+          <button class="ch flash" data-chan="${c.id}">
+            <span class="ava" style="background:${c.c}">${c.ini}</span>
+            <span class="ch-b">
+              <span class="ch-n">${c.n}${c.ver?'<span class="ver">✓</span>':""}</span>
+              <span class="hndl">${c.h} · ${c.cat} · ${c.kind}</span>
+              <span class="desc">${c.d}</span>
+              <span class="tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</span>
+            </span>
+            <span class="ch-r">
+              <span class="subs">${fmt(c.subs)}<small>подписчиков</small></span>
+              <span class="er">ER ${c.er}%</span>
+              <span class="price">реклама от ${fmt(c.price)} ₽</span>
+            </span>
+          </button>`).join("")
+        : `<div class="empty"><b>Ничего не нашлось</b>Смягчи фильтры или очисти поиск</div>`}
+      </div>
+    </section>
+
+    <aside>
+      <div class="card pad">
+        <div class="t">Топ недели</div>
+        <div class="rail">
+          ${[...CH].sort((a,b)=>b.subs-a.subs).slice(0,5).map((c,i)=>`
+            <button class="row" data-chan="${c.id}">
+              <span class="rk">${i+1}</span>
+              <span class="mini" style="background:${c.c}">${c.ini}</span>
+              <span style="min-width:0"><span class="rn">${c.n}</span><span class="rs">${fmt(c.subs)}</span></span>
+              <span class="up">+${(1+i*0.6).toFixed(1)}%</span>
+            </button>`).join("")}
+        </div>
+      </div>
+      <div class="card pad" style="margin-top:14px">
+        <div class="t">Индекс каталога</div>
+        <div class="statline"><div class="stat"><b>48 219</b><span>каналов</span></div><div class="stat"><b>86 мс</b><span>поиск p95</span></div></div>
+        <div class="statline"><div class="stat"><b>24 ч</b><span>цикл воркера</span></div><div class="stat"><b>${state.mod.filter(m=>!m.status).length}</b><span>в модерации</span></div></div>
+        <div class="srvs"><span class="dot"></span>Meilisearch · BullMQ · SSR из Postgres</div>
+      </div>
+    </aside>
+  </div>`;
+}
+
+function channel(){
+  const c = CH.find(x=>x.id===state.channel) || CH[0];
+  const bars = [52,61,48,74,69,83,91,78,96,88,100,94];
+  return `
+  <div class="hero">
+    <div class="crumb"><button data-go="catalog" style="color:var(--accent);font-weight:600">← Каталог</button> · ${c.cat} · <b>${c.n}</b></div>
+  </div>
+  <div class="chan">
+    <section>
+      <div class="card pad">
+        <div class="chead">
+          <span class="bigava" style="background:${c.c}">${c.ini}</span>
+          <div style="flex:1">
+            <div class="ch-n" style="font-size:22px">${c.n}${c.ver?'<span class="ver">✓</span>':""}</div>
+            <div class="hndl">${c.h} · ${c.kind} · ${c.cat}</div>
+            <div class="desc" style="max-width:520px">${c.d}</div>
+            <div class="tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+          </div>
+        </div>
+        <div class="statline" style="margin-top:16px">
+          <div class="stat"><b>${fmt(c.subs)}</b><span>подписчиков</span></div>
+          <div class="stat"><b>${c.er}%</b><span>ER за 30 дней</span></div>
+          <div class="stat"><b>${fmt(Math.round(c.subs*c.er/100))}</b><span>охват поста</span></div>
+          <div class="stat"><b>${(c.price/ (c.subs*c.er/100) * 1000).toFixed(0)} ₽</b><span>CPM</span></div>
+        </div>
+      </div>
+
+      <div class="card pad" style="margin-top:14px">
+        <div class="t">Подписчики за год</div>
+        <div class="chart">${bars.map(b=>`<i style="height:${b}%"></i>`).join("")}</div>
+        <div class="srvs"><span class="dot"></span>Снимок статистики пишет воркер BullMQ раз в сутки</div>
+      </div>
+
+      <div class="card pad" style="margin-top:14px">
+        <div class="t">Последние посты</div>
+        <div class="post">Разобрали, почему индекс по (status, created_at) ускорил выборку в 4 раза, а по (created_at, status) — нет.<div class="m">вчера · 14 200 просмотров</div></div>
+        <div class="post">Короткая заметка про таймауты в очередях: что ставить, если воркер ходит во внешний API.<div class="m">3 дня назад · 11 800 просмотров</div></div>
+      </div>
+    </section>
+
+    <aside>
+      <div class="buyad">
+        <div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.8;font-weight:700">Реклама</div>
+        <div class="p">от ${fmt(c.price)} ₽</div>
+        <div style="font-size:12.5px;opacity:.85">1/24 · цена из заявки владельца</div>
+        <button data-ad="1">Оставить заявку</button>
+      </div>
+      <div class="card pad" style="margin-top:14px">
+        <div class="t">Похожие</div>
+        <div class="rail">
+          ${CH.filter(x=>x.cat===c.cat&&x.id!==c.id).slice(0,3).map(x=>`
+            <button class="row" data-chan="${x.id}">
+              <span class="mini" style="background:${x.c}">${x.ini}</span>
+              <span style="min-width:0"><span class="rn">${x.n}</span><span class="rs">${fmt(x.subs)}</span></span>
+            </button>`).join("") || '<div class="rs">Пока нет</div>'}
+        </div>
+      </div>
+    </aside>
+  </div>`;
+}
+
+function admin(){
+  const left = state.mod.filter(m=>!m.status);
+  return `
+  <div class="hero">
+    <div class="crumb">Админка · <b>Модерация</b></div>
+    <h1>Очередь модерации</h1>
+    <div class="sub">Заявки владельцев каналов. Решение пишется в Postgres и переиндексирует запись в Meilisearch.</div>
+  </div>
+  <div class="adm">
+    <div class="statline" style="max-width:560px;margin-bottom:16px">
+      <div class="stat"><b>${left.length}</b><span>ждут решения</span></div>
+      <div class="stat"><b>${state.mod.filter(m=>m.status==="ok").length}</b><span>одобрено</span></div>
+      <div class="stat"><b>${state.mod.filter(m=>m.status==="no").length}</b><span>отклонено</span></div>
+    </div>
+    ${state.mod.map(m=>`
+      <div class="mod">
+        <span class="ava" style="width:38px;height:38px;border-radius:12px;font-size:13px;background:${m.status==="ok"?"var(--accent)":m.status==="no"?"#b4453a":"#8c97a6"}">${m.n.slice(0,2).toUpperCase()}</span>
+        <div class="ab"><div class="an">${m.n}</div><div class="am">${m.h} · ${m.why}</div></div>
+        <div class="act">
+          ${m.status ? `<span class="tag" style="padding:8px 12px">${m.status==="ok"?"Одобрен":"Отклонён"}</span>`
+            : `<button class="ok" data-mod="${m.id}" data-act="ok">Одобрить</button>
+               <button class="no" data-mod="${m.id}" data-act="no">Отклонить</button>`}
+        </div>
+      </div>`).join("")}
+    ${left.length?"":'<div class="empty"><b>Очередь пуста</b>Все заявки разобраны</div>'}
+  </div>`;
+}
+
+function render(){
+  const views = {catalog, channel, admin};
+  $("#app").innerHTML = (views[state.page] || catalog)();
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on", b.dataset.go===state.page));
+  const q = $("#q"); if (q) q.value = state.q;
+}
+
+function go(page){
+  state.page = page;
+  const h = "#/" + page;
+  if (location.hash !== h) location.hash = h;
+  render();
+  window.scrollTo({top:0});
+}
+
+document.addEventListener("click", e=>{
+  const t = e.target.closest("[data-go],[data-cat],[data-lang],[data-kind],[data-ver],[data-sort],[data-chan],[data-mod],[data-ad]");
+  if(!t) return;
+  if(t.dataset.go) return go(t.dataset.go);
+  if(t.dataset.cat){ state.cat = t.dataset.cat; return render(); }
+  if(t.dataset.lang){ state.lang[t.dataset.lang] = !state.lang[t.dataset.lang]; return render(); }
+  if(t.dataset.kind){ state.kind[t.dataset.kind] = !state.kind[t.dataset.kind]; return render(); }
+  if(t.dataset.ver){ state.onlyVer = !state.onlyVer; return render(); }
+  if(t.dataset.sort){ state.sort = t.dataset.sort; return render(); }
+  if(t.dataset.chan){ state.channel = t.dataset.chan; return go("channel"); }
+  if(t.dataset.ad){ return toast("Заявка ушла владельцу канала — в демо дальше ничего не отправляется"); }
+  if(t.dataset.mod){
+    const m = state.mod.find(x=>String(x.id)===t.dataset.mod);
+    if(m){ m.status = t.dataset.act; toast(m.status==="ok"?`${m.n} в каталоге`:`${m.n} отклонён`); render(); }
+  }
+});
+
+document.addEventListener("input", e=>{
+  if(e.target.id!=="q") return;
+  state.q = e.target.value;
+  const el = $("#app"); const pos = e.target.selectionStart;
+  if(state.page!=="catalog") state.page="catalog";
+  render();
+  const q = $("#q"); q.focus(); q.setSelectionRange(pos,pos);
+  void el;
+});
+
+function fromHash(){
+  const want = (location.hash||"").replace(/^#\/?/,"").trim();
+  state.page = ["catalog","channel","admin"].includes(want) ? want : "catalog";
+  render();
+}
+window.addEventListener("hashchange", fromHash);
+fromHash();
+</script>
+</body>
+</html>

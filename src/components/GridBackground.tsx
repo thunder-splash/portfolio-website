@@ -26,7 +26,7 @@ export function GridBackground() {
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid slice"
       >
-        <g transform="translate(72% 20%)">
+        <svg x="72%" y="20%" overflow="visible">
           <g
             className="geo-drift"
             fill="none"
@@ -51,8 +51,8 @@ export function GridBackground() {
               opacity="0.6"
             />
           </g>
-        </g>
-        <g transform="translate(16% 64%)">
+        </svg>
+        <svg x="16%" y="64%" overflow="visible">
           <g
             className="geo-drift-slow"
             fill="none"
@@ -62,7 +62,7 @@ export function GridBackground() {
             <path d="M0,-40 L35,-12 L35,28 L0,56 L-35,28 L-35,-12 Z" />
             <circle r="3" fill="rgba(16,185,129,0.45)" stroke="none" />
           </g>
-        </g>
+        </svg>
         <g stroke="rgba(148,163,184,0.2)" strokeWidth="1" fill="none">
           <path d="M40 480 L180 280 L320 360" />
           <circle

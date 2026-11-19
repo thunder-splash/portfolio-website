@@ -20,6 +20,9 @@ export type Dictionary = {
     sub: string;
     viewWork: string;
     contact: string;
+    demoCount: string;
+    demoNote: string;
+    toLab: string;
     scroll: string;
   };
   stack: {
@@ -100,6 +103,8 @@ export type Dictionary = {
     note: string;
     gridHint: string;
     open: string;
+    openDemo: string;
+    demoBadge: string;
     close: string;
     prev: string;
     next: string;
@@ -156,6 +161,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
       headlineAccent: "built faster",
       headlineAfter: "",
       sub: "5+ years fullstack. AI agents in the workflow — up to 300% faster delivery.",
+      demoCount: "{apps} live demos · {scenes} screens",
+      demoNote: "Every case on this page opens as a working app in the browser. Nothing to install.",
+      toLab: "My own products",
       viewWork: "Touch the work",
       contact: "Contact",
       scroll: "Scroll",
@@ -447,9 +455,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Products built outside the employment timeline — my own and for direct clients. Backend, frontend, bot and deploy on me.",
       horizonTag: "Lab",
       horizonToEdu: "05 · Background",
-      note: "Screens use synthetic data: no real customers, balances or credentials.",
-      gridHint: "Pick a project to see the detail",
-      open: "Open case",
+      note: "Every card opens the real thing in the browser — clickable, with synthetic data. No real customers, balances or credentials.",
+      gridHint: "Open a project — every one runs live in the browser",
+      open: "Case detail",
+      openDemo: "Open live demo",
+      demoBadge: "Demo",
       close: "Close",
       prev: "Previous project",
       next: "Next project",
@@ -587,6 +597,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
       headlineAccent: "нового поколения",
       headlineAfter: "",
       sub: "Senior Fullstack с опытом 5+ лет. Внедряю AI-агентов в цикл разработки — ускорение поставки до 300%.",
+      demoCount: "{apps} живых демо · {scenes} экранов",
+      demoNote: "Каждый кейс на этой странице открывается как рабочее приложение в браузере. Ставить ничего не надо.",
+      toLab: "Свои продукты",
       viewWork: "Потрогать работы",
       contact: "Написать",
       scroll: "Далее",
@@ -874,9 +887,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "То, что сделано вне найма — свои продукты и заказы напрямую. Бэкенд, фронт, бот и деплой на мне.",
       horizonTag: "Лаборатория",
       horizonToEdu: "05 · Образование",
-      note: "На скринах синтетические данные: ни реальных клиентов, ни балансов, ни доступов.",
-      gridHint: "Выбери проект, чтобы раскрыть детали",
-      open: "Открыть кейс",
+      note: "Каждая карточка открывает рабочий интерфейс прямо в браузере — кликабельно, на синтетических данных. Ни реальных клиентов, ни балансов, ни доступов.",
+      gridHint: "Открой проект — каждый запускается прямо в браузере",
+      open: "Подробно",
+      openDemo: "Запустить демо",
+      demoBadge: "Демо",
       close: "Закрыть",
       prev: "Предыдущий проект",
       next: "Следующий проект",
@@ -1015,6 +1030,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
       headlineAccent: "más rápido",
       headlineAfter: "",
       sub: "5+ años fullstack. Agentes AI en el flujo — hasta 300% más velocidad.",
+      demoCount: "{apps} demos en vivo · {scenes} pantallas",
+      demoNote: "Cada caso de esta página se abre como una app funcionando en el navegador. Nada que instalar.",
+      toLab: "Mis productos",
       viewWork: "Tocar el trabajo",
       contact: "Contacto",
       scroll: "Scroll",
@@ -1303,9 +1321,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
         "Productos hechos fuera del empleo: propios y para clientes directos. Backend, frontend, bot y despliegue a mi cargo.",
       horizonTag: "Laboratorio",
       horizonToEdu: "05 · Background",
-      note: "Las capturas usan datos sintéticos: ni clientes reales, ni saldos, ni credenciales.",
-      gridHint: "Elige un proyecto para ver el detalle",
-      open: "Abrir caso",
+      note: "Cada tarjeta abre la interfaz real en el navegador — clicable, con datos sintéticos. Ni clientes reales, ni saldos, ni credenciales.",
+      gridHint: "Abre un proyecto — cada uno corre en vivo en el navegador",
+      open: "Detalle",
+      openDemo: "Abrir demo en vivo",
+      demoBadge: "Demo",
       close: "Cerrar",
       prev: "Proyecto anterior",
       next: "Proyecto siguiente",

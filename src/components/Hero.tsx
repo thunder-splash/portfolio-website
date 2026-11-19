@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDownRight, Mail } from "lucide-react";
+import { ArrowDownRight, Mail, MousePointerClick, Play } from "lucide-react";
 import { GridBackground } from "@/components/GridBackground";
 import { TelegramIcon } from "@/components/icons";
+import { interactiveDemos } from "@/data/demos";
 import { profile } from "@/data/portfolio";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { scrollToId } from "@/lib/utils";
@@ -24,6 +25,12 @@ const item = {
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
+
+const demoApps = Object.keys(interactiveDemos).length;
+const demoScenes = Object.values(interactiveDemos).reduce(
+  (sum, demo) => sum + demo.scenes.length,
+  0,
+);
 
 export function Hero() {
   const { t } = useI18n();
@@ -122,6 +129,33 @@ export function Hero() {
                 <Mail size={14} />
               </a>
             </div>
+          </motion.div>
+
+          <motion.div
+            variants={item}
+            className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-white/8 pt-6"
+          >
+            <span className="inline-flex items-center gap-2 rounded-md border border-emerald-400/25 bg-emerald-400/10 px-2.5 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.14em] text-emerald-300">
+              <Play size={10} fill="currentColor" />
+              {t.hero.demoCount
+                .replace("{apps}", String(demoApps))
+                .replace("{scenes}", String(demoScenes))}
+            </span>
+            <p className="max-w-sm font-mono text-[11px] leading-relaxed tracking-[0.03em] text-slate-500">
+              {t.hero.demoNote}
+            </p>
+            <button
+              type="button"
+              onClick={() => scrollToId("lab")}
+              className="group inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-300/90 transition hover:text-amber-200"
+            >
+              <MousePointerClick size={13} />
+              {t.hero.toLab}
+              <ArrowDownRight
+                size={13}
+                className="transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5"
+              />
+            </button>
           </motion.div>
         </motion.div>
       </div>
